@@ -314,7 +314,7 @@ function HowItWorksTimeline() {
    Schedule a Consultation — Calendly Embed
    ═══════════════════════════════════════════ */
 // TODO: Replace CALENDLY_URL with your actual Calendly link
-const CALENDLY_URL = "";
+const CALENDLY_URL = "https://calendly.com/d/cppx-785-njf/meeting-with-mike";
 
 function ScheduleSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -423,7 +423,8 @@ function ScheduleSection() {
               <iframe
                 src={CALENDLY_URL}
                 title="Schedule a consultation"
-                className="h-[620px] w-full border-0"
+                className="h-[820px] w-full border-0"
+                style={{ overflow: "hidden" }}
               />
             ) : (
               /* Placeholder until Calendly link is added */

@@ -88,3 +88,23 @@ body {
     opacity: 0.3;
   }
 }
+
+@keyframes floatSnippet {
+  0% {
+    transform: translateY(100%) translateX(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--snippet-opacity, 0.4);
+  }
+  50% {
+    transform: translateY(-20%) translateX(var(--snippet-drift, 15px));
+  }
+  92% {
+    opacity: var(--snippet-opacity, 0.4);
+  }
+  100% {
+    transform: translateY(-120%) translateX(0);
+    opacity: 0;
+  }
+}

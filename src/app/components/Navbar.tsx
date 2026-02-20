@@ -6,11 +6,14 @@ import { useEffect, useRef, useState } from "react";
 
 const topLinks = [
   { href: "/", label: "Home" },
+  { href: "/testimonials", label: "Testimonials" },
+  { href: "/blog", label: "Blog" },
 ];
 
 const volzMethodLinks = [
   { href: "/volz-method", label: "The Method" },
   { href: "/volz-method/how-it-works", label: "How It Works" },
+  { href: "/volz-method/core-values", label: "Core Values" },
 ];
 
 export default function Navbar() {
