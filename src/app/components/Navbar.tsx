@@ -8,6 +8,7 @@ const topLinks = [
   { href: "/", label: "Home" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/blog", label: "Blog" },
+  { href: "/digital-piano-deal", label: "Digital Piano Deal" },
 ];
 
 const volzMethodLinks = [
