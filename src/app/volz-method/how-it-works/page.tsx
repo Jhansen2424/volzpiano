@@ -74,8 +74,8 @@ function PianoStringsAnimation({ visible }: { visible: boolean }) {
         // Color: faint white when still, orange glow when vibrating
         if (amp > 0.5) {
           const alpha = Math.min(0.8, 0.2 + decay * 0.6);
-          ctx.strokeStyle = `rgba(242, 122, 26, ${alpha})`;
-          ctx.shadowColor = "rgba(242, 122, 26, 0.5)";
+          ctx.strokeStyle = `rgba(99, 67, 212, ${alpha})`;
+          ctx.shadowColor = "rgba(99, 67, 212, 0.5)";
           ctx.shadowBlur = 12 * decay;
         } else {
           ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
@@ -213,7 +213,7 @@ function HowItWorksTimeline() {
             How It Works
           </h2>
           <div
-            className="mx-auto mt-4 h-1 w-16 rounded-full bg-orange-brand"
+            className="mx-auto mt-4 h-1 w-16 rounded-full bg-brand"
             style={{
               transform: visible ? "scaleX(1)" : "scaleX(0)",
               transition: "transform 0.5s ease-out 0.3s",
@@ -238,7 +238,7 @@ function HowItWorksTimeline() {
           <div className="absolute top-6 left-[calc(16.67%)] right-[calc(16.67%)] hidden sm:block">
             <div className="h-px w-full bg-zinc-200">
               <div
-                className="h-full bg-orange-brand origin-left"
+                className="h-full bg-brand origin-left"
                 style={{ width: `${lineWidth}%` }}
               />
             </div>
@@ -251,7 +251,7 @@ function HowItWorksTimeline() {
                 <div key={i} className="flex flex-col items-center text-center">
                   {/* Dot with icon */}
                   <div
-                    className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-orange-brand text-white shadow-lg"
+                    className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-brand text-white shadow-lg"
                     style={{
                       opacity: visible ? 1 : 0,
                       transform: visible ? "scale(1)" : "scale(0.4)",
@@ -263,7 +263,7 @@ function HowItWorksTimeline() {
 
                   {/* Card */}
                   <div
-                    className="group relative w-full rounded-2xl border border-zinc-100 bg-white p-7 shadow-md transition-all duration-300 hover:shadow-xl hover:border-orange-brand/20 hover:-translate-y-1"
+                    className="group relative w-full rounded-2xl border border-zinc-100 bg-white p-7 shadow-md transition-all duration-300 hover:shadow-xl hover:border-brand/20 hover:-translate-y-1"
                     style={{
                       opacity: visible ? 1 : 0,
                       transform: visible ? "translateY(0)" : "translateY(24px)",
@@ -271,9 +271,9 @@ function HowItWorksTimeline() {
                     }}
                   >
                     {/* Orange top accent on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl bg-gradient-to-r from-orange-brand to-orange-brand-hover scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100" />
+                    <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl bg-gradient-to-r from-brand to-brand-hover scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100" />
 
-                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.15em] text-orange-brand">
+                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.15em] text-brand">
                       Step {i + 1}
                     </span>
                     <h3 className="mb-2 text-lg font-bold text-zinc-900">
@@ -313,7 +313,6 @@ function HowItWorksTimeline() {
 /* ═══════════════════════════════════════════
    Schedule a Consultation — Calendly Embed
    ═══════════════════════════════════════════ */
-// TODO: Replace CALENDLY_URL with your actual Calendly link
 const CALENDLY_URL = "https://calendly.com/d/cppx-785-njf/meeting-with-mike";
 
 function ScheduleSection() {
@@ -350,7 +349,7 @@ function ScheduleSection() {
               transition: "all 0.7s ease-out",
             }}
           >
-            <span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-orange-brand">
+            <span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-brand">
               Sales
             </span>
             <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
@@ -358,7 +357,7 @@ function ScheduleSection() {
             </h2>
 
             <div
-              className="mb-6 h-1 w-16 rounded-full bg-orange-brand"
+              className="mb-6 h-1 w-16 rounded-full bg-brand"
               style={{
                 transform: visible ? "scaleX(1)" : "scaleX(0)",
                 transformOrigin: "left",
@@ -429,9 +428,9 @@ function ScheduleSection() {
             ) : (
               /* Placeholder until Calendly link is added */
               <div className="flex h-[620px] w-full flex-col items-center justify-center bg-zinc-50 px-8 text-center">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-orange-brand/10">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand/10">
                   <svg
-                    className="h-8 w-8 text-orange-brand"
+                    className="h-8 w-8 text-brand"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -498,7 +497,7 @@ export default function HowItWorksPage() {
             <span className="relative inline-block">
               <span className="relative z-10">Pricing</span>
               <span
-                className="absolute bottom-1 left-0 h-3 w-full bg-orange-brand/30 -z-0 rounded-sm"
+                className="absolute bottom-1 left-0 h-3 w-full bg-brand/30 -z-0 rounded-sm"
                 style={{
                   transform: visible ? "scaleX(1)" : "scaleX(0)",
                   transformOrigin: "left",
@@ -528,7 +527,7 @@ export default function HowItWorksPage() {
               transition: "all 0.7s ease-out 0.7s",
             }}
           >
-            <span className="text-5xl font-extrabold text-orange-brand sm:text-6xl">
+            <span className="text-5xl font-extrabold text-brand sm:text-6xl">
               $29–$45
             </span>
             <span className="text-lg text-white/50 font-medium">

@@ -77,7 +77,7 @@ export default function TestimonialsSection() {
 
                 {/* Orange accent bar */}
                 <div
-                  className="mb-8 h-1 w-16 rounded-full bg-orange-brand"
+                  className="mb-8 h-1 w-16 rounded-full bg-brand"
                   style={{
                     opacity: visible ? 1 : 0,
                     transform: visible ? "scaleX(1)" : "scaleX(0)",
@@ -109,10 +109,10 @@ export default function TestimonialsSection() {
                   <button
                     key={i}
                     onClick={() => setActiveVideo(video.embedUrl)}
-                    className="group flex items-center gap-4 rounded-3xl border border-zinc-200/60 bg-white/80 backdrop-blur-sm px-6 py-4 shadow-sm transition-all duration-300 hover:border-orange-brand/40 hover:shadow-lg hover:-translate-y-0.5"
+                    className="group flex items-center gap-4 rounded-3xl border border-zinc-200/60 bg-white/80 backdrop-blur-sm px-6 py-4 shadow-sm transition-all duration-300 hover:border-brand/40 hover:shadow-lg hover:-translate-y-0.5"
                   >
                     {/* Play circle */}
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-orange-brand text-white shadow-md transition-transform duration-300 group-hover:scale-110">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-transform duration-300 group-hover:scale-110">
                       <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5" fill="currentColor">
                         <path d="M8 5v14l11-7z" />
                       </svg>
@@ -135,7 +135,7 @@ export default function TestimonialsSection() {
               {testimonials.map((t, i) => (
                 <div
                   key={i}
-                  className="group relative overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/80 backdrop-blur-sm p-7 shadow-sm transition-all duration-300 hover:border-orange-brand/30 hover:shadow-lg"
+                  className="group relative overflow-hidden rounded-3xl border border-zinc-200/60 bg-white/80 backdrop-blur-sm p-7 shadow-sm transition-all duration-300 hover:border-brand/30 hover:shadow-lg"
                   style={{
                     opacity: visible ? 1 : 0,
                     transform: visible ? "translateX(0)" : "translateX(30px)",
@@ -143,12 +143,12 @@ export default function TestimonialsSection() {
                   }}
                 >
                   {/* Decorative quote mark */}
-                  <div className="absolute -top-2 -left-1 text-7xl font-bold leading-none text-orange-brand/10 select-none">
+                  <div className="absolute -top-2 -left-1 text-7xl font-bold leading-none text-brand/10 select-none">
                     &ldquo;
                   </div>
 
                   {/* Orange top accent on hover */}
-                  <div className="absolute top-0 left-0 h-[3px] w-0 bg-orange-brand transition-all duration-500 group-hover:w-full" />
+                  <div className="absolute top-0 left-0 h-[3px] w-0 bg-brand transition-all duration-500 group-hover:w-full" />
 
                   <p className="relative mb-5 text-base leading-relaxed text-zinc-600 italic sm:text-lg">
                     &ldquo;{t.quote}&rdquo;

@@ -37,7 +37,7 @@ function SectionHeading({ children }: { children: ReactNode }) {
   }, []);
   return (
     <div ref={ref} className="flex items-start gap-4 mt-12 mb-4">
-      <div className="mt-1.5 w-1 rounded-full bg-orange-brand flex-shrink-0"
+      <div className="mt-1.5 w-1 rounded-full bg-brand flex-shrink-0"
         style={{ height: visible ? "2.5rem" : "0", transition: "height 0.5s ease-out 0.1s" }} />
       <h2 className="text-2xl font-extrabold text-zinc-900 sm:text-3xl"
         style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-12px)", transition: "opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s" }}>
@@ -61,10 +61,10 @@ function FrameworkCard({ num, icon, title, children }: { num: string; icon: stri
     return () => observer.disconnect();
   }, []);
   return (
-    <div ref={ref} className="mt-6 rounded-2xl border-l-4 border-orange-brand bg-gradient-to-r from-orange-brand/5 to-transparent p-6"
+    <div ref={ref} className="mt-6 rounded-2xl border-l-4 border-brand bg-gradient-to-r from-brand/5 to-transparent p-6"
       style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.55s ease-out, transform 0.55s ease-out" }}>
       <div className="flex items-center gap-3 mb-3">
-        <span className="flex-shrink-0 h-9 w-9 rounded-full bg-orange-brand flex items-center justify-center text-white text-lg">{icon}</span>
+        <span className="flex-shrink-0 h-9 w-9 rounded-full bg-brand flex items-center justify-center text-white text-lg">{icon}</span>
         <h3 className="text-xl font-bold text-zinc-900">{num}. {title}</h3>
       </div>
       <div className="text-base leading-relaxed text-zinc-600">{children}</div>
@@ -116,7 +116,7 @@ function FaqItem({ q, a }: { q: string; a: ReactNode }) {
     <div ref={ref} className="mt-6 rounded-xl border border-zinc-100 bg-zinc-50 p-6"
       style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: "opacity 0.5s ease-out, transform 0.5s ease-out" }}>
       <div className="flex items-start gap-3 mb-3">
-        <span className="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-orange-brand flex items-center justify-center">
+        <span className="flex-shrink-0 mt-0.5 h-5 w-5 rounded-full bg-brand flex items-center justify-center">
           <span className="text-[10px] font-bold text-white">Q</span>
         </span>
         <h3 className="text-lg font-bold text-zinc-900">{q}</h3>
@@ -195,9 +195,9 @@ function FloatingNotesAnimation({ visible }: { visible: boolean }) {
 
         ctx.save();
         ctx.globalAlpha = Math.max(0, Math.min(1, pulseOpacity));
-        ctx.shadowColor = "rgba(242, 122, 26, 0.5)";
+        ctx.shadowColor = "rgba(99, 67, 212, 0.5)";
         ctx.shadowBlur = 10;
-        ctx.fillStyle = `rgba(242, 122, 26, ${pulseOpacity * 0.85})`;
+        ctx.fillStyle = `rgba(99, 67, 212, ${pulseOpacity * 0.85})`;
         ctx.font = `bold ${p.size * 2}px serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -222,59 +222,6 @@ function FloatingNotesAnimation({ visible }: { visible: boolean }) {
 }
 
 /* ═══════════════════════════════════════════
-   Footer CTA Banner
-   ═══════════════════════════════════════════ */
-function FooterBanner() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-    }, { threshold: 0.15 });
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-  return (
-    <footer ref={sectionRef} className="relative overflow-hidden bg-zinc-950">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 h-64 w-[600px] rounded-full opacity-15 blur-[120px]"
-        style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }} />
-      <div className="relative border-b border-white/5 py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-6 sm:px-12">
-          <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between sm:items-center">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl max-w-lg"
-              style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.7s ease-out" }}>
-              Schedule a Call to{" "}<span className="text-orange-brand">Enroll Today!</span>
-            </h2>
-            <a href="#schedule"
-              className="group relative inline-flex items-center gap-3 rounded-full bg-orange-brand px-10 py-5 text-lg font-bold text-white shadow-lg shadow-orange-brand/25 transition-all duration-300 hover:bg-orange-brand-hover hover:shadow-xl hover:-translate-y-0.5"
-              style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.7s ease-out 0.15s" }}>
-              Schedule a Call
-              <svg className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="relative py-8">
-        <div className="mx-auto max-w-7xl px-6 sm:px-12">
-          <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-between">
-            <a href="#teach" className="inline-flex items-center gap-2 rounded-full bg-cta px-7 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-cta-hover hover:-translate-y-0.5">
-              Teach with us! Click here
-            </a>
-            <div className="flex items-center gap-6">
-              <a href="#privacy" className="text-sm text-white/40 hover:text-white/70 transition-colors">Privacy Policy</a>
-              <span className="text-white/10">|</span>
-              <span className="text-sm text-white/30">&copy; {new Date().getFullYear()} Volz Method Piano Lessons</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-/* ═══════════════════════════════════════════
    Page
    ═══════════════════════════════════════════ */
 export default function MotivationBlogPost() {
@@ -294,7 +241,7 @@ export default function MotivationBlogPost() {
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-transparent to-zinc-900 z-[1]" />
 
         <div className="relative z-[2] text-center px-6">
-          <span className="inline-block rounded-full bg-orange-brand/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-orange-brand mb-6"
+          <span className="inline-block rounded-full bg-brand/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-brand mb-6"
             style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: "all 0.6s ease-out 0.1s" }}>
             Practice Tips
           </span>
@@ -420,7 +367,6 @@ export default function MotivationBlogPost() {
         </div>
       </article>
 
-      <FooterBanner />
     </main>
   );
 }

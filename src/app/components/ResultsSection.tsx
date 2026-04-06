@@ -70,7 +70,7 @@ export default function ResultsSection() {
 
             {/* Orange accent bar */}
             <div
-              className="mb-8 h-1 w-16 rounded-full bg-orange-brand"
+              className="mb-8 h-1 w-16 rounded-full bg-brand"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "scaleX(1)" : "scaleX(0)",
@@ -140,7 +140,7 @@ export default function ResultsSection() {
               }}
             >
               <a
-                href="#schedule"
+                href="/schedule-call"
                 className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
               >
                 Schedule a Call

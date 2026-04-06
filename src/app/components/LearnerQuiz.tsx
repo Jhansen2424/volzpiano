@@ -155,7 +155,7 @@ export default function LearnerQuiz() {
           <p className="mx-auto max-w-2xl text-lg text-zinc-600">
             Take this quick quiz to discover your musical learning style. We tailor every lesson to how your brain works best.
           </p>
-          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-orange-brand" />
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-brand" />
         </div>
 
         <div
@@ -192,8 +192,8 @@ export default function LearnerQuiz() {
                 <p className="text-zinc-600 mb-6 leading-relaxed">
                   {result.description}
                 </p>
-                <div className="rounded-xl bg-orange-brand/10 border border-orange-brand/20 p-5 mb-8 text-left">
-                  <p className="text-sm font-semibold text-orange-brand mb-1">
+                <div className="rounded-xl bg-brand/10 border border-brand/20 p-5 mb-8 text-left">
+                  <p className="text-sm font-semibold text-brand mb-1">
                     How we teach you:
                   </p>
                   <p className="text-zinc-700 text-sm leading-relaxed">
@@ -202,7 +202,7 @@ export default function LearnerQuiz() {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <a
-                    href="#schedule"
+                    href="/schedule-call"
                     className="inline-block rounded-full bg-cta px-8 py-3 font-bold text-white shadow-lg transition-all duration-200 hover:bg-cta-hover hover:shadow-xl hover:-translate-y-0.5"
                   >
                     Schedule a Lesson
@@ -225,7 +225,7 @@ export default function LearnerQuiz() {
                   </div>
                   <div className="h-2 w-full rounded-full bg-zinc-100">
                     <div
-                      className="h-2 rounded-full bg-orange-brand transition-all duration-500"
+                      className="h-2 rounded-full bg-brand transition-all duration-500"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -240,7 +240,7 @@ export default function LearnerQuiz() {
                     <button
                       key={i}
                       onClick={() => handleAnswer(answer.type)}
-                      className="w-full text-left rounded-xl border-2 border-zinc-200 p-4 text-zinc-700 font-medium transition-all duration-200 hover:border-orange-brand hover:bg-orange-brand/5 hover:text-zinc-900 active:scale-[0.98]"
+                      className="w-full text-left rounded-xl border-2 border-zinc-200 p-4 text-zinc-700 font-medium transition-all duration-200 hover:border-brand hover:bg-brand/5 hover:text-zinc-900 active:scale-[0.98]"
                     >
                       {answer.text}
                     </button>

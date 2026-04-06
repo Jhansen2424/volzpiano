@@ -234,7 +234,7 @@ export default function InteractiveKeyboard() {
           {/* CTA */}
           <div className="mt-8 text-center">
             <a
-              href="#schedule"
+              href="/schedule-call"
               className="inline-block rounded-full bg-cta px-8 py-3.5 font-bold text-white shadow-lg transition-all duration-200 hover:bg-cta-hover hover:shadow-xl hover:-translate-y-0.5"
             >
               Ready for Real Lessons? Schedule a Call

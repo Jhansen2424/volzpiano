@@ -98,7 +98,7 @@ export default function SkillsSection() {
           <p className="mx-auto max-w-2xl text-lg text-zinc-600">
             Learn these four essential skills for playing great piano during our lessons.
           </p>
-          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-orange-brand" />
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-brand" />
         </div>
 
         {/* Accordion Cards */}
@@ -163,7 +163,7 @@ export default function SkillsSection() {
                   }`}
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-brand/90 shadow-md">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand/90 shadow-md">
                       {skill.icon}
                     </div>
                     <h3 className="text-3xl font-extrabold text-white sm:text-4xl">

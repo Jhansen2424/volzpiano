@@ -190,7 +190,7 @@ export default function ScholarshipBanner() {
         </p>
 
         <a
-          href="#schedule"
+          href="/schedule-call"
           className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
         >
           Learn More

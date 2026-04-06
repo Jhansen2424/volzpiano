@@ -7,9 +7,9 @@ const learningPaths = [
   {
     label: "By Ear",
     description: "Learn to hear patterns, play melodies by listening, and develop musical intuition.",
-    color: "from-orange-brand/20 to-orange-brand/5",
-    borderColor: "border-orange-brand/30",
-    iconBg: "bg-orange-brand",
+    color: "from-brand/20 to-brand/5",
+    borderColor: "border-brand/30",
+    iconBg: "bg-brand",
     icon: (
       <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7 text-white">
         <path d="M16 4a9 9 0 0 1 9 9v1a6 6 0 0 1-3 5.2V22a3 3 0 0 1-3 3h-1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -37,9 +37,9 @@ const learningPaths = [
   {
     label: "By Feel",
     description: "Build muscle memory, finger technique, and physical comfort at the keys.",
-    color: "from-orange-brand/20 to-orange-brand/5",
-    borderColor: "border-orange-brand/30",
-    iconBg: "bg-orange-brand",
+    color: "from-brand/20 to-brand/5",
+    borderColor: "border-brand/30",
+    iconBg: "bg-brand",
     icon: (
       <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7 text-white">
         <path d="M18 4v8l4-2v12a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5v-4l-2-1V9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -175,7 +175,7 @@ export default function MethodSection() {
                 }}
               >
                 <a
-                  href="#schedule"
+                  href="/schedule-call"
                   className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
                 >
                   Schedule a Call
@@ -185,7 +185,7 @@ export default function MethodSection() {
                   onClick={() => setVideoOpen(true)}
                   className="group flex items-center gap-3 transition-opacity hover:opacity-80"
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-brand shadow-md transition-transform group-hover:scale-110">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand shadow-md transition-transform group-hover:scale-110">
                     <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
                     </svg>

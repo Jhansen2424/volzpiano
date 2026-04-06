@@ -362,7 +362,7 @@ export default function BrainSection() {
             {started && !showResult && (
               <div className="absolute top-0 left-0 h-1 w-full bg-white/10">
                 <div
-                  className="h-full bg-orange-brand transition-all duration-500 ease-out"
+                  className="h-full bg-brand transition-all duration-500 ease-out"
                   style={{
                     width: `${((currentQ + (answers.length > currentQ ? 1 : 0)) / questions.length) * 100}%`,
                   }}
@@ -374,8 +374,8 @@ export default function BrainSection() {
               {/* Start Screen */}
               {!started && !showResult && (
                 <div className="flex flex-col items-center py-6 text-center">
-                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-brand/15">
-                    <svg viewBox="0 0 24 24" className="h-8 w-8 text-orange-brand" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand/15">
+                    <svg viewBox="0 0 24 24" className="h-8 w-8 text-brand" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                       <path d="M9 19V6l12-3v13M6 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg>
                   </div>
@@ -385,7 +385,7 @@ export default function BrainSection() {
                   </p>
                   <button
                     onClick={() => setStarted(true)}
-                    className="rounded-full bg-orange-brand px-8 py-3.5 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-orange-brand-hover hover:shadow-xl hover:-translate-y-0.5"
+                    className="rounded-full bg-brand px-8 py-3.5 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-brand-hover hover:shadow-xl hover:-translate-y-0.5"
                   >
                     Start the Quiz
                   </button>
@@ -395,7 +395,7 @@ export default function BrainSection() {
               {/* Question */}
               {started && !showResult && (
                 <div>
-                  <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-orange-brand">
+                  <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-brand">
                     Question {currentQ + 1} of {questions.length}
                   </p>
                   <h3
@@ -410,10 +410,10 @@ export default function BrainSection() {
                       <button
                         key={option.label}
                         onClick={() => handleAnswer(option.side)}
-                        className="group rounded-xl border border-white/10 bg-white/5 p-4 text-left text-base font-medium text-white transition-all duration-200 hover:border-orange-brand/50 hover:bg-orange-brand/10 sm:text-lg"
+                        className="group rounded-xl border border-white/10 bg-white/5 p-4 text-left text-base font-medium text-white transition-all duration-200 hover:border-brand/50 hover:bg-brand/10 sm:text-lg"
                       >
                         <span className="flex items-center gap-3">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white/20 text-sm font-bold text-white/50 transition-all duration-200 group-hover:border-orange-brand group-hover:bg-orange-brand group-hover:text-white">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white/20 text-sm font-bold text-white/50 transition-all duration-200 group-hover:border-brand group-hover:bg-brand group-hover:text-white">
                             {option.side === "left" ? "A" : "B"}
                           </span>
                           {option.label}
@@ -427,7 +427,7 @@ export default function BrainSection() {
               {/* Result */}
               {showResult && (
                 <div style={{ animation: "fadeSlideIn 0.5s ease-out" }}>
-                  <p className="mb-1 text-sm font-bold uppercase tracking-wider text-orange-brand">
+                  <p className="mb-1 text-sm font-bold uppercase tracking-wider text-brand">
                     Your child is a
                   </p>
                   <h3 className="mb-1 text-2xl font-extrabold text-white sm:text-3xl">
@@ -439,7 +439,7 @@ export default function BrainSection() {
                     {result.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="rounded-full bg-orange-brand/15 px-4 py-1.5 text-sm font-bold text-orange-brand"
+                        className="rounded-full bg-brand/15 px-4 py-1.5 text-sm font-bold text-brand"
                       >
                         {skill}
                       </span>
@@ -455,7 +455,7 @@ export default function BrainSection() {
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
                     <a
-                      href="#schedule"
+                      href="/schedule-call"
                       className="rounded-full bg-cta px-8 py-3.5 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-cta-hover hover:shadow-xl hover:-translate-y-0.5"
                     >
                       Schedule a Call

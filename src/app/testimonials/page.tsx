@@ -170,7 +170,7 @@ function ReviewCard({
       }}
     >
       {/* Orange quote mark */}
-      <span className="block text-4xl font-bold leading-none text-orange-brand/30 select-none">
+      <span className="block text-4xl font-bold leading-none text-brand/30 select-none">
         {"\u201C"}
       </span>
 
@@ -184,7 +184,7 @@ function ReviewCard({
         {[...Array(5)].map((_, i) => (
           <svg
             key={i}
-            className="h-4 w-4 text-orange-brand"
+            className="h-4 w-4 text-brand"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -202,107 +202,6 @@ function ReviewCard({
   );
 }
 
-/* ═══════════════════════════════════════════
-   Footer CTA Banner
-   ═══════════════════════════════════════════ */
-function FooterBanner() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <footer ref={sectionRef} className="relative overflow-hidden bg-zinc-950">
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 h-64 w-[600px] rounded-full opacity-15 blur-[120px]"
-        style={{
-          background: "radial-gradient(circle, #6343d4 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative border-b border-white/5 py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-6 sm:px-12">
-          <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between sm:items-center">
-            <h2
-              className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl max-w-lg"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(20px)",
-                transition: "all 0.7s ease-out",
-              }}
-            >
-              Schedule a Call to{" "}
-              <span className="text-orange-brand">Enroll Today!</span>
-            </h2>
-
-            <a
-              href="#schedule"
-              className="group relative inline-flex items-center gap-3 rounded-full bg-orange-brand px-10 py-5 text-lg font-bold text-white shadow-lg shadow-orange-brand/25 transition-all duration-300 hover:bg-orange-brand-hover hover:shadow-xl hover:shadow-orange-brand/30 hover:-translate-y-0.5"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(20px)",
-                transition: "all 0.7s ease-out 0.15s",
-              }}
-            >
-              Schedule a Call
-              <svg
-                className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative py-8">
-        <div className="mx-auto max-w-7xl px-6 sm:px-12">
-          <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-between">
-            <a
-              href="#teach"
-              className="inline-flex items-center gap-2 rounded-full bg-cta px-7 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-cta-hover hover:-translate-y-0.5"
-            >
-              Teach with us! Click here
-            </a>
-
-            <div className="flex items-center gap-6">
-              <a
-                href="#privacy"
-                className="text-sm text-white/40 transition-colors duration-200 hover:text-white/70"
-              >
-                Privacy Policy
-              </a>
-              <span className="text-white/10">|</span>
-              <span className="text-sm text-white/30">
-                &copy; {new Date().getFullYear()} Volz Method Piano Lessons
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 /* ═══════════════════════════════════════════
    Page
@@ -343,7 +242,7 @@ export default function TestimonialsPage() {
               {[...Array(5)].map((_, i) => (
                 <svg
                   key={i}
-                  className="h-5 w-5 text-orange-brand"
+                  className="h-5 w-5 text-brand"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -394,8 +293,6 @@ export default function TestimonialsPage() {
         </div>
       </section>
 
-      {/* ── CTA Banner + Footer ── */}
-      <FooterBanner />
     </main>
   );
 }

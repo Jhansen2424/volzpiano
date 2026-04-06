@@ -250,7 +250,7 @@ function MethodBlock({
               }}
             >
               <a
-                href="#schedule"
+                href="/schedule-call"
                 className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-cta-hover hover:shadow-xl hover:-translate-y-0.5"
               >
                 Schedule a Call

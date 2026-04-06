@@ -122,7 +122,7 @@ export default function HeroSection() {
               {[...Array(5)].map((_, i) => (
                 <svg
                   key={i}
-                  className="h-5 w-5 text-orange-brand"
+                  className="h-5 w-5 text-brand"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -149,7 +149,7 @@ export default function HeroSection() {
             }}
           >
             <a
-              href="#schedule"
+              href="/schedule-call"
               className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
             >
               Schedule a Call
