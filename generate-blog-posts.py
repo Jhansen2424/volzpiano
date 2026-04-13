@@ -9,9 +9,15 @@ import os
 import re
 import html
 
-CSV_PATH = "c:/Users/Hanse/Desktop/volzpiano-blog-posts.csv"
-BLOG_DIR = "c:/Users/Hanse/Desktop/volzpiano/src/app/blog"
+_PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.environ.get(
+    "VOLZ_BLOG_CSV",
+    os.path.join(os.path.dirname(_PROJECT_ROOT), "volzpiano-blog-posts.csv"),
+)
+BLOG_DIR = os.path.join(_PROJECT_ROOT, "src", "app", "blog")
 INDEX_PATH = os.path.join(BLOG_DIR, "page.tsx")
+SLUGS_JSON_PATH = os.path.join(_PROJECT_ROOT, "src", "blog-slugs.json")
+POSTS_JSON_PATH = os.path.join(_PROJECT_ROOT, "src", "content", "blog-posts.json")
 
 # Posts that already have custom hand-built pages — skip them
 SKIP_SLUGS = {
@@ -66,7 +72,163 @@ def escape_for_jsx_text(s: str) -> str:
     return s
 
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = _PROJECT_ROOT
+
+SITE_URL = "https://volzpiano.com"
+MAX_DESCRIPTION_LENGTH = 160  # SEO meta description sweet spot
+
+
+def escape_for_ts_double_quoted(s: str) -> str:
+    """Escape a string for use inside a TypeScript double-quoted string literal.
+
+    Order matters: backslash first, then quotes and control characters.
+    """
+    s = s.replace("\\", "\\\\")
+    s = s.replace('"', '\\"')
+    s = s.replace("\n", " ")
+    s = s.replace("\r", " ")
+    s = s.replace("\t", " ")
+    return s
+
+
+def build_meta_description(raw_excerpt: str, raw_content: str) -> str:
+    """Produce a clean SEO meta description capped near MAX_DESCRIPTION_LENGTH.
+
+    Strips HTML tags, shortcodes, and extra whitespace; falls back to the
+    first chunk of body content if no excerpt is provided.
+    """
+    source = raw_excerpt or raw_content or ""
+    # Strip shortcodes and HTML tags
+    source = re.sub(r"\[/?[a-z_]+(?:\s[^\]]+)?\]", "", source, flags=re.IGNORECASE)
+    source = re.sub(r"<!--[\s\S]*?-->", "", source)
+    source = re.sub(r"<[^>]+>", "", source)
+    source = html.unescape(source)
+    source = re.sub(r"\s+", " ", source).strip()
+
+    if len(source) <= MAX_DESCRIPTION_LENGTH:
+        return source
+    # Truncate at the last word boundary before the limit and add an ellipsis
+    cutoff = source.rfind(" ", 0, MAX_DESCRIPTION_LENGTH - 1)
+    if cutoff < 80:
+        cutoff = MAX_DESCRIPTION_LENGTH - 1
+    return source[:cutoff].rstrip(",.;: ") + "…"
+
+
+def normalize_iso_date(date_str: str) -> str:
+    """Best-effort conversion to ISO 8601 (YYYY-MM-DD). Empty string on failure."""
+    if not date_str:
+        return ""
+    try:
+        from datetime import datetime
+        dt = datetime.strptime(date_str.strip(), "%Y-%m-%d %H:%M:%S")
+        return dt.date().isoformat()
+    except Exception:
+        # Try just a date
+        try:
+            from datetime import datetime
+            dt = datetime.strptime(date_str.strip()[:10], "%Y-%m-%d")
+            return dt.date().isoformat()
+        except Exception:
+            return ""
+
+
+def make_layout_tsx(
+    slug: str,
+    title: str,
+    excerpt: str,
+    content_html: str,
+    date_str: str,
+    image_path: str | None,
+) -> str:
+    """Generate a server-side layout.tsx with metadata + Article JSON-LD."""
+    description = build_meta_description(excerpt, content_html)
+    iso_date = normalize_iso_date(date_str)
+
+    title_ts = escape_for_ts_double_quoted(title)
+    desc_ts = escape_for_ts_double_quoted(description)
+    slug_ts = escape_for_ts_double_quoted(slug)
+
+    # Image: relative path is fine for OG (metadataBase resolves it),
+    # but the JSON-LD object needs an absolute URL
+    image_relative = image_path or ""
+    image_absolute = f"{SITE_URL}{image_path}" if image_path else ""
+    image_ts = escape_for_ts_double_quoted(image_relative)
+    image_abs_ts = escape_for_ts_double_quoted(image_absolute)
+
+    image_meta_block = (
+        f'    images: ["{image_ts}"],\n' if image_relative else ""
+    )
+    image_field_for_jsonld = (
+        f'  image: "{image_abs_ts}",\n' if image_absolute else ""
+    )
+    published_field = (
+        f'  datePublished: "{iso_date}",\n  dateModified: "{iso_date}",\n'
+        if iso_date
+        else ""
+    )
+    og_published_field = (
+        f'    publishedTime: "{iso_date}",\n' if iso_date else ""
+    )
+
+    return f'''import type {{ Metadata }} from "next";
+import {{ serializeJsonLd }} from "@/lib/json-ld";
+
+const TITLE = "{title_ts}";
+const DESCRIPTION = "{desc_ts}";
+const SLUG = "{slug_ts}";
+const CANONICAL = `/${{SLUG}}`;
+
+export const metadata: Metadata = {{
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: {{ canonical: CANONICAL }},
+  openGraph: {{
+    title: TITLE,
+    description: DESCRIPTION,
+    url: CANONICAL,
+    type: "article",
+{og_published_field}{image_meta_block}  }},
+  twitter: {{
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+{image_meta_block}  }},
+}};
+
+const articleJsonLd = {{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: TITLE,
+  description: DESCRIPTION,
+{image_field_for_jsonld}{published_field}  author: {{
+    "@type": "Organization",
+    name: "Volz Method Piano Lessons",
+    url: "{SITE_URL}",
+  }},
+  publisher: {{
+    "@type": "Organization",
+    name: "Volz Method Piano Lessons",
+    url: "{SITE_URL}",
+    logo: {{
+      "@type": "ImageObject",
+      url: "{SITE_URL}/icon.svg",
+    }},
+  }},
+  mainEntityOfPage: `{SITE_URL}${{CANONICAL}}`,
+}};
+
+export default function Layout({{ children }}: {{ children: React.ReactNode }}) {{
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{{{ __html: serializeJsonLd(articleJsonLd) }}}}
+      />
+      {{children}}
+    </>
+  );
+}}
+'''
 
 
 def find_local_image(slug: str) -> str | None:
@@ -111,20 +273,24 @@ def make_page_tsx(title: str, content_html: str, category: str, date_str: str, i
       {{/* Featured Image */}}
       <div className="relative mx-auto max-w-4xl px-6 -mt-12 z-10 sm:px-12">
         <AnimatedSection>
-          <div className="overflow-hidden rounded-2xl shadow-2xl">
-            <img
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl h-64 sm:h-80 lg:h-96">
+            <Image
               src="{image_path}"
               alt="{escaped_alt}"
-              className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 1024px"
+              className="object-cover"
             />
           </div>
         </AnimatedSection>
       </div>"""
 
+    image_import = 'import Image from "next/image";\n' if image_path else ""
     return f'''"use client";
 
 import {{ useEffect, useRef, useState }} from "react";
-import Link from "next/link";
+{image_import}import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 
 /* Animated wrapper */
@@ -287,6 +453,7 @@ def make_index_tsx(all_posts: list[dict]) -> str:
 
     return f'''"use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {{ useEffect, useRef, useState }} from "react";
 
@@ -334,16 +501,17 @@ function PostCard({{
       }}}}
     >
       <Link
-        href={{`/blog/${{post.slug}}`}}
+        href={{`/${{post.slug}}`}}
         className="group block rounded-2xl border border-zinc-200 bg-white overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
       >
         {{post.image && (
           <div className="relative h-48 w-full overflow-hidden">
-            <img
+            <Image
               src={{post.image}}
-              alt=""
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              loading="lazy"
+              alt={{post.title}}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         )}}
@@ -410,7 +578,16 @@ export default function BlogIndexPage() {{
   const totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE);
   const paged = filtered.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
 
-  useEffect(() => {{ setPage(1); }}, [searchTerm, selectedTag]);
+  // Reset to page 1 whenever the filter inputs change. Derived during render
+  // (React 19 guidance) instead of an effect — avoids cascading rerenders.
+  const [prevFilters, setPrevFilters] = useState({{ searchTerm, selectedTag }});
+  if (
+    prevFilters.searchTerm !== searchTerm ||
+    prevFilters.selectedTag !== selectedTag
+  ) {{
+    setPage(1);
+    setPrevFilters({{ searchTerm, selectedTag }});
+  }}
 
   const goToPage = (p: number) => {{
     setPage(p);
@@ -430,7 +607,7 @@ export default function BlogIndexPage() {{
 
         <div className="relative z-[2] text-center px-6">
           <h1
-            className="text-5xl font-extrabold text-white sm:text-6xl lg:text-7xl"
+            className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl"
             style={{{{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(30px)",
@@ -576,6 +753,7 @@ def main():
     created = 0
     skipped = 0
     all_posts_for_index = []
+    all_posts_for_dynamic = []
 
     for row in rows:
         slug = row["Slug"].strip()
@@ -599,42 +777,88 @@ def main():
             plain = re.sub(r"\s+", " ", plain)
             excerpt_raw = plain[:200].rsplit(" ", 1)[0] + "..." if len(plain) > 200 else plain
 
+        local_image = find_local_image(slug)
+
+        # Format display date once
+        try:
+            from datetime import datetime
+            dt = datetime.strptime(date_str.strip(), "%Y-%m-%d %H:%M:%S")
+            formatted_date = dt.strftime("%B %d, %Y")
+        except Exception:
+            formatted_date = date_str.strip() if date_str.strip() else ""
+
+        # Resolve category for tag display
+        raw_cat = category.split(",")[0].strip() if category else "Blog"
+        raw_cat = raw_cat.split("|")[0].strip()
+        if ">" in raw_cat:
+            raw_cat = raw_cat.split(">")[-1].strip()
+        if raw_cat == "Uncategorized":
+            raw_cat = "Blog"
+
         all_posts_for_index.append({
             "slug": slug,
             "title": title,
             "excerpt": excerpt_raw,
             "category": category,
             "date": date_str,
-            "image": find_local_image(slug) or "",
+            "image": local_image or "",
         })
 
+        # Hand-built posts have their own page.tsx + layout.tsx checked into
+        # the repo. Don't shadow them via the dynamic route or the JSON.
         if slug in SKIP_SLUGS:
             skipped += 1
             continue
 
-        post_dir = os.path.join(BLOG_DIR, slug)
-        os.makedirs(post_dir, exist_ok=True)
-
-        local_image = find_local_image(slug)
-        page_content = make_page_tsx(title, content, category, date_str, local_image)
-        page_path = os.path.join(post_dir, "page.tsx")
-
-        with open(page_path, "w", encoding="utf-8") as f:
-            f.write(page_content)
+        all_posts_for_dynamic.append({
+            "slug": slug,
+            "title": title,
+            "description": build_meta_description(excerpt_raw, content),
+            "category": raw_cat,
+            "date": date_str,
+            "dateIso": normalize_iso_date(date_str),
+            "formattedDate": formatted_date,
+            "image": local_image or "",
+            "content": clean_wp_content(content),
+        })
 
         created += 1
 
     # Sort posts by date descending (newest first)
     all_posts_for_index.sort(key=lambda p: p.get("date", ""), reverse=True)
+    all_posts_for_dynamic.sort(key=lambda p: p.get("date", ""), reverse=True)
 
     # Generate index page
     index_content = make_index_tsx(all_posts_for_index)
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
         f.write(index_content)
 
-    print(f"Created {created} new blog post pages")
-    print(f"Skipped {skipped} existing custom pages")
+    # Write the consolidated content JSON consumed by the dynamic [slug] route
+    import json
+    os.makedirs(os.path.dirname(POSTS_JSON_PATH), exist_ok=True)
+    with open(POSTS_JSON_PATH, "w", encoding="utf-8") as f:
+        json.dump(all_posts_for_dynamic, f, ensure_ascii=False)
+
+    # Regenerate blog-slugs.json so the sitemap stays in sync. Each entry is
+    # { slug, date } so the sitemap can emit a real lastModified date.
+    entries = [
+        {"slug": p["slug"], "date": normalize_iso_date(p.get("date", ""))}
+        for p in all_posts_for_index
+    ]
+    seen = {e["slug"] for e in entries}
+    for hand_slug in SKIP_SLUGS:
+        if hand_slug in seen:
+            continue
+        if os.path.isdir(os.path.join(BLOG_DIR, hand_slug)):
+            entries.append({"slug": hand_slug, "date": ""})
+            seen.add(hand_slug)
+    with open(SLUGS_JSON_PATH, "w", encoding="utf-8") as f:
+        json.dump(entries, f)
+
+    print(f"Wrote {created} posts to blog-posts.json (dynamic route)")
+    print(f"Skipped {skipped} hand-built posts")
     print(f"Updated blog index with {len(all_posts_for_index)} posts")
+    print(f"Updated blog-slugs.json with {len(entries)} slugs")
 
 
 if __name__ == "__main__":

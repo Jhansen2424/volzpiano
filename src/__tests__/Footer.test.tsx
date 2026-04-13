@@ -58,7 +58,7 @@ describe("Footer", () => {
   it("renders Privacy Policy link pointing to /privacy-policy", () => {
     render(<Footer />);
     const link = screen.getByRole("link", { name: /privacy policy/i });
-    expect(link).toHaveAttribute("href", "/privacy-policy");
+    expect(link).toHaveAttribute("href", "/privacy-policy-2");
   });
 
   it("renders the copyright notice with current year", () => {

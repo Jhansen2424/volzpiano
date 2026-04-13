@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
+import { useInView } from "@/lib/use-in-view";
 
 const questions = [
   {
@@ -268,23 +270,8 @@ export default function BrainSection() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<("left" | "right")[]>([]);
   const [showResult, setShowResult] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [started, setStarted] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [sectionRef, visible] = useInView<HTMLElement>({ threshold: 0.1 });
 
   const leftCount = answers.filter((a) => a === "left").length;
   const rightCount = answers.filter((a) => a === "right").length;
@@ -454,12 +441,12 @@ export default function BrainSection() {
                     {result.cta}
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
-                    <a
+                    <Link
                       href="/schedule-call"
                       className="rounded-full bg-cta px-8 py-3.5 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-cta-hover hover:shadow-xl hover:-translate-y-0.5"
                     >
                       Schedule a Call
-                    </a>
+                    </Link>
                     <button
                       onClick={reset}
                       className="rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold text-white/60 transition-all duration-200 hover:border-white/40 hover:text-white"

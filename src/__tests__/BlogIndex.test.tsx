@@ -87,12 +87,14 @@ describe("BlogIndexPage", () => {
     expect(page2Button.className).toContain("bg-brand");
   });
 
-  it("post cards link to /blog/[slug]", () => {
+  it("post cards link to root-level /[slug] (not /blog/[slug])", () => {
     render(<BlogIndexPage />);
     const readLinks = screen.getAllByText("Read article");
     readLinks.forEach((link) => {
       const anchor = link.closest("a");
-      expect(anchor?.getAttribute("href")).toMatch(/^\/blog\//);
+      const href = anchor?.getAttribute("href") || "";
+      expect(href).toMatch(/^\//);
+      expect(href).not.toMatch(/^\/blog\//);
     });
   });
 });

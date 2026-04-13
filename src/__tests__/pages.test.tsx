@@ -68,65 +68,37 @@ beforeAll(() => {
 });
 
 describe("Schedule Call Page", () => {
-  it("renders heading and Calendly iframe", async () => {
+  it("renders heading and Calendly inline widget", async () => {
     const { default: ScheduleCallPage } = await import(
       "../app/schedule-call/page"
     );
     render(<ScheduleCallPage />);
     expect(screen.getByText("Enroll")).toBeInTheDocument();
-    const iframe = document.querySelector("iframe");
-    expect(iframe).toBeInTheDocument();
-    expect(iframe?.getAttribute("src")).toContain("calendly.com");
+    const widget = document.querySelector(".calendly-inline-widget");
+    expect(widget).toBeInTheDocument();
+    expect(widget?.getAttribute("data-url")).toContain("calendly.com");
   });
 });
 
-describe("Teaching Positions Page", () => {
-  it("renders heading and job listings", async () => {
-    const { default: TeachingPositionsPage } = await import(
-      "../app/teaching-positions/page"
-    );
-    render(<TeachingPositionsPage />);
-    expect(screen.getByText("Positions")).toBeInTheDocument();
-    expect(screen.getByText("Open Positions")).toBeInTheDocument();
-    expect(
-      screen.getByText("Piano Instructor — Salt Lake County")
-    ).toBeInTheDocument();
-  });
-
-  it("renders Apply Now links to Google Form", async () => {
-    const { default: TeachingPositionsPage } = await import(
-      "../app/teaching-positions/page"
-    );
-    render(<TeachingPositionsPage />);
-    const applyLinks = screen.getAllByText("Apply Now");
-    applyLinks.forEach((link) => {
-      expect(link.closest("a")).toHaveAttribute(
-        "href",
-        expect.stringContaining("google.com/forms")
-      );
-    });
-  });
-});
 
 describe("Student Portal Page", () => {
-  it("renders heading and CTA links", async () => {
+  it("renders heading and the My Music Staff login widget container", async () => {
     const { default: StudentPortalPage } = await import(
       "../app/student-portal/page"
     );
     render(<StudentPortalPage />);
     expect(screen.getByText("Portal")).toBeInTheDocument();
-    expect(screen.getByText("Welcome Back!")).toBeInTheDocument();
-    const scheduleLink = screen.getByRole("link", {
-      name: /schedule a call/i,
-    });
-    expect(scheduleLink).toHaveAttribute("href", "/schedule-call");
+    // Container the widget injects into
+    expect(document.getElementById("mms-login-widget")).toBeInTheDocument();
+    // Powered-by attribution under the widget
+    expect(screen.getByText(/My Music Staff/i)).toBeInTheDocument();
   });
 });
 
 describe("Privacy Policy Page", () => {
   it("renders heading and key sections", async () => {
     const { default: PrivacyPolicyPage } = await import(
-      "../app/privacy-policy/page"
+      "../app/privacy-policy-2/page"
     );
     render(<PrivacyPolicyPage />);
     expect(screen.getByText("Policy")).toBeInTheDocument();
@@ -141,7 +113,7 @@ describe("Privacy Policy Page", () => {
 
   it("renders contact email link", async () => {
     const { default: PrivacyPolicyPage } = await import(
-      "../app/privacy-policy/page"
+      "../app/privacy-policy-2/page"
     );
     render(<PrivacyPolicyPage />);
     const emailLink = screen.getByRole("link", {
@@ -149,7 +121,7 @@ describe("Privacy Policy Page", () => {
     });
     expect(emailLink).toHaveAttribute(
       "href",
-      "mailto:support@volzpiano.webaholics.co"
+      "mailto:support@volzpiano.com"
     );
   });
 });

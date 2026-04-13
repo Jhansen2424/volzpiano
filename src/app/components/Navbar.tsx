@@ -5,17 +5,16 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const topLinks = [
-  { href: "/teaching-positions", label: "Teaching Positions" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/blog", label: "Blog" },
-  { href: "/digital-piano-deal", label: "Digital Piano Deal" },
+  { href: "/digital-piano", label: "Digital Piano Deal" },
   { href: "/student-portal", label: "Student Portal" },
 ];
 
 const volzMethodLinks = [
-  { href: "/volz-method", label: "The Method" },
-  { href: "/volz-method/how-it-works", label: "How It Works" },
-  { href: "/volz-method/core-values", label: "Core Values" },
+  { href: "/volz-method-best-piano-teaching-medthod", label: "The Method" },
+  { href: "/pricing", label: "How It Works" },
+  { href: "/core-values", label: "Core Values" },
 ];
 
 export default function Navbar() {
@@ -24,7 +23,10 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const isVolzActive = pathname.startsWith("/volz-method");
+  const isVolzActive =
+    pathname === "/volz-method-best-piano-teaching-medthod" ||
+    pathname === "/pricing" ||
+    pathname === "/core-values";
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -39,10 +41,19 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 z-40 w-full backdrop-blur-md border-b border-white/10" style={{ background: "linear-gradient(135deg, rgba(26,16,53,0.9) 0%, rgba(45,27,105,0.9) 50%, rgba(99,67,212,0.9) 100%)" }}>
+      {/* ── Scholarship banner ── */}
+      <div className="w-full bg-accent text-white border-b border-white/10">
+        <div className="mx-auto flex max-w-[90rem] items-center justify-center gap-2 px-4 py-1.5 text-center text-[11px] font-bold uppercase tracking-wider sm:text-xs">
+          <svg className="h-3.5 w-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M10 1l2.928 5.934 6.546.952-4.737 4.617 1.118 6.515L10 15.897l-5.855 3.121 1.118-6.515L.526 7.886l6.546-.952L10 1z" clipRule="evenodd" />
+          </svg>
+          We Accept the Utah Fits All Scholarship
+        </div>
+      </div>
       <div className="mx-auto flex max-w-[90rem] items-center px-4 py-4 lg:px-8">
         {/* Logo — fixed width so center nav is truly centered */}
         <Link href="/" className="shrink-0 text-xl font-extrabold tracking-tight text-white mr-8">
-          Volz<span className="text-orange-brand">Piano</span>
+          Volz<span className="text-accent">Piano</span>
         </Link>
 
         {/* Desktop links — centered */}

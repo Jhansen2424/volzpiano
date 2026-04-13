@@ -37,7 +37,6 @@ describe("Navbar", () => {
     expect(screen.getAllByText("Testimonials").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Blog").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Digital Piano Deal").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Teaching Positions").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Student Portal").length).toBeGreaterThanOrEqual(1);
   });
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -1702,16 +1703,17 @@ function PostCard({
       }}
     >
       <Link
-        href={`/blog/${post.slug}`}
+        href={`/${post.slug}`}
         className="group block rounded-2xl border border-zinc-200 bg-white overflow-hidden shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
       >
         {post.image && (
           <div className="relative h-48 w-full overflow-hidden">
-            <img
+            <Image
               src={post.image}
-              alt=""
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              loading="lazy"
+              alt={post.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         )}
@@ -1778,7 +1780,16 @@ export default function BlogIndexPage() {
   const totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE);
   const paged = filtered.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
 
-  useEffect(() => { setPage(1); }, [searchTerm, selectedTag]);
+  // Reset to page 1 whenever the filter inputs change. Derived during render
+  // (React 19 guidance) instead of an effect — avoids cascading rerenders.
+  const [prevFilters, setPrevFilters] = useState({ searchTerm, selectedTag });
+  if (
+    prevFilters.searchTerm !== searchTerm ||
+    prevFilters.selectedTag !== selectedTag
+  ) {
+    setPage(1);
+    setPrevFilters({ searchTerm, selectedTag });
+  }
 
   const goToPage = (p: number) => {
     setPage(p);
@@ -1798,7 +1809,7 @@ export default function BlogIndexPage() {
 
         <div className="relative z-[2] text-center px-6">
           <h1
-            className="text-5xl font-extrabold text-white sm:text-6xl lg:text-7xl"
+            className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(30px)",

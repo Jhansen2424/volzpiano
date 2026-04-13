@@ -11,14 +11,21 @@ const VALID_ROUTES = [
   "/",
   "/blog",
   "/testimonials",
-  "/digital-piano-deal",
-  "/volz-method",
-  "/volz-method/how-it-works",
-  "/volz-method/core-values",
+  "/digital-piano",
+  "/volz-method-best-piano-teaching-medthod",
+  "/pricing",
+  "/core-values",
   "/schedule-call",
-  "/teaching-positions",
   "/student-portal",
-  "/privacy-policy",
+  "/privacy-policy-2",
+  "/about-us",
+  "/contact-us",
+  "/jobs",
+  "/teaching-positions",
+  "/shop",
+  "/cart",
+  "/checkout",
+  "/my-account",
 ];
 
 function getAllTsxFiles(dir: string): string[] {
@@ -49,23 +56,29 @@ describe("Link integrity checks", () => {
   for (const route of [
     "page.tsx",
     "schedule-call/page.tsx",
-    "teaching-positions/page.tsx",
     "student-portal/page.tsx",
-    "privacy-policy/page.tsx",
+    "privacy-policy-2/page.tsx",
     "testimonials/page.tsx",
-    "digital-piano-deal/page.tsx",
-    "volz-method/page.tsx",
-    "volz-method/how-it-works/page.tsx",
-    "volz-method/core-values/page.tsx",
+    "digital-piano/page.tsx",
+    "volz-method-best-piano-teaching-medthod/page.tsx",
+    "pricing/page.tsx",
+    "core-values/page.tsx",
+    "about-us/page.tsx",
+    "contact-us/page.tsx",
+    "jobs/page.tsx",
+    "teaching-positions/page.tsx",
   ]) {
     const fp = path.join(SRC_DIR, route);
     if (fs.existsSync(fp)) filesToCheck.push(fp);
   }
 
-  it("should not contain href=\"#schedule\" outside how-it-works", () => {
+  it("should not contain href=\"#schedule\" outside the pricing page", () => {
     const violations: string[] = [];
     for (const file of filesToCheck) {
-      if (file.includes("how-it-works")) continue;
+      // The pricing page (formerly /volz-method/how-it-works) has an
+      // intentional same-page #schedule anchor that scrolls to the embedded
+      // Calendly section.
+      if (file.includes("pricing")) continue;
       const content = fs.readFileSync(file, "utf-8");
       if (content.includes('href="#schedule"')) {
         violations.push(path.relative(SRC_DIR, file));
@@ -126,13 +139,18 @@ describe("Link integrity checks", () => {
 describe("SEO metadata checks", () => {
   const routesWithLayouts = [
     "schedule-call",
-    "teaching-positions",
     "student-portal",
-    "privacy-policy",
+    "privacy-policy-2",
     "testimonials",
-    "digital-piano-deal",
-    "volz-method",
+    "digital-piano",
+    "volz-method-best-piano-teaching-medthod",
+    "pricing",
+    "core-values",
     "blog",
+    "about-us",
+    "contact-us",
+    "jobs",
+    "teaching-positions",
   ];
 
   it.each(routesWithLayouts)(
@@ -148,69 +166,30 @@ describe("SEO metadata checks", () => {
   );
 });
 
-describe("Blog post template checks", () => {
-  it("generated blog posts should import DOMPurify", () => {
-    // Check a sample generated blog post
-    const blogDir = path.join(SRC_DIR, "blog");
-    const dirs = fs.readdirSync(blogDir, { withFileTypes: true });
-    const sampleDir = dirs.find(
-      (d) =>
-        d.isDirectory() &&
-        d.name !== "best-age-to-start-piano-lessons" &&
-        d.name !== "how-to-motivate-your-child-to-practice-piano" &&
-        d.name !== "piano-lessons-vs-apps"
-    );
-    expect(sampleDir).toBeDefined();
-    const pagePath = path.join(blogDir, sampleDir!.name, "page.tsx");
+describe("Dynamic [slug] blog route checks", () => {
+  it("the dynamic [slug] route uses DOMPurify on blog content", () => {
+    const pagePath = path.join(SRC_DIR, "[slug]", "page.tsx");
     const content = fs.readFileSync(pagePath, "utf-8");
     expect(content).toContain("isomorphic-dompurify");
     expect(content).toContain("DOMPurify.sanitize");
   });
 
-  it("generated blog posts should not contain HTML comments", () => {
-    const blogDir = path.join(SRC_DIR, "blog");
-    const dirs = fs.readdirSync(blogDir, { withFileTypes: true });
-    // Check 5 random generated posts
-    const generatedDirs = dirs
-      .filter(
-        (d) =>
-          d.isDirectory() &&
-          d.name !== "best-age-to-start-piano-lessons" &&
-          d.name !== "how-to-motivate-your-child-to-practice-piano" &&
-          d.name !== "piano-lessons-vs-apps"
-      )
-      .slice(0, 5);
-
-    for (const dir of generatedDirs) {
-      const pagePath = path.join(blogDir, dir.name, "page.tsx");
-      const content = fs.readFileSync(pagePath, "utf-8");
-      // Should not have HTML comments in the content template literal
-      // (JSX comments {/* */} are fine)
-      const templateMatch = content.match(/const content = `([\s\S]*?)`;/);
-      if (templateMatch) {
-        expect(templateMatch[1]).not.toMatch(/<!--/);
-      }
+  it("blog-posts.json content has no leftover HTML comments", () => {
+    const jsonPath = path.join(SRC_DIR, "..", "content", "blog-posts.json");
+    const posts = JSON.parse(fs.readFileSync(jsonPath, "utf-8")) as Array<{ content: string }>;
+    for (const post of posts.slice(0, 5)) {
+      expect(post.content).not.toMatch(/<!--/);
     }
   });
 
-  it("generated blog posts with images should have alt text", () => {
-    const blogDir = path.join(SRC_DIR, "blog");
-    const dirs = fs.readdirSync(blogDir, { withFileTypes: true });
-    const generatedDirs = dirs
-      .filter(
-        (d) =>
-          d.isDirectory() &&
-          d.name !== "best-age-to-start-piano-lessons" &&
-          d.name !== "how-to-motivate-your-child-to-practice-piano" &&
-          d.name !== "piano-lessons-vs-apps"
-      )
-      .slice(0, 5);
-
-    for (const dir of generatedDirs) {
-      const pagePath = path.join(blogDir, dir.name, "page.tsx");
-      const content = fs.readFileSync(pagePath, "utf-8");
-      if (content.includes("blog-images")) {
-        expect(content).toMatch(/alt="Featured image for/);
+  it("blog-posts.json content with images has alt text", () => {
+    const jsonPath = path.join(SRC_DIR, "..", "content", "blog-posts.json");
+    const posts = JSON.parse(fs.readFileSync(jsonPath, "utf-8")) as Array<{
+      content: string;
+    }>;
+    for (const post of posts.slice(0, 5)) {
+      if (post.content.includes("<img")) {
+        expect(post.content).toMatch(/alt="/);
       }
     }
   });

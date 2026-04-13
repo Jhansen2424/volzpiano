@@ -7,8 +7,16 @@
   --color-cream-dark: #f3ede4;
   --color-blush: #fdf2ee;
   --color-warm-gray: #f5f0ea;
+  /* Amber accent (used for testimonial stars and a few highlights) */
   --color-brand: #f59e0b;
   --color-brand-hover: #d97706;
+  /* Primary purple accent — historically named "orange-brand" before a brand
+     refresh swapped the color but kept the variable name. Both names are
+     exported as Tailwind utilities to keep the codebase migration painless. */
+  --color-accent: #6343d4;
+  --color-accent-hover: #5235b8;
+  /* Legacy aliases — keep so existing classes still resolve. New code should
+     prefer the `-accent` names. */
   --color-orange-brand: #6343d4;
   --color-orange-brand-hover: #5235b8;
   --color-cta: #6343d4;
@@ -19,6 +27,24 @@
 body {
   background: var(--color-background);
   color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Gentle bob for the homepage hero cartoon car — feels alive without being
+   distracting. Combined with a hint of horizontal jiggle to suggest motion. */
+@keyframes heroDrive {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-6px) rotate(-0.4deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-8px) rotate(0.4deg);
+  }
 }
 
 @keyframes fadeScaleIn {

@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
 import VideoModal from "./VideoModal";
+import { useInView } from "@/lib/use-in-view";
 
 const learningPaths = [
   {
@@ -50,23 +52,8 @@ const learningPaths = [
 ];
 
 export default function MethodSection() {
-  const [visible, setVisible] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [sectionRef, visible] = useInView<HTMLElement>();
 
   return (
     <>
@@ -174,12 +161,12 @@ export default function MethodSection() {
                   transition: "all 0.7s ease-out 0.65s",
                 }}
               >
-                <a
+                <Link
                   href="/schedule-call"
                   className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
                 >
                   Schedule a Call
-                </a>
+                </Link>
 
                 <button
                   onClick={() => setVideoOpen(true)}

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import VideoModal from "./VideoModal";
+import { useInView } from "@/lib/use-in-view";
 
 const testimonials = [
   {
@@ -39,23 +40,8 @@ const videos = [
 ];
 
 export default function TestimonialsSection() {
-  const [visible, setVisible] = useState(false);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [sectionRef, visible] = useInView<HTMLElement>();
 
   return (
     <>

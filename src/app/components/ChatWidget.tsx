@@ -35,19 +35,19 @@ const FOLLOW_UP_ACTIONS: QuickAction[] = [
 // ─── Page-Specific Proactive Messages ────────────────────────────────────────
 
 function getProactiveMessage(pathname: string): string {
-  if (pathname === "/volz-method/how-it-works") {
+  if (pathname === "/pricing") {
     return "Looking at how lessons work? I can walk you through everything \u2014 pricing, scheduling, or what a first lesson looks like!";
   }
   if (pathname === "/testimonials") {
     return "Love hearing from other families? I can help you get started or answer any questions!";
   }
-  if (pathname === "/digital-piano-deal") {
+  if (pathname === "/digital-piano") {
     return "Looking for a digital piano? I can help you figure out what you need to get started!";
   }
   if (pathname.startsWith("/blog/")) {
     return "Great read! Have questions about starting piano lessons for your child? I\u2019m here to help.";
   }
-  if (pathname === "/volz-method" || pathname === "/volz-method/core-values") {
+  if (pathname === "/volz-method-best-piano-teaching-medthod" || pathname === "/core-values") {
     return "Curious about the Volz Method? I can explain how it works or help you schedule a free call!";
   }
   return "Hi! I\u2019m here to help you find the perfect piano lessons for your child. What would you like to know?";
@@ -73,7 +73,7 @@ function renderMarkdownLinks(text: string): React.ReactNode[] {
         href={href}
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noopener noreferrer" : undefined}
-        className="underline text-orange-brand hover:text-orange-brand-hover font-semibold transition-colors duration-150"
+        className="underline text-accent hover:text-accent-hover font-semibold transition-colors duration-150"
       >
         {linkText}
       </a>
@@ -122,7 +122,7 @@ function QuickActions({
           key={action.label}
           onClick={() => onSelect(action.message)}
           disabled={disabled}
-          className="rounded-full border border-orange-brand/30 bg-orange-brand/10 px-3 py-1.5 text-xs font-semibold text-orange-brand transition-all duration-200 hover:bg-orange-brand/20 hover:border-orange-brand/50 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 cursor-pointer"
+          className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1.5 text-xs font-semibold text-accent transition-all duration-200 hover:bg-accent/20 hover:border-accent/50 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 cursor-pointer"
         >
           {action.label}
         </button>
@@ -151,6 +151,12 @@ export default function ChatWidget() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Abort any in-flight chat fetch when the widget unmounts so we don't keep
+  // streaming into a dead component (e.g. on route change).
+  useEffect(() => {
+    return () => abortRef.current?.abort();
+  }, []);
 
   // Show welcome message and focus input when panel opens
   useEffect(() => {
@@ -260,7 +266,7 @@ export default function ChatWidget() {
           updated[updated.length - 1] = {
             role: "assistant",
             content:
-              "Sorry, I ran into an issue. Please try again or [schedule a free call](https://calendly.com/d/cppx-785-njf/meeting-with-mike).",
+              "Sorry, I ran into an issue. Please try again or [schedule a free call](https://calendly.com/volz-method-sales/piano_lessons_phone_consultation).",
             isStreaming: false,
           };
           return updated;
@@ -336,7 +342,7 @@ export default function ChatWidget() {
       <button
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close chat" : "Open chat assistant"}
-        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-orange-brand shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-orange-brand-hover hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-accent shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-accent-hover hover:-translate-y-0.5 active:scale-95 cursor-pointer"
         style={{ boxShadow: "0 4px 24px rgba(99,67,212,0.35)" }}
       >
         {isOpen ? (
@@ -363,7 +369,7 @@ export default function ChatWidget() {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-zinc-950 flex-shrink-0">
             <div className="flex items-center gap-2.5">
-              <div className="h-2 w-2 rounded-full bg-orange-brand animate-pulse" />
+              <div className="h-2 w-2 rounded-full bg-accent animate-pulse" />
               <span className="text-sm font-bold text-white">Volz Piano Assistant</span>
             </div>
             <button
@@ -387,7 +393,7 @@ export default function ChatWidget() {
                 <div
                   className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
                     msg.role === "user"
-                      ? "bg-orange-brand text-white rounded-br-sm"
+                      ? "bg-accent text-white rounded-br-sm"
                       : "bg-zinc-800 text-white/90 rounded-bl-sm"
                   }`}
                 >
@@ -425,14 +431,14 @@ export default function ChatWidget() {
                 placeholder="Type a message..."
                 rows={1}
                 disabled={isStreaming}
-                className="flex-1 resize-none rounded-xl border border-white/10 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-white/30 outline-none focus:border-orange-brand/50 focus:ring-1 focus:ring-orange-brand/30 transition-all duration-150 max-h-24 overflow-y-auto disabled:opacity-50"
+                className="flex-1 resize-none rounded-xl border border-white/10 bg-zinc-800 px-3 py-2 text-sm text-white placeholder-white/30 outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/30 transition-all duration-150 max-h-24 overflow-y-auto disabled:opacity-50"
                 style={{ lineHeight: "1.5" }}
               />
               <button
                 onClick={() => sendMessage(inputValue)}
                 disabled={isStreaming || !inputValue.trim()}
                 aria-label="Send message"
-                className="flex-shrink-0 h-9 w-9 rounded-xl bg-orange-brand flex items-center justify-center transition-all duration-150 hover:bg-orange-brand-hover disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 cursor-pointer"
+                className="flex-shrink-0 h-9 w-9 rounded-xl bg-accent flex items-center justify-center transition-all duration-150 hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 cursor-pointer"
               >
                 <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

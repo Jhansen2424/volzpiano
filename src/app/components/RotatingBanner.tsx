@@ -80,14 +80,16 @@ export default function RotatingBanner() {
       <div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-brand to-transparent" />
 
       <div className="mx-auto flex items-center justify-center gap-6 px-6 sm:gap-10">
-        {/* Left icon strip */}
-        <IconStrip />
+        {/* Left icon strip — hidden on mobile so the rotating text has room */}
+        <div className="hidden md:block">
+          <IconStrip />
+        </div>
 
         {/* Divider */}
-        <div className="hidden h-10 w-px bg-brand/40 sm:block" />
+        <div className="hidden h-10 w-px bg-brand/40 md:block" />
 
-        {/* Rotating text */}
-        <p className="shrink-0 text-center text-2xl font-bold tracking-wide text-white sm:text-3xl md:text-4xl lg:text-5xl">
+        {/* Rotating text — wraps cleanly on mobile, never gets pushed off-screen */}
+        <p className="min-w-0 max-w-full text-center text-xl font-bold tracking-wide text-white sm:text-2xl md:text-3xl lg:text-5xl">
           <span
             className="inline-block transition-all duration-400 ease-out"
             style={{
@@ -101,10 +103,12 @@ export default function RotatingBanner() {
         </p>
 
         {/* Divider */}
-        <div className="hidden h-10 w-px bg-brand/40 sm:block" />
+        <div className="hidden h-10 w-px bg-brand/40 md:block" />
 
-        {/* Right icon strip */}
-        <IconStrip flip />
+        {/* Right icon strip — also hidden on mobile */}
+        <div className="hidden md:block">
+          <IconStrip flip />
+        </div>
       </div>
     </section>
   );

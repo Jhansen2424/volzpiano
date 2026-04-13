@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function HeroSection() {
@@ -10,13 +11,6 @@ export default function HeroSection() {
     const timer = setTimeout(() => setAnimate(true), 300);
     return () => clearTimeout(timer);
   }, []);
-
-  const fadeUp = (delay: number) =>
-    `transition-all duration-700 ease-out ${
-      animate
-        ? "opacity-100 translate-y-0"
-        : "opacity-0 translate-y-6"
-    }` + ` delay-[${delay}ms]`;
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
@@ -33,6 +27,30 @@ export default function HeroSection() {
 
       {/* Dark Overlay — warmer gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/45 to-zinc-900/70" />
+
+      {/* Cartoon piano-mover illustration — visual punchline for "We Drive
+          to Your House!". Hidden on small screens to keep the headline
+          breathing room. */}
+      <div
+        className="pointer-events-none absolute right-12 bottom-24 z-[5] hidden w-[55%] max-w-[760px] lg:block xl:right-24 xl:bottom-32 xl:w-[58%]"
+        style={{
+          opacity: animate ? 1 : 0,
+          transform: animate ? "translateX(0)" : "translateX(60px)",
+          transition: "opacity 1.1s ease-out 0.7s, transform 1.1s ease-out 0.7s",
+          filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.45))",
+        }}
+      >
+        <Image
+          src="/driving-piano.png"
+          alt="Volz Method piano teacher driving to your house with a piano on the roof"
+          width={4107}
+          height={3543}
+          priority
+          sizes="(max-width: 1024px) 0px, (max-width: 1280px) 55vw, 760px"
+          className="h-auto w-full select-none"
+          style={{ animation: "heroDrive 4s ease-in-out infinite" }}
+        />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-32 sm:px-12 lg:px-20">
@@ -131,12 +149,12 @@ export default function HeroSection() {
               ))}
             </div>
             <p className="text-base leading-relaxed italic text-white/90">
-              &ldquo;My daughter used to dread practice, but now she runs to the
-              piano before her teacher even knocks. This has been the best
-              decision I&rsquo;ve made for her.&rdquo;
+              &ldquo;Jarus is awesome! He has inspired my boys to love piano
+              and create their own music. I knew my boys liked piano but I
+              didn&rsquo;t expect them to look forward to their lessons.&rdquo;
             </p>
             <p className="mt-2 text-sm font-semibold text-white/70">
-              &mdash; Sarah M., mom of two
+              &mdash; Camille Waller
             </p>
           </div>
 
@@ -148,12 +166,34 @@ export default function HeroSection() {
               transition: "all 0.7s ease-out 800ms",
             }}
           >
-            <a
+            <Link
               href="/schedule-call"
               className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
             >
               Schedule a Call
-            </a>
+            </Link>
+          </div>
+
+          {/* Mobile-only car illustration — inline under the CTA, since the
+              absolute desktop version is hidden below lg: */}
+          <div
+            className="pointer-events-none mx-auto mt-12 w-full max-w-[420px] lg:hidden"
+            style={{
+              opacity: animate ? 1 : 0,
+              transform: animate ? "translateY(0)" : "translateY(20px)",
+              transition: "all 1s ease-out 0.9s",
+              filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.4))",
+            }}
+          >
+            <Image
+              src="/driving-piano.png"
+              alt="Volz Method piano teacher driving to your house with a piano on the roof"
+              width={4107}
+              height={3543}
+              sizes="(max-width: 1024px) 90vw, 0px"
+              className="h-auto w-full select-none"
+              style={{ animation: "heroDrive 4s ease-in-out infinite" }}
+            />
           </div>
         </div>
       </div>

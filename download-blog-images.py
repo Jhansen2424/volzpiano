@@ -9,8 +9,12 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-CSV_PATH = "c:/Users/Hanse/Desktop/volzpiano-blog-posts.csv"
-OUTPUT_DIR = "c:/Users/Hanse/Desktop/volzpiano/public/blog-images"
+_PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.environ.get(
+    "VOLZ_BLOG_CSV",
+    os.path.join(os.path.dirname(_PROJECT_ROOT), "volzpiano-blog-posts.csv"),
+)
+OUTPUT_DIR = os.path.join(_PROJECT_ROOT, "public", "blog-images")
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

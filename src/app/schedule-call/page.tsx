@@ -1,8 +1,9 @@
 "use client";
 
+import Script from "next/script";
 import { useEffect, useState } from "react";
 
-const CALENDLY_URL = "https://calendly.com/d/cppx-785-njf/meeting-with-mike";
+const CALENDLY_URL = "https://calendly.com/volz-method-sales/piano_lessons_phone_consultation";
 
 export default function ScheduleCallPage() {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -15,7 +16,7 @@ export default function ScheduleCallPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="relative flex min-h-[40vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[55vh] items-center justify-center overflow-hidden bg-zinc-900 pt-40 pb-32">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{
@@ -62,12 +63,17 @@ export default function ScheduleCallPage() {
       {/* Calendly Embed */}
       <section className="bg-white py-12 sm:py-20">
         <div className="mx-auto max-w-4xl px-6 sm:px-12">
-          <div className="overflow-hidden rounded-2xl border border-zinc-200 shadow-lg">
-            <iframe
-              src={CALENDLY_URL}
-              title="Schedule a consultation"
-              className="w-full border-0"
-              style={{ height: "700px", minHeight: "600px" }}
+          {/* Negative margin lets the 320px-min-width widget bleed all the
+              way to the viewport edge on mobile so it never overflows. */}
+          <div className="-mx-6 overflow-hidden rounded-2xl border border-zinc-200 shadow-lg sm:mx-0">
+            <div
+              className="calendly-inline-widget"
+              data-url={CALENDLY_URL}
+              style={{ minWidth: "320px", height: "800px" }}
+            />
+            <Script
+              src="https://assets.calendly.com/assets/external/widget.js"
+              strategy="afterInteractive"
             />
           </div>
         </div>

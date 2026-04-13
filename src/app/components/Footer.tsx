@@ -1,25 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useInView } from "@/lib/use-in-view";
 
 export default function Footer() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const pathname = usePathname();
+  const hideCtaBanner = pathname === "/schedule-call";
+  const [sectionRef, visible] = useInView<HTMLElement>();
 
   return (
     <footer ref={sectionRef} className="relative overflow-hidden bg-zinc-950">
@@ -31,6 +19,7 @@ export default function Footer() {
       />
 
       {/* CTA Banner */}
+      {!hideCtaBanner && (
       <div className="relative border-b border-white/5 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 sm:px-12">
           <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between sm:items-center">
@@ -73,6 +62,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      )}
 
       {/* Bottom bar */}
       <div className="relative py-8">
@@ -89,7 +79,7 @@ export default function Footer() {
 
             <div className="flex items-center gap-6">
               <Link
-                href="/privacy-policy"
+                href="/privacy-policy-2"
                 className="text-sm text-white/40 transition-colors duration-200 hover:text-white/70"
               >
                 Privacy Policy

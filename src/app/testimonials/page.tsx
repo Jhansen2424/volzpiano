@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useInView } from "@/lib/use-in-view";
 
 /* ═══════════════════════════════════════════
    Reviews Data
@@ -142,22 +143,7 @@ function ReviewCard({
   review: (typeof reviews)[number];
   index: number;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (cardRef.current) observer.observe(cardRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [cardRef, visible] = useInView<HTMLDivElement>();
 
   return (
     <div
@@ -256,7 +242,7 @@ export default function TestimonialsPage() {
           </div>
 
           <h1
-            className="text-5xl font-extrabold text-white sm:text-6xl lg:text-7xl"
+            className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(30px)",

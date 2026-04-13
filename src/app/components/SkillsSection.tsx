@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { useInView } from "@/lib/use-in-view";
 
 const skills = [
   {
@@ -63,22 +64,7 @@ const skills = [
 
 export default function SkillsSection() {
   const [active, setActive] = useState(0);
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [sectionRef, visible] = useInView<HTMLElement>();
 
   return (
     <section ref={sectionRef} className="bg-cream py-20 sm:py-28 lg:py-32">
@@ -101,9 +87,50 @@ export default function SkillsSection() {
           <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-brand" />
         </div>
 
-        {/* Accordion Cards */}
+        {/* Mobile: stacked cards with full content always visible. The
+            horizontal accordion below doesn't fit a phone — even the active
+            card is only ~250px wide, so headings get clipped. */}
         <div
-          className="flex h-[500px] gap-3 sm:gap-4"
+          className="grid grid-cols-1 gap-4 sm:hidden"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(30px)",
+            transition: "all 0.7s ease-out 0.2s",
+          }}
+        >
+          {skills.map((skill) => (
+            <div
+              key={skill.label}
+              className="relative h-80 overflow-hidden rounded-3xl"
+            >
+              <Image
+                src={skill.image}
+                alt={skill.label}
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+              <div className="absolute inset-0 flex flex-col justify-end p-6">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand/90 shadow-md">
+                    {skill.icon}
+                  </div>
+                  <h3 className="text-3xl font-extrabold text-white">
+                    {skill.label}
+                  </h3>
+                </div>
+                <p className="text-base leading-relaxed text-white/90">
+                  {skill.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop / tablet: horizontal accordion */}
+        <div
+          className="hidden h-[500px] gap-3 sm:flex sm:gap-4"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(30px)",
@@ -125,6 +152,7 @@ export default function SkillsSection() {
                   src={skill.image}
                   alt={skill.label}
                   fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
                   className={`object-cover transition-transform duration-700 ${
                     isActive ? "scale-100" : "scale-110"
                   }`}
@@ -146,7 +174,7 @@ export default function SkillsSection() {
                   }`}
                 >
                   <span
-                    className="text-2xl font-bold tracking-wider text-white uppercase sm:text-3xl"
+                    className="text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl"
                     style={{
                       writingMode: "vertical-rl",
                       textOrientation: "mixed",
@@ -162,8 +190,8 @@ export default function SkillsSection() {
                     isActive ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand/90 shadow-md">
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand/90 shadow-md">
                       {skill.icon}
                     </div>
                     <h3 className="text-3xl font-extrabold text-white sm:text-4xl">

@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useInView } from "@/lib/use-in-view";
 
 const NOTES = [
   { note: "C", type: "white", freq: 261.63 },
@@ -35,28 +37,18 @@ const WaveTop = () => (
 
 export default function InteractiveKeyboard() {
   const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
-  const [visible, setVisible] = useState(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const activeOscillators = useRef<Map<number, { osc: OscillatorNode; gain: GainNode }>>(new Map());
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [sectionRef, visible] = useInView<HTMLElement>();
 
   const getAudioCtx = useCallback(() => {
     if (!audioCtxRef.current) {
       audioCtxRef.current = new AudioContext();
+    }
+    // Modern browsers (especially iOS Safari) start AudioContext in a
+    // "suspended" state. Resume on first user gesture so notes actually play.
+    if (audioCtxRef.current.state === "suspended") {
+      audioCtxRef.current.resume();
     }
     return audioCtxRef.current;
   }, []);
@@ -117,8 +109,11 @@ export default function InteractiveKeyboard() {
   }, [playNote, stopNote]);
 
   useEffect(() => {
+    // Capture refs into locals so the cleanup uses the values from mount-time,
+    // not whatever ref.current happens to be at unmount-time (lint guidance).
+    const oscillators = activeOscillators.current;
     return () => {
-      activeOscillators.current.forEach(({ osc }) => {
+      oscillators.forEach(({ osc }) => {
         osc.stop();
         osc.disconnect();
       });
@@ -160,7 +155,7 @@ export default function InteractiveKeyboard() {
             Tap the keys or use your keyboard (A&ndash;K row) to play a few notes.
             Imagine what a real lesson could sound like!
           </p>
-          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-orange-brand" />
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-accent" />
         </div>
 
         <div
@@ -188,7 +183,7 @@ export default function InteractiveKeyboard() {
                     onPointerLeave={() => stopNote(key.index)}
                     className={`relative flex-1 rounded-b-xl transition-all duration-100 ${
                       activeNotes.has(key.index)
-                        ? "bg-orange-brand/15 border-2 border-orange-brand/40 shadow-[inset_0_-4px_12px_rgba(99,67,212,0.15)]"
+                        ? "bg-accent/15 border-2 border-accent/40 shadow-[inset_0_-4px_12px_rgba(99,67,212,0.15)]"
                         : "bg-white border-2 border-zinc-200/80 shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:bg-cream-dark"
                     }`}
                   >
@@ -212,7 +207,7 @@ export default function InteractiveKeyboard() {
                     onPointerLeave={() => stopNote(key.index)}
                     className={`absolute top-0 z-10 rounded-b-lg transition-all duration-100 ${
                       activeNotes.has(key.index)
-                        ? "bg-orange-brand shadow-[inset_0_-2px_8px_rgba(0,0,0,0.2)]"
+                        ? "bg-accent shadow-[inset_0_-2px_8px_rgba(0,0,0,0.2)]"
                         : "bg-zinc-700 hover:bg-zinc-600 shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
                     }`}
                     style={{
@@ -233,12 +228,12 @@ export default function InteractiveKeyboard() {
 
           {/* CTA */}
           <div className="mt-8 text-center">
-            <a
+            <Link
               href="/schedule-call"
               className="inline-block rounded-full bg-cta px-8 py-3.5 font-bold text-white shadow-lg transition-all duration-200 hover:bg-cta-hover hover:shadow-xl hover:-translate-y-0.5"
             >
               Ready for Real Lessons? Schedule a Call
-            </a>
+            </Link>
           </div>
         </div>
       </div>

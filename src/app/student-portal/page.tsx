@@ -1,7 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+
+// The My Music Staff login widget is a legacy script that uses document.write
+// to inject its form. After-load document.write would append to <body>, which
+// is why we host it inside a srcdoc iframe — the script runs during the
+// iframe's initial parse where document.write works correctly.
+const MMS_LOGIN_SRCDOC = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base target="_top">
+    <style>
+      html, body { margin: 0; padding: 0; background: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      body { padding: 16px; }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="https://app.mymusicstaff.com/Widget/v2/Login.ashx"></script>
+  </body>
+</html>`;
 
 export default function StudentPortalPage() {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -48,48 +67,21 @@ export default function StudentPortalPage() {
         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent z-[1]" />
       </section>
 
-      {/* Portal Content */}
+      {/* Portal Login — My Music Staff widget hosted in a srcdoc iframe */}
       <section className="bg-white py-16 sm:py-24">
-        <div className="mx-auto max-w-2xl px-6 sm:px-12 text-center">
-          <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-12 shadow-sm">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-brand/10">
-              <svg
-                className="h-10 w-10 text-brand"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                />
-              </svg>
-            </div>
-            <h2 className="mt-6 text-2xl font-extrabold text-zinc-900">
-              Welcome Back!
-            </h2>
-            <p className="mt-3 text-zinc-500 leading-relaxed">
-              The student portal is coming soon. In the meantime, please reach
-              out to your instructor directly for lesson materials and
-              scheduling.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/schedule-call"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 text-base font-bold text-white transition-all duration-200 hover:bg-brand-hover hover:-translate-y-0.5"
-              >
-                Schedule a Call
-              </Link>
-              <Link
-                href="/"
-                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-zinc-200 px-8 py-4 text-base font-bold text-zinc-700 transition-all duration-200 hover:border-brand hover:text-brand hover:-translate-y-0.5"
-              >
-                Back to Home
-              </Link>
-            </div>
+        <div className="mx-auto max-w-2xl px-6 sm:px-12">
+          <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-lg">
+            <iframe
+              id="mms-login-widget"
+              title="Volz Piano student portal login"
+              srcDoc={MMS_LOGIN_SRCDOC}
+              className="w-full border-0"
+              style={{ height: "520px", minHeight: "440px" }}
+            />
           </div>
+          <p className="mt-4 text-center text-xs text-zinc-400">
+            Powered by My Music Staff
+          </p>
         </div>
       </section>
     </main>

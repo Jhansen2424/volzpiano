@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useInView } from "@/lib/use-in-view";
 
 const results = [
   "Students using the Volz Method advance at a rapid rate and report often how much they enjoy it so much more.",
@@ -13,22 +14,7 @@ const results = [
 ];
 
 export default function ResultsSection() {
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [sectionRef, visible] = useInView<HTMLElement>({ threshold: 0.1 });
 
   return (
     <section ref={sectionRef} className="bg-cream py-20 sm:py-28 lg:py-32">
@@ -139,12 +125,12 @@ export default function ResultsSection() {
                 transition: `all 0.6s ease-out ${0.3 + results.length * 0.12}s`,
               }}
             >
-              <a
+              <Link
                 href="/schedule-call"
                 className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
               >
                 Schedule a Call
-              </a>
+              </Link>
             </div>
           </div>
         </div>
