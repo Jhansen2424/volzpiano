@@ -1,6 +1,5 @@
 "use client";
 
-import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
@@ -368,14 +367,11 @@ function ScheduleSection() {
               transition: "all 0.7s ease-out 0.2s",
             }}
           >
-            <div
-              className="calendly-inline-widget"
-              data-url={CALENDLY_URL}
-              style={{ minWidth: "320px", height: "820px" }}
-            />
-            <Script
-              src="https://assets.calendly.com/assets/external/widget.js"
-              strategy="afterInteractive"
+            <iframe
+              src={CALENDLY_URL}
+              title="Schedule a consultation"
+              className="w-full border-0"
+              style={{ height: "820px" }}
             />
           </div>
         </div>

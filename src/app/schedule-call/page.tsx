@@ -1,6 +1,5 @@
 "use client";
 
-import Script from "next/script";
 import { useEffect, useState } from "react";
 
 const CALENDLY_URL = "https://calendly.com/volz-method-sales/piano_lessons_phone_consultation";
@@ -63,17 +62,15 @@ export default function ScheduleCallPage() {
       {/* Calendly Embed */}
       <section className="bg-white py-12 sm:py-20">
         <div className="mx-auto max-w-4xl px-6 sm:px-12">
-          {/* Negative margin lets the 320px-min-width widget bleed all the
-              way to the viewport edge on mobile so it never overflows. */}
+          {/* Direct iframe — no widget.js dependency. Loads instantly and
+              works correctly on SPA back/forward navigation. Negative margin
+              on mobile lets it reach viewport edges. */}
           <div className="-mx-6 overflow-hidden rounded-2xl border border-zinc-200 shadow-lg sm:mx-0">
-            <div
-              className="calendly-inline-widget"
-              data-url={CALENDLY_URL}
-              style={{ minWidth: "320px", height: "800px" }}
-            />
-            <Script
-              src="https://assets.calendly.com/assets/external/widget.js"
-              strategy="afterInteractive"
+            <iframe
+              src={CALENDLY_URL}
+              title="Schedule a consultation"
+              className="w-full border-0"
+              style={{ height: "800px" }}
             />
           </div>
         </div>

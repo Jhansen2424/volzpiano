@@ -74,9 +74,9 @@ describe("Schedule Call Page", () => {
     );
     render(<ScheduleCallPage />);
     expect(screen.getByText("Enroll")).toBeInTheDocument();
-    const widget = document.querySelector(".calendly-inline-widget");
-    expect(widget).toBeInTheDocument();
-    expect(widget?.getAttribute("data-url")).toContain("calendly.com");
+    const iframe = document.querySelector("iframe");
+    expect(iframe).toBeInTheDocument();
+    expect(iframe?.getAttribute("src")).toContain("calendly.com");
   });
 });
 
