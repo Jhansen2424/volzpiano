@@ -149,12 +149,12 @@ export default function HeroSection() {
               ))}
             </div>
             <p className="text-base leading-relaxed italic text-white/90">
-              &ldquo;Jarus is awesome! He has inspired my boys to love piano
-              and create their own music. I knew my boys liked piano but I
-              didn&rsquo;t expect them to look forward to their lessons.&rdquo;
+              &ldquo;We have loved Volz Method Piano Lessons! Our kids are
+              challenged and have improved very quickly. By far the best piano
+              lessons we have had!&rdquo;
             </p>
             <p className="mt-2 text-sm font-semibold text-white/70">
-              &mdash; Camille Waller
+              &mdash; Callie Curtis
             </p>
           </div>
 

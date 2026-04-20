@@ -828,10 +828,9 @@ def main():
     all_posts_for_index.sort(key=lambda p: p.get("date", ""), reverse=True)
     all_posts_for_dynamic.sort(key=lambda p: p.get("date", ""), reverse=True)
 
-    # Generate index page
-    index_content = make_index_tsx(all_posts_for_index)
-    with open(INDEX_PATH, "w", encoding="utf-8") as f:
-        f.write(index_content)
+    # NOTE: src/app/blog/page.tsx is now a hand-written server component that
+    # reads from src/lib/blog (which merges blog-posts.json + extras and
+    # filters by publishDate). The generator no longer overwrites it.
 
     # Write the consolidated content JSON consumed by the dynamic [slug] route
     import json
@@ -857,8 +856,8 @@ def main():
 
     print(f"Wrote {created} posts to blog-posts.json (dynamic route)")
     print(f"Skipped {skipped} hand-built posts")
-    print(f"Updated blog index with {len(all_posts_for_index)} posts")
     print(f"Updated blog-slugs.json with {len(entries)} slugs")
+    print("(blog index page.tsx is hand-maintained; not regenerated)")
 
 
 if __name__ == "__main__":

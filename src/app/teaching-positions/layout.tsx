@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const TITLE = "Teaching Positions";
 const DESCRIPTION =
-  "Apply to teach piano with the Volz Method in Utah or Idaho. We hire and train teachers in each geographic area we serve.";
+  "Now hiring in-home piano teachers in Sandy, Draper, Cottonwood Heights, and Midvale. $35–$45/hour while teaching. Apply to teach with the Volz Method.";
 
 export const metadata: Metadata = {
   title: TITLE,

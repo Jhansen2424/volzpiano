@@ -2,23 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { serializeJsonLd } from "@/lib/json-ld";
 import { SITE_URL } from "@/lib/site";
-import blogPosts from "@/content/blog-posts.json";
-
-type BlogPost = {
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  date: string;
-  dateIso: string;
-  formattedDate: string;
-  image: string;
-  content: string;
-};
-
-const postBySlug = new Map<string, BlogPost>(
-  (blogPosts as BlogPost[]).map((p) => [p.slug, p])
-);
+import { getPostBySlug } from "@/lib/blog";
 
 export async function generateMetadata({
   params,
@@ -26,7 +10,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = postBySlug.get(slug);
+  const post = getPostBySlug(slug);
   if (!post) return {};
 
   const canonical = `/${post.slug}`;
@@ -61,7 +45,7 @@ export default async function BlogPostLayout({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = postBySlug.get(slug);
+  const post = getPostBySlug(slug);
   if (!post) notFound();
 
   const articleJsonLd = {

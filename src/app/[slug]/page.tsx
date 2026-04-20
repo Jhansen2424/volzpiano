@@ -3,29 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import AnimatedSection from "@/app/components/AnimatedSection";
-import blogPosts from "@/content/blog-posts.json";
+import { getAllPublishedSlugs, getPostBySlug } from "@/lib/blog";
 
-type BlogPost = {
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  date: string;
-  dateIso: string;
-  formattedDate: string;
-  image: string;
-  content: string;
-};
-
-const postBySlug = new Map<string, BlogPost>(
-  (blogPosts as BlogPost[]).map((p) => [p.slug, p])
-);
+// Re-render at most once per hour. Combined with `dynamicParams = true`,
+// scheduled posts go live within an hour of their publishDate without a
+// redeploy (Vercel ISR).
+export const revalidate = 3600;
+export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return (blogPosts as BlogPost[]).map((p) => ({ slug: p.slug }));
+  // Pre-render every currently-published post at build time. New posts
+  // (publishDate in the future) get rendered on-demand once their date
+  // passes — courtesy of dynamicParams = true.
+  return getAllPublishedSlugs().map((slug) => ({ slug }));
 }
-
-export const dynamicParams = false; // 404 anything not in blogPosts.json
 
 export default async function BlogPostPage({
   params,
@@ -33,7 +24,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = postBySlug.get(slug);
+  const post = getPostBySlug(slug);
   if (!post) notFound();
 
   // Sanitize at build time — DOMPurify is isomorphic so this runs server-side.
