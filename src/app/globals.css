@@ -69,6 +69,35 @@ body {
   }
 }
 
+/* Music notes drifting from below the hero up past the top, used by the
+   teaching-positions hero background. Combined with `noteSway` for a gentle
+   side-to-side wobble. */
+@keyframes floatNoteUp {
+  0% {
+    transform: translateY(60vh) rotate(-8deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--note-opacity, 0.2);
+  }
+  90% {
+    opacity: var(--note-opacity, 0.2);
+  }
+  100% {
+    transform: translateY(-100vh) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes noteSway {
+  from {
+    margin-left: -12px;
+  }
+  to {
+    margin-left: 12px;
+  }
+}
+
 @keyframes floatUp {
   0% {
     transform: translateY(100%) rotate(0deg);

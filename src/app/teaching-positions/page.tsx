@@ -1,10 +1,17 @@
 import StubPage from "@/app/components/StubPage";
+import MusicNotesHero from "./MusicNotesHero";
 
 const openPositions = [
   {
     title: "In-Home Piano Teacher",
     pay: "$35–$45 per hour (while teaching)",
     cities: ["Sandy", "Draper", "Cottonwood Heights", "Midvale"],
+    employmentType: "Part-time, 1099 contractor",
+  },
+  {
+    title: "Experienced In-Home Piano Teacher",
+    pay: "$40–$45 per hour (while teaching)",
+    cities: ["Sandy", "Draper", "Midvale", "Cottonwood Heights"],
     employmentType: "Part-time, 1099 contractor",
   },
 ];
@@ -20,6 +27,7 @@ export default function TeachingPositionsPage() {
         href: "https://docs.google.com/forms/d/e/1FAIpQLSeiYwH4ZX0-0hpnOf1nlrVFqLOXYim6GuzQu1Iq_05524850w/viewform",
         label: "Apply to Teach",
       }}
+      heroBackground={<MusicNotesHero />}
       body={
         <div>
           {/* Open Positions */}

@@ -8,6 +8,7 @@ const topLinks = [
   { href: "/testimonials", label: "Testimonials" },
   { href: "/blog", label: "Blog" },
   { href: "/digital-piano", label: "Digital Piano Deal" },
+  { href: "/teaching-positions", label: "Teaching Positions" },
   { href: "/student-portal", label: "Student Portal" },
 ];
 

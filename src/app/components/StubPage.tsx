@@ -15,6 +15,7 @@ export default function StubPage({
   description,
   primaryCta = { href: "/schedule-call", label: "Schedule a Call" },
   body,
+  heroBackground,
 }: {
   badge?: string;
   title: string;
@@ -22,6 +23,12 @@ export default function StubPage({
   description: string;
   primaryCta?: { href: string; label: string };
   body?: React.ReactNode;
+  /**
+   * Optional background graphic/animation for the hero. Renders inside the
+   * hero section, behind the text content but in front of the radial glow.
+   * Should be absolutely positioned to fill the parent.
+   */
+  heroBackground?: React.ReactNode;
 }) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -39,6 +46,7 @@ export default function StubPage({
             background: "radial-gradient(circle, #6343d4 0%, transparent 70%)",
           }}
         />
+        {heroBackground}
         <div className="relative z-[2] text-center px-6 max-w-3xl">
           {badge && (
             <span
