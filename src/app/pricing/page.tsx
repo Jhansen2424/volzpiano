@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
+import SmsConsent from "@/app/components/SmsConsent";
 
 /* ═══════════════════════════════════════════
    Rippling Piano Strings Animation (Hero)
@@ -289,92 +290,73 @@ function ScheduleSection() {
       className="bg-zinc-900 py-20 sm:py-28"
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-12">
-        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          {/* ── Left — Info ── */}
+        {/* Section header (centered, full width) */}
+        <div
+          className="mx-auto mb-12 max-w-2xl text-center"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(24px)",
+            transition: "all 0.7s ease-out",
+          }}
+        >
+          <span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-brand">
+            Sales
+          </span>
+          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Piano Lessons Phone Consultation
+          </h2>
           <div
+            className="mx-auto mb-6 h-1 w-16 rounded-full bg-brand"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out",
+              transform: visible ? "scaleX(1)" : "scaleX(0)",
+              transition: "transform 0.5s ease-out 0.3s",
             }}
-          >
-            <span className="mb-3 inline-block text-xs font-bold uppercase tracking-[0.2em] text-brand">
-              Sales
-            </span>
-            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Piano Lessons Phone Consultation
-            </h2>
-
-            <div
-              className="mb-6 h-1 w-16 rounded-full bg-brand"
-              style={{
-                transform: visible ? "scaleX(1)" : "scaleX(0)",
-                transformOrigin: "left",
-                transition: "transform 0.5s ease-out 0.3s",
-              }}
-            />
-
-            {/* Duration badge */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
-              <svg
-                className="h-5 w-5 text-white/50"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.8}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="text-sm font-semibold text-white/70">
-                15 min
-              </span>
-            </div>
-
-            <p
-              className="mb-4 text-base leading-relaxed text-white/60 sm:text-lg"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(16px)",
-                transition: "all 0.6s ease-out 0.3s",
-              }}
+          />
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
+            <svg
+              className="h-5 w-5 text-white/50"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.8}
             >
-              We will answer your questions and if you&apos;re ready,
-              we&apos;ll sign you up!
-            </p>
-
-            <p
-              className="text-base leading-relaxed text-white/60 sm:text-lg"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(16px)",
-                transition: "all 0.6s ease-out 0.45s",
-              }}
-            >
-              Bonus points if you include your spouse on the call!
-            </p>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span className="text-sm font-semibold text-white/70">15 min</span>
           </div>
+          <p className="text-base leading-relaxed text-white/60 sm:text-lg">
+            We will answer your questions and if you&apos;re ready, we&apos;ll
+            sign you up! Bonus points if you include your spouse on the call.
+          </p>
+        </div>
 
-          {/* ── Right — Calendly inline widget ──
-              Negative margin on mobile lets the 320px-min-width widget bleed
-              all the way to the viewport edge so it never overflows. */}
-          <div
-            className="relative -mx-6 overflow-hidden rounded-2xl border border-white/10 bg-white shadow-2xl sm:mx-0"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out 0.2s",
-            }}
-          >
+        {/* Calendly + SMS consent side-by-side on desktop, stacked on mobile.
+            Negative margin on mobile lets the 320px-min-width widget bleed
+            all the way to the viewport edge so it never overflows. */}
+        <div
+          className="grid items-start gap-6 lg:grid-cols-[2fr_1fr] lg:gap-8"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(24px)",
+            transition: "all 0.7s ease-out 0.2s",
+          }}
+        >
+          <div className="relative -mx-6 overflow-hidden rounded-2xl border border-white/10 bg-white shadow-2xl sm:mx-0">
             <iframe
               src={CALENDLY_URL}
               title="Schedule a consultation"
               className="w-full border-0"
               style={{ height: "820px" }}
             />
+          </div>
+          {/* SmsConsent has its own mt-6 spacing for the stacked mobile case;
+              neutralize it on lg+ so it aligns with the iframe top edge. */}
+          <div className="lg:[&>div]:mt-0">
+            <SmsConsent />
           </div>
         </div>
       </div>

@@ -111,18 +111,20 @@ describe("Privacy Policy Page", () => {
     expect(screen.getByText("Contact Us")).toBeInTheDocument();
   });
 
-  it("renders contact email link", async () => {
+  it("renders contact email link(s) pointing to support@volzpiano.com", async () => {
     const { default: PrivacyPolicyPage } = await import(
       "../app/privacy-policy-2/page"
     );
     render(<PrivacyPolicyPage />);
-    const emailLink = screen.getByRole("link", {
+    // The new TCR-compliant policy mentions the support email in both the
+    // Help section and Contact Us section, so there's more than one link.
+    const emailLinks = screen.getAllByRole("link", {
       name: /support@volzpiano/i,
     });
-    expect(emailLink).toHaveAttribute(
-      "href",
-      "mailto:support@volzpiano.com"
-    );
+    expect(emailLinks.length).toBeGreaterThan(0);
+    for (const link of emailLinks) {
+      expect(link).toHaveAttribute("href", "mailto:support@volzpiano.com");
+    }
   });
 });
 

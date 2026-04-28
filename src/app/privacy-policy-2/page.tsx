@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage() {
               transition: "opacity 0.6s ease-out 0.5s",
             }}
           >
-            Last updated: July 31, 2024
+            Last updated: April 20, 2026
           </p>
         </div>
         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent z-[1]" />
@@ -50,16 +50,16 @@ export default function PrivacyPolicyPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-6 sm:px-12">
           <AnimatedSection>
-            <div className="prose prose-zinc prose-lg max-w-none prose-headings:font-extrabold prose-headings:text-zinc-900 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-brand prose-h2:pl-4 prose-p:text-zinc-600 prose-p:leading-relaxed prose-a:text-brand prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-zinc-800 prose-ul:text-zinc-600 prose-li:marker:text-brand">
+            <div className="prose prose-zinc prose-lg max-w-none prose-headings:font-extrabold prose-headings:text-zinc-900 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-brand prose-h2:pl-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-zinc-600 prose-p:leading-relaxed prose-a:text-brand prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-zinc-800 prose-ul:text-zinc-600 prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-li:my-1 prose-li:marker:text-brand">
               <h2>Interpretation and Definitions</h2>
               <p>
                 The words of which the initial letter is capitalized have
                 meanings defined under the following conditions. The following
                 definitions shall have the same meaning regardless of whether
-                they appear in singular or in plural.
+                they appear in singular or plural.
               </p>
               <p>For the purposes of this Privacy Policy:</p>
-              <ul>
+              <ul className="list-disc pl-6 my-4 space-y-1">
                 <li>
                   <strong>Company</strong> (referred to as &quot;the
                   Company&quot;, &quot;We&quot;, &quot;Us&quot; or
@@ -74,7 +74,9 @@ export default function PrivacyPolicyPage() {
                   to an identified or identifiable individual.
                 </li>
                 <li>
-                  <strong>Service</strong> refers to the Website.
+                  <strong>Service</strong> refers to the Website and all
+                  related services, including in-home piano lessons and
+                  communication systems.
                 </li>
                 <li>
                   <strong>Service Provider</strong> means any natural or legal
@@ -92,145 +94,229 @@ export default function PrivacyPolicyPage() {
               </ul>
 
               <h2>Collecting and Using Your Personal Data</h2>
+
               <h3>Types of Data Collected</h3>
               <p>
                 While using Our Service, We may ask You to provide Us with
                 certain personally identifiable information that can be used to
-                contact or identify You. Personally identifiable information may
-                include, but is not limited to:
+                contact or identify You. This may include, but is not limited
+                to:
               </p>
-              <ul>
-                <li>First name and last name</li>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>First and last name</li>
                 <li>Email address</li>
                 <li>Phone number</li>
-                <li>Location details</li>
-                <li>Personal preferences</li>
+                <li>Address/location details (for in-home lesson scheduling)</li>
+                <li>Student information (e.g., age, experience level)</li>
+                <li>Personal preferences related to lessons</li>
               </ul>
 
               <h3>Use of Your Personal Data</h3>
               <p>
                 The Company may use Personal Data for the following purposes:
               </p>
-              <ul>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>To provide and maintain our Service</li>
+                <li>To schedule and deliver in-home piano lessons</li>
+                <li>To manage Your Account</li>
+                <li>For the performance of a contract</li>
                 <li>
-                  To provide and maintain our Service, including to monitor the
-                  usage of our Service.
+                  To contact You by email, phone calls, or SMS regarding
+                  lessons, scheduling, billing, or updates
                 </li>
-                <li>
-                  To manage Your Account and registration as a user of the
-                  Service.
-                </li>
-                <li>
-                  For the performance of a contract with You.
-                </li>
-                <li>
-                  To contact You by email, telephone calls, SMS, or other forms
-                  of electronic communication.
-                </li>
-                <li>
-                  To provide You with news, special offers, and general
-                  information about other services which we offer.
-                </li>
-                <li>To manage Your requests.</li>
-                <li>
-                  For other purposes such as data analysis, identifying usage
-                  trends, and improving our Service.
-                </li>
+                <li>To send promotional offers (only if consent is provided)</li>
+                <li>To improve our services through data analysis</li>
+                <li>To manage customer service requests</li>
               </ul>
+
+              <h2>Sharing of Your Personal Data (Updated for TCR Compliance)</h2>
+              <p>
+                We may share your information with Service Providers only as
+                necessary to operate our business (e.g., scheduling software,
+                payment processors, messaging platforms).
+              </p>
+              <p>
+                <strong>We do NOT sell your personal data.</strong>
+              </p>
+              <p>
+                Mobile Opt-in, SMS consent, and phone numbers collected for SMS
+                communication purposes will <strong>NOT</strong> be shared with
+                any third party or affiliates for marketing purposes.
+              </p>
 
               <h2>Retention of Your Personal Data</h2>
               <p>
-                The Company will retain Your Personal Data only for as long as
-                is necessary for the purposes set out in this Privacy Policy. We
-                will retain and use Your Personal Data to the extent necessary
-                to comply with our legal obligations, resolve disputes, and
-                enforce our agreements and policies.
+                We retain Personal Data only as long as necessary to fulfill
+                the purposes outlined in this Privacy Policy, comply with legal
+                obligations, resolve disputes, and enforce agreements.
               </p>
 
               <h2>Transfer of Your Personal Data</h2>
               <p>
-                Your information, including Personal Data, is processed at the
-                Company&apos;s operating offices and in any other places where
-                the parties involved in the processing are located. The Company
-                will take all steps reasonably necessary to ensure that Your
-                data is treated securely and in accordance with this Privacy
-                Policy.
+                Your data may be processed in locations outside your state or
+                country. We take all reasonable steps to ensure your data is
+                treated securely and in accordance with this Privacy Policy.
               </p>
 
               <h2>Disclosure of Your Personal Data</h2>
               <h3>Law Enforcement</h3>
               <p>
-                Under certain circumstances, the Company may be required to
-                disclose Your Personal Data if required to do so by law or in
-                response to valid requests by public authorities.
+                We may disclose Personal Data if required by law.
               </p>
               <h3>Other Legal Requirements</h3>
-              <p>
-                The Company may disclose Your Personal Data in the good faith
-                belief that such action is necessary to:
-              </p>
-              <ul>
-                <li>Comply with a legal obligation</li>
-                <li>
-                  Protect and defend the rights or property of the Company
-                </li>
-                <li>
-                  Prevent or investigate possible wrongdoing in connection with
-                  the Service
-                </li>
-                <li>
-                  Protect the personal safety of Users of the Service or the
-                  public
-                </li>
-                <li>Protect against legal liability</li>
+              <p>We may disclose data to:</p>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>Comply with legal obligations</li>
+                <li>Protect company rights or property</li>
+                <li>Prevent wrongdoing</li>
+                <li>Protect user safety</li>
+                <li>Defend against legal liability</li>
               </ul>
 
               <h2>Security of Your Personal Data</h2>
               <p>
-                The security of Your Personal Data is important to Us, but
-                remember that no method of transmission over the Internet, or
-                method of electronic storage is 100% secure. While We strive to
-                use commercially acceptable means to protect Your Personal Data,
-                We cannot guarantee its absolute security.
+                We use commercially reasonable methods to protect your data but
+                cannot guarantee absolute security.
               </p>
 
               <h2>Links to Other Websites</h2>
               <p>
-                Our Service may contain links to other websites that are not
-                operated by Us. If You click on a third party link, You will be
-                directed to that third party&apos;s site. We strongly advise You
-                to review the Privacy Policy of every site You visit. We have no
-                control over and assume no responsibility for the content,
-                privacy policies, or practices of any third party sites or
-                services.
+                We are not responsible for third-party websites linked from our
+                Service.
               </p>
 
               <h2>Changes to This Privacy Policy</h2>
               <p>
-                We may update Our Privacy Policy from time to time. We will
-                notify You of any changes by posting the new Privacy Policy on
-                this page. Changes are effective when they are posted on this
-                page.
+                We may update this policy at any time. Changes take effect when
+                posted.
               </p>
 
-              <h2>SMS Terms &amp; Conditions</h2>
+              <h2>SMS Terms &amp; Conditions (TCR Compliant)</h2>
+
+              <h3>SMS Consent Communication</h3>
               <p>
-                By opting in to SMS communications from Volz Method Piano
-                Lessons, you agree to receive text messages related to your
-                account, lesson reminders, promotional offers, and other
-                communications. Message frequency may vary. Message and data
-                rates may apply. You can opt out at any time by texting STOP.
-                For help, text HELP or contact us at 385-482-0122.
+                Phone numbers collected as part of the SMS consent process will
+                not be shared with third parties for marketing purposes.
               </p>
+
+              <h3>Types of SMS Communications</h3>
+              <p>
+                If you have consented to receive SMS messages from Volz Method
+                Piano Lessons, you may receive messages related to:
+              </p>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>Lesson reminders</li>
+                <li>Scheduling updates</li>
+                <li>Follow-up messages</li>
+                <li>Billing notifications</li>
+                <li>Promotions or offers (if opted in)</li>
+              </ul>
+              <p>
+                <strong>Example:</strong>
+                <br />
+                &ldquo;Hello, this is a reminder of your upcoming piano lesson
+                on Tuesday at 4:00 PM. Reply STOP to opt out at any time.&rdquo;
+              </p>
+
+              <h3>Message Frequency</h3>
+              <p>
+                Message frequency may vary depending on your interaction with
+                us.
+              </p>
+              <p>
+                <strong>Example:</strong>
+                <br />
+                You may receive up to 2&ndash;4 SMS messages per week related
+                to lessons, scheduling, or your account.
+              </p>
+
+              <h3>Potential Fees for SMS Messaging</h3>
+              <p>
+                Standard message and data rates may apply based on your
+                carrier&rsquo;s plan.
+              </p>
+
+              <h3>Opt-In Methods</h3>
+              <p>
+                You may opt in to receive SMS messages from Volz Method Piano
+                Lessons in the following ways:
+              </p>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>Verbally during a phone or in-person conversation</li>
+                <li>By submitting an online form on our website</li>
+                <li>By checking an SMS consent box on a form</li>
+                <li>By filling out a paper form</li>
+              </ul>
+
+              <h3>Opt-Out Method</h3>
+              <p>
+                You can opt out at any time by replying <strong>STOP</strong> to
+                any SMS message.
+                <br />
+                You may also contact us directly to be removed.
+              </p>
+
+              <h3>Help</h3>
+              <p>
+                If you are experiencing issues, reply <strong>HELP</strong> or
+                contact us at:
+              </p>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>
+                  Phone:{" "}
+                  <a href="tel:+13854820122">385-482-0122</a>
+                </li>
+                <li>
+                  Email:{" "}
+                  <a href="mailto:support@volzpiano.com">
+                    support@volzpiano.com
+                  </a>
+                </li>
+                <li>
+                  Website:{" "}
+                  <a href="https://www.volzpiano.com">
+                    https://www.volzpiano.com
+                  </a>
+                </li>
+              </ul>
+
+              <h3>Additional Options</h3>
+              <p>
+                You may choose not to receive SMS messages by not selecting the
+                SMS consent option on our forms.
+              </p>
+
+              <h3>Standard Messaging Disclosures</h3>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>Message and data rates may apply</li>
+                <li>You can opt out at any time by texting STOP</li>
+                <li>For help, text HELP or contact us directly</li>
+                <li>Message frequency may vary</li>
+              </ul>
 
               <h2>Contact Us</h2>
               <p>
-                If you have any questions about this Privacy Policy, You can
-                contact us by email at:{" "}
-                <a href="mailto:support@volzpiano.com">
-                  support@volzpiano.com
-                </a>
+                If you have any questions about this Privacy Policy, you can
+                contact us:
               </p>
+              <ul className="list-disc pl-6 my-4 space-y-1">
+                <li>
+                  Email:{" "}
+                  <a href="mailto:support@volzpiano.com">
+                    support@volzpiano.com
+                  </a>
+                </li>
+                <li>
+                  Phone:{" "}
+                  <a href="tel:+13854820122">385-482-0122</a>
+                </li>
+                <li>
+                  Website:{" "}
+                  <a href="https://www.volzpiano.com">
+                    https://www.volzpiano.com
+                  </a>
+                </li>
+              </ul>
             </div>
           </AnimatedSection>
         </div>

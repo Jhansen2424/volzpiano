@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import SmsConsent from "@/app/components/SmsConsent";
 
 const CALENDLY_URL = "https://calendly.com/volz-method-sales/piano_lessons_phone_consultation";
 
@@ -59,19 +60,26 @@ export default function ScheduleCallPage() {
         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent z-[1]" />
       </section>
 
-      {/* Calendly Embed */}
+      {/* Calendly + SMS consent side-by-side on desktop, stacked on mobile */}
       <section className="bg-white py-12 sm:py-20">
-        <div className="mx-auto max-w-4xl px-6 sm:px-12">
-          {/* Direct iframe — no widget.js dependency. Loads instantly and
-              works correctly on SPA back/forward navigation. Negative margin
-              on mobile lets it reach viewport edges. */}
-          <div className="-mx-6 overflow-hidden rounded-2xl border border-zinc-200 shadow-lg sm:mx-0">
-            <iframe
-              src={CALENDLY_URL}
-              title="Schedule a consultation"
-              className="w-full border-0"
-              style={{ height: "800px" }}
-            />
+        <div className="mx-auto max-w-6xl px-6 sm:px-12">
+          <div className="grid items-start gap-6 lg:grid-cols-[2fr_1fr] lg:gap-8">
+            {/* Direct iframe — no widget.js dependency. Loads instantly and
+                works correctly on SPA back/forward navigation. Negative
+                margin on mobile lets it reach viewport edges. */}
+            <div className="-mx-6 overflow-hidden rounded-2xl border border-zinc-200 shadow-lg sm:mx-0">
+              <iframe
+                src={CALENDLY_URL}
+                title="Schedule a consultation"
+                className="w-full border-0"
+                style={{ height: "800px" }}
+              />
+            </div>
+            {/* SmsConsent has its own mt-6 spacing for the stacked mobile case;
+                neutralize it on lg+ so it aligns with the iframe top edge. */}
+            <div className="lg:[&>div]:mt-0">
+              <SmsConsent />
+            </div>
           </div>
         </div>
       </section>
