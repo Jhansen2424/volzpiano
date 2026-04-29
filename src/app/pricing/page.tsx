@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
 import SmsConsent from "@/app/components/SmsConsent";
+import CalendlyEmbed from "@/app/components/CalendlyEmbed";
 
 /* ═══════════════════════════════════════════
    Rippling Piano Strings Animation (Hero)
@@ -282,6 +283,7 @@ const CALENDLY_URL = "https://calendly.com/volz-method-sales/piano_lessons_phone
 
 function ScheduleSection() {
   const [sectionRef, visible] = useInView<HTMLElement>({ threshold: 0.1 });
+  const [smsConsent, setSmsConsent] = useState(false);
 
   return (
     <section
@@ -345,18 +347,11 @@ function ScheduleSection() {
             transition: "all 0.7s ease-out 0.2s",
           }}
         >
-          <div className="relative -mx-6 overflow-hidden rounded-2xl border border-white/10 bg-white shadow-2xl sm:mx-0">
-            <iframe
-              src={CALENDLY_URL}
-              title="Schedule a consultation"
-              className="w-full border-0"
-              style={{ height: "820px" }}
-            />
-          </div>
+          <CalendlyEmbed url={CALENDLY_URL} height={820} gated={!smsConsent} />
           {/* SmsConsent has its own mt-6 spacing for the stacked mobile case;
               neutralize it on lg+ so it aligns with the iframe top edge. */}
           <div className="lg:[&>div]:mt-0">
-            <SmsConsent />
+            <SmsConsent checked={smsConsent} onChange={setSmsConsent} />
           </div>
         </div>
       </div>
