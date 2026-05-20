@@ -4,15 +4,59 @@ import MusicNotesHero from "./MusicNotesHero";
 const openPositions = [
   {
     title: "In-Home Piano Teacher",
-    pay: "$35–$45 per hour (while teaching)",
-    cities: ["Sandy", "Draper", "Cottonwood Heights", "Midvale"],
-    employmentType: "Part-time, 1099 contractor",
-  },
-  {
-    title: "Experienced In-Home Piano Teacher",
     pay: "$40–$45 per hour (while teaching)",
     cities: ["Sandy", "Draper", "Midvale", "Cottonwood Heights"],
-    employmentType: "Part-time, 1099 contractor",
+    employmentType: "Part-time",
+  },
+  {
+    title: "In-Home Piano Teacher",
+    pay: "$35–$40 per hour (while teaching)",
+    cities: ["Salt Lake City", "Millcreek", "Murray", "Holladay", "Taylorsville"],
+    employmentType: "Part-time",
+  },
+  {
+    title: "In-Home Piano Teacher",
+    pay: "$40–$45 per hour (while teaching)",
+    cities: ["West Jordan", "South Jordan", "Riverton", "Herriman", "Bluffdale"],
+    employmentType: "Part-time",
+  },
+  {
+    title: "In-Home Piano Teacher",
+    pay: "$40–$50 per hour (while teaching)",
+    cities: [
+      "North Salt Lake",
+      "Woods Cross",
+      "Bountiful",
+      "Centerville",
+      "Farmington",
+      "Kaysville",
+      "Layton",
+      "Syracuse",
+      "Clearfield",
+      "Clinton",
+      "Roy",
+      "Hooper",
+      "South Weber",
+    ],
+    employmentType: "Part-time",
+  },
+  {
+    title: "In-Home Piano Teacher",
+    pay: "$30–$40 per hour (while teaching)",
+    cities: ["Eagle Mountain", "Saratoga Springs", "Lehi"],
+    employmentType: "Part-time",
+  },
+  {
+    title: "In-Home Piano Teacher",
+    pay: "$30–$40 per hour (while teaching)",
+    cities: ["Lehi", "American Fork", "Cedar Hills", "Highland", "Alpine"],
+    employmentType: "Part-time",
+  },
+  {
+    title: "In-Home Piano Teacher",
+    pay: "$30–$35 per hour (while teaching)",
+    cities: ["Pleasant Grove", "Lindon", "Orem", "Vineyard"],
+    employmentType: "Part-time",
   },
 ];
 
@@ -35,9 +79,9 @@ export default function TeachingPositionsPage() {
             Open Positions
           </h2>
           <div className="space-y-4">
-            {openPositions.map((pos) => (
+            {openPositions.map((pos, i) => (
               <div
-                key={pos.title}
+                key={`${pos.title}-${pos.cities[0]}-${i}`}
                 className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
               >
                 <div className="mb-3 flex flex-wrap items-center gap-2">
