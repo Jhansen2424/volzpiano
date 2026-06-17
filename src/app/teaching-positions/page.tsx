@@ -10,12 +10,6 @@ const openPositions = [
   },
   {
     title: "In-Home Piano Teacher",
-    pay: "$35–$40 per hour (while teaching)",
-    cities: ["Salt Lake City", "Millcreek", "Murray", "Holladay", "Taylorsville"],
-    employmentType: "Part-time",
-  },
-  {
-    title: "In-Home Piano Teacher",
     pay: "$40–$45 per hour (while teaching)",
     cities: ["West Jordan", "South Jordan", "Riverton", "Herriman", "Bluffdale"],
     employmentType: "Part-time",
