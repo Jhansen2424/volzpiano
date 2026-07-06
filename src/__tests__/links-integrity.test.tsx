@@ -26,6 +26,7 @@ const VALID_ROUTES = [
   "/cart",
   "/checkout",
   "/my-account",
+  "/thank-you",
 ];
 
 function getAllTsxFiles(dir: string): string[] {
