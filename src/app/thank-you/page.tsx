@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import { useEffect, useState } from "react";
 
 export default function ThankYouPage() {
@@ -12,6 +13,21 @@ export default function ThankYouPage() {
 
   return (
     <main>
+      {/* Google Ads conversion tag — only loads on this thank-you page so it
+          fires once per completed booking. */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=AW-755139969"
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-755139969');
+        `}
+      </Script>
+
       {/* Hero */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-zinc-900 pt-40 pb-20">
         <div
