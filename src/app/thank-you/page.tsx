@@ -25,6 +25,14 @@ export default function ThankYouPage() {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'AW-755139969');
+
+          // Conversion event — fires once per thank-you page view (i.e. one
+          // completed Calendly booking). The label after the slash comes from
+          // the conversion action in Google Ads (Goals > Conversions > Tag
+          // setup). Replace the placeholder label below with the real one.
+          gtag('event', 'conversion', {
+              'send_to': 'AW-755139969/AbC-D_efG-h12_34-567'
+          });
         `}
       </Script>
 
