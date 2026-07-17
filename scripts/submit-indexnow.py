@@ -6,7 +6,7 @@ Usage:
     py scripts/submit-indexnow.py URL [URL2] # submit specific URLs only
 
 The IndexNow key file must be publicly served at:
-    https://volzpiano.com/<KEY>.txt
+    https://www.volzpiano.com/<KEY>.txt
 (That file lives in public/ and is deployed with the site.)
 
 Run this after deploying new content (new blog posts, new pages) to get
@@ -20,7 +20,7 @@ import sys
 import urllib.request
 from datetime import datetime, timezone
 
-SITE_URL = "https://volzpiano.com"
+SITE_URL = "https://www.volzpiano.com"
 INDEXNOW_KEY = "7cd660935209bac4d119e59a2680b8c6"
 INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow"
 
