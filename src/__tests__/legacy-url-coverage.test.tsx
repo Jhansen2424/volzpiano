@@ -1,6 +1,6 @@
 /**
  * Verifies that every URL from the legacy WordPress site
- * (https://volzpiano.com) exists as a real route on the new site at the
+ * (https://www.volzpiano.com) exists as a real route on the new site at the
  * EXACT same slug. No redirects allowed — slug parity must be preserved so
  * Google's index doesn't lose any of the legacy ranking signals.
  *
@@ -14,7 +14,7 @@ import blogSlugs from "../blog-slugs.json";
 
 type BlogEntry = { slug: string; date: string };
 
-// Snapshot of every URL on the live https://volzpiano.com page-sitemap as of
+// Snapshot of every URL on the live https://www.volzpiano.com page-sitemap as of
 // the audit (40 entries; trailing slashes stripped, leading slash dropped).
 const LEGACY_PAGES = [
   // Top-level pages

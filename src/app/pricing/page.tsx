@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
-import SmsConsent from "@/app/components/SmsConsent";
 
 /* ═══════════════════════════════════════════
    Rippling Piano Strings Animation (Hero)
@@ -334,19 +333,17 @@ function ScheduleSection() {
           </p>
         </div>
 
-        {/* Calendly + SMS consent side-by-side on desktop, stacked on mobile.
-            Negative margin on mobile lets the 320px-min-width widget bleed
-            all the way to the viewport edge so it never overflows. */}
+        {/* Calendly — centered, single column. Negative margin on mobile
+            lets the 320px-min-width widget bleed all the way to the
+            viewport edge so it never overflows. */}
         <div
-          className="grid items-start gap-6 lg:grid-cols-[2fr_1fr] lg:gap-8"
+          className="mx-auto max-w-4xl"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(24px)",
             transition: "all 0.7s ease-out 0.2s",
           }}
         >
-          {/* Negative margin on mobile lets the 320px-min-width widget bleed
-              all the way to the viewport edge so it never overflows. */}
           <div className="relative -mx-6 overflow-hidden rounded-2xl border border-white/10 bg-white shadow-2xl sm:mx-0">
             <iframe
               src={CALENDLY_URL}
@@ -354,11 +351,6 @@ function ScheduleSection() {
               className="w-full border-0"
               style={{ height: "820px" }}
             />
-          </div>
-          {/* SmsConsent has its own mt-6 spacing for the stacked mobile case;
-              neutralize it on lg+ so it aligns with the iframe top edge. */}
-          <div className="lg:[&>div]:mt-0">
-            <SmsConsent />
           </div>
         </div>
       </div>

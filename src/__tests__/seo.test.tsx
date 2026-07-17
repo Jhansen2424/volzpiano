@@ -12,7 +12,7 @@ import { metadata as studentPortalMetadata } from "../app/student-portal/layout"
 import { metadata as privacyPolicyMetadata } from "../app/privacy-policy-2/layout";
 import blogSlugs from "../blog-slugs.json";
 
-const SITE_URL = "https://volzpiano.com";
+const SITE_URL = "https://www.volzpiano.com";
 
 describe("Root metadata", () => {
   it("has metadataBase pointing at the canonical site URL", () => {

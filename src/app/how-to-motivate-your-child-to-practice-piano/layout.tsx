@@ -32,18 +32,18 @@ const articleJsonLd = {
   author: {
     "@type": "Organization",
     name: "Volz Method Piano Lessons",
-    url: "https://volzpiano.com",
+    url: "https://www.volzpiano.com",
   },
   publisher: {
     "@type": "Organization",
     name: "Volz Method Piano Lessons",
-    url: "https://volzpiano.com",
+    url: "https://www.volzpiano.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://volzpiano.com/icon.svg",
+      url: "https://www.volzpiano.com/icon.svg",
     },
   },
-  mainEntityOfPage: `https://volzpiano.com${CANONICAL}`,
+  mainEntityOfPage: `https://www.volzpiano.com${CANONICAL}`,
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
