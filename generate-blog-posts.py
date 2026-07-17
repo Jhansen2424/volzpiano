@@ -74,7 +74,7 @@ def escape_for_jsx_text(s: str) -> str:
 
 PROJECT_ROOT = _PROJECT_ROOT
 
-SITE_URL = "https://volzpiano.com"
+SITE_URL = "https://www.volzpiano.com"
 MAX_DESCRIPTION_LENGTH = 160  # SEO meta description sweet spot
 
 
