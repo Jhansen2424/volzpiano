@@ -1,8 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import Script from "next/script";
 import { useEffect, useState } from "react";
+
+// "Book appointment" conversion action in Google Ads (id 6558605213). The
+// base tag itself loads site-wide from the root layout — it must be on the
+// landing pages to capture the gclid, not here.
+const ADS_BOOKING_SEND_TO = "AW-755139969/ozLyCJ2_sbcYEIGLiugC";
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+  }
+}
 
 export default function ThankYouPage() {
   const [visible, setVisible] = useState(false);
@@ -11,30 +21,20 @@ export default function ThankYouPage() {
     return () => clearTimeout(t);
   }, []);
 
+  // Fire once per thank-you view (one completed booking). Pushing an
+  // arguments object onto dataLayer is safe regardless of whether gtag.js
+  // has finished loading — the queue is drained when it does.
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(..._args: unknown[]) {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer!.push(arguments);
+    }
+    gtag("event", "conversion", { send_to: ADS_BOOKING_SEND_TO });
+  }, []);
+
   return (
     <main>
-      {/* Google Ads conversion tag — only loads on this thank-you page so it
-          fires once per completed booking. */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=AW-755139969"
-        strategy="afterInteractive"
-      />
-      <Script id="gtag-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-755139969');
-
-          // Conversion event — fires once per thank-you page view (i.e. one
-          // completed Calendly booking). The label after the slash comes from
-          // the conversion action in Google Ads (Goals > Conversions > Tag
-          // setup). Replace the placeholder label below with the real one.
-          gtag('event', 'conversion', {
-              'send_to': 'AW-755139969/AbC-D_efG-h12_34-567'
-          });
-        `}
-      </Script>
 
       {/* Hero */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-zinc-900 pt-40 pb-20">

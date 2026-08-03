@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -133,6 +134,21 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        {/* Google Ads base tag — must load on EVERY page, not just /thank-you.
+            Ad clicks land on the homepage or /ppc-b-test with a ?gclid= param;
+            the base tag stores it in the _gcl_aw cookie. Without that capture
+            the conversion fired later on /thank-you has nothing to attribute
+            to, which is exactly how tracking silently died in April 2026. */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-755139969"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-base" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'AW-755139969');`}
+        </Script>
       </body>
     </html>
   );
