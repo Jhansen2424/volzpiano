@@ -40,6 +40,11 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  // PPC landing pages under /lp are intentionally distraction-free: no site
+  // nav so the only path forward is the booking CTA. (Guard placed after all
+  // hooks to satisfy the rules of hooks.)
+  if (pathname === "/lp" || pathname?.startsWith("/lp/")) return null;
+
   return (
     <nav className="fixed top-0 left-0 z-40 w-full backdrop-blur-md border-b border-white/10" style={{ background: "linear-gradient(135deg, rgba(26,16,53,0.9) 0%, rgba(45,27,105,0.9) 50%, rgba(99,67,212,0.9) 100%)" }}>
       {/* ── Scholarship banner ── */}
