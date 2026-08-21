@@ -38,12 +38,12 @@ const BENEFITS = [
     body: "Kids learn faster and feel more comfortable playing in their own space — right where they'll practice all week.",
   },
   {
-    title: "One consistent teacher",
-    body: "The same teacher every week — trained three months in the Volz Method before their very first lesson.",
+    title: "One teacher your child bonds with",
+    body: "The same friendly face every week — someone who gets to know your child, trained three months in the Volz Method before their very first lesson.",
   },
   {
     title: "No contracts, ever",
-    body: "Month-to-month billing. Adjust, pause, or stop whenever life changes. Nothing to lock into.",
+    body: "Month-to-month billing. Life with kids changes fast — adjust, pause, or stop whenever you need. Nothing to lock into.",
   },
 ];
 
@@ -78,9 +78,10 @@ export default function VariantAInHome() {
               className="mt-5 max-w-xl text-lg text-white/70"
               style={{ animation: "fadeSlideIn 0.6s ease-out 0.16s both" }}
             >
-              A trained Volz Method teacher comes to your house. You never fight
-              traffic, wrangle siblings, or sit in a waiting room. Book a free
-              15-minute call and get your exact price today.
+              A trained Volz Method teacher comes to you — no loading everyone in
+              the car, no cross-town drive, no waiting-room hour while dinner
+              waits. The lesson happens at your own piano. Book a free 15-minute
+              call and get your exact price today.
             </p>
 
             {/* Price + rating inline */}
@@ -124,11 +125,12 @@ export default function VariantAInHome() {
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <div className="mb-12 max-w-2xl">
             <h2 className="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
-              The easiest piano lessons you&rsquo;ll ever schedule
+              The easiest thing you&rsquo;ll add to the calendar all year
             </h2>
             <p className="mt-4 text-lg text-zinc-600">
-              Everything about the Volz Method is built to remove friction — so
-              your child actually starts, and keeps going.
+              Everything about the Volz Method is built to fit into an
+              already-full week — so your child actually starts, and keeps going,
+              without one more thing to drive to.
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">

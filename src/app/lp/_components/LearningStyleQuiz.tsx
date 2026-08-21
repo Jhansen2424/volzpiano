@@ -131,8 +131,9 @@ export default function LearningStyleQuiz() {
             What kind of little musician is your child?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-zinc-600">
-            The Volz Method teaches to how each child learns. Answer four quick
-            questions and see where <em>your</em> child would shine.
+            You already know your child better than anyone. Answer four quick
+            questions and we&rsquo;ll show you where <em>they</em> would shine
+            &mdash; and exactly how we&rsquo;d teach them.
           </p>
         </div>
 

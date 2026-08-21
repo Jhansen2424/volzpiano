@@ -92,6 +92,10 @@ export const FAQS: { q: string; a: string }[] = [
     a: "Perfect — most of our students start as complete beginners. We teach to how your child naturally learns, so they get real wins early and actually enjoy it.",
   },
   {
+    q: "I'm not musical myself — can I still help my child?",
+    a: "Absolutely. Plenty of the parents we work with have never touched a piano. Each week your teacher leaves a simple, specific practice plan, so you never have to be the music expert — you just help your child show up and cheer them on.",
+  },
+  {
     q: "What happens on the free call?",
     a: "It takes about 15 minutes. We answer your questions, give you an exact price for your area, and — if you're ready — set you up with a teacher. No pressure either way.",
   },

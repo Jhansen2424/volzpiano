@@ -109,7 +109,7 @@ export function OfferCard() {
 }
 
 /* ── Testimonials ────────────────────────────────────────────────────── */
-export function Testimonials({ heading = "Parents and kids love it" }: { heading?: string }) {
+export function Testimonials({ heading = "Moms and kids love it" }: { heading?: string }) {
   return (
     <section className="bg-cream py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-6 sm:px-10">
@@ -145,7 +145,7 @@ export function Faq() {
     <section className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
         <h2 className="mb-10 text-center text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
-          Questions parents ask
+          Questions moms ask us
         </h2>
         <div className="divide-y divide-zinc-200 rounded-2xl border border-zinc-200">
           {FAQS.map((f) => (
@@ -176,7 +176,7 @@ export function Faq() {
 export function BookingSection({
   eyebrow = "The next step",
   heading = "Book your free 15-minute call",
-  sub = "Pick a time below. We'll answer your questions, give you an exact price, and — if you're ready — set you up with a teacher. No pressure.",
+  sub = "Pick a time below — we keep it to 15 focused minutes because we know your day is full. We'll answer your questions, give you an exact price, and, if you're ready, match your child with a teacher. No pressure.",
 }: {
   eyebrow?: string;
   heading?: string;

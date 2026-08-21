@@ -211,7 +211,7 @@ export default function PlayableKeyboard() {
           <p className="mx-auto mt-3 max-w-xl text-zinc-600">
             Pick a song and follow the glowing keys. This is exactly how we get
             kids playing real music on day one &mdash; hand your phone to your
-            child and watch.
+            child and watch their face light up.
           </p>
         </div>
 
