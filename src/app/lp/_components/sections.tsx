@@ -109,7 +109,7 @@ export function OfferCard() {
 }
 
 /* ── Testimonials ────────────────────────────────────────────────────── */
-export function Testimonials({ heading = "Moms and kids love it" }: { heading?: string }) {
+export function Testimonials({ heading = "Parents and kids love it" }: { heading?: string }) {
   return (
     <section className="bg-cream py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-6 sm:px-10">
@@ -145,7 +145,7 @@ export function Faq() {
     <section className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
         <h2 className="mb-10 text-center text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
-          Questions moms ask us
+          Questions parents ask us
         </h2>
         <div className="divide-y divide-zinc-200 rounded-2xl border border-zinc-200">
           {FAQS.map((f) => (
