@@ -199,7 +199,7 @@ export default function PlayableKeyboard() {
   const KEY_H = "h-40 sm:h-48";
 
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-cream py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
         <div className="mb-8 text-center">
           <span className="text-xs font-bold uppercase tracking-[0.18em] text-accent">
@@ -271,7 +271,7 @@ export default function PlayableKeyboard() {
           onKeyDown={onKeyDown}
           role="group"
           aria-label="Playable piano keyboard. Use A S D F G H J K L keys or tap."
-          className="relative mx-auto flex w-full max-w-2xl rounded-b-xl rounded-t-md bg-zinc-900 p-2 shadow-xl outline-none ring-accent/50 focus-visible:ring-2"
+          className="lp-plum relative mx-auto flex w-full max-w-2xl rounded-b-xl rounded-t-md p-2 shadow-warm-lg outline-none ring-accent/50 focus-visible:ring-2"
           style={{ touchAction: "none" }}
         >
           {/* White keys */}
@@ -325,7 +325,7 @@ export default function PlayableKeyboard() {
 
         {/* Completion celebration */}
         {done && (
-          <div className="lp-fade-scale mx-auto mt-8 max-w-xl rounded-2xl border border-accent/25 bg-cream p-6 text-center shadow-sm">
+          <div className="lp-fade-scale mx-auto mt-8 max-w-xl rounded-3xl border border-accent/20 bg-white p-6 text-center shadow-warm">
             <p className="text-lg font-extrabold text-zinc-900">
               🎉 You just played {song ? SONGS[song].name : "a song"}!
             </p>

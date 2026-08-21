@@ -137,7 +137,7 @@ export default function LearningStyleQuiz() {
           </p>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-lg">
+        <div className="overflow-hidden rounded-3xl border border-[#efe1d2] bg-white shadow-warm-lg">
           {/* progress */}
           <div className="h-1.5 w-full bg-zinc-100">
             <div

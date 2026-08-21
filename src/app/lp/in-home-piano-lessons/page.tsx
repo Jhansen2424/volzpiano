@@ -53,10 +53,14 @@ export default function VariantAInHome() {
       <LpAnalytics variant="A" name="in-home-piano-lessons" />
 
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-zinc-900">
+      <section className="lp-hero-plum relative overflow-hidden">
         <div
-          className="pointer-events-none absolute left-1/2 top-0 h-80 w-[560px] -translate-x-1/2 rounded-full opacity-20 blur-[130px]"
-          style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }}
+          className="pointer-events-none absolute left-1/2 top-0 h-80 w-[560px] -translate-x-1/2 rounded-full opacity-25 blur-[130px]"
+          style={{ background: "radial-gradient(circle, #8a5cff 0%, transparent 70%)" }}
+        />
+        <div
+          className="pointer-events-none absolute right-0 bottom-0 h-72 w-[420px] translate-x-1/4 rounded-full opacity-20 blur-[120px]"
+          style={{ background: "radial-gradient(circle, #f0a860 0%, transparent 70%)" }}
         />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 sm:px-10 lg:grid-cols-2 lg:py-24">
           {/* Copy */}
@@ -121,7 +125,7 @@ export default function VariantAInHome() {
       <TrustBar />
 
       {/* ── Benefits ── */}
-      <section className="bg-white py-16 sm:py-24">
+      <section className="bg-blush py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <div className="mb-12 max-w-2xl">
             <h2 className="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
@@ -135,7 +139,7 @@ export default function VariantAInHome() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
             {BENEFITS.map((b) => (
-              <div key={b.title} className="rounded-2xl border border-zinc-100 bg-cream p-7 shadow-sm">
+              <div key={b.title} className="rounded-3xl border border-[#efe1d2] bg-white p-7 shadow-warm">
                 <h3 className="mb-2 text-lg font-bold text-zinc-900">{b.title}</h3>
                 <p className="text-sm leading-relaxed text-zinc-600">{b.body}</p>
               </div>

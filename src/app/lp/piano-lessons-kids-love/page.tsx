@@ -72,7 +72,7 @@ export default function VariantBKidsLove() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/85 via-zinc-900/70 to-zinc-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1e1226]/88 via-[#2a1a2e]/72 to-[#33223a]/40" />
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
           <div className="max-w-2xl" style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}>
             <p
@@ -120,7 +120,7 @@ export default function VariantBKidsLove() {
       <TrustBar />
 
       {/* ── Problem → Solution ── */}
-      <section className="bg-white py-16 sm:py-24">
+      <section className="bg-blush py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Pain */}
@@ -182,7 +182,7 @@ export default function VariantBKidsLove() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {PILLARS.map((p) => (
-              <div key={p.title} className="rounded-2xl border border-zinc-100 bg-white p-7 shadow-sm">
+              <div key={p.title} className="rounded-3xl border border-[#efe6d8] bg-white p-7 shadow-warm">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-xl font-extrabold text-white">
                   {p.letter}
                 </div>
@@ -199,7 +199,7 @@ export default function VariantBKidsLove() {
       <Testimonials heading="Kids who found their thing" />
 
       {/* ── Teacher-training trust nugget ── */}
-      <section className="bg-white py-14">
+      <section className="bg-blush py-14">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="text-xl font-semibold leading-relaxed text-zinc-800 sm:text-2xl">
             Every Volz Method teacher trains for{" "}

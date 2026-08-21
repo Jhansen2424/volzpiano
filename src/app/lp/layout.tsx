@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 
 export default function LpLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-white pb-20 lg:pb-0">
+    <div className="min-h-screen bg-cream pb-20 lg:pb-0">
       {/* Slim top bar */}
-      <header className="border-b border-zinc-200 bg-white">
+      <header className="border-b border-[#ecdfce] bg-cream/90 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
           <span className="text-lg font-extrabold tracking-tight text-zinc-900">
             Volz<span className="text-accent">Piano</span>
@@ -44,7 +44,7 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
       {children}
 
       {/* Minimal footer */}
-      <footer className="border-t border-zinc-200 bg-white py-8">
+      <footer className="border-t border-[#ecdfce] bg-cream py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 text-center">
           <span className="text-sm font-bold text-zinc-700">
             Volz Method Piano Lessons · In-home lessons across Utah &amp; Idaho
@@ -57,7 +57,7 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
       </footer>
 
       {/* Sticky mobile CTA bar — zero JS, anchor + tel links only */}
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-200 bg-white/95 backdrop-blur-sm shadow-[0_-4px_20px_rgba(0,0,0,0.08)] lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-[#ecdfce] bg-cream/95 backdrop-blur-sm shadow-[0_-4px_20px_rgba(120,80,45,0.10)] lg:hidden">
         <div className="mx-auto flex max-w-md items-center gap-3 px-4 py-3">
           <a
             href="#book"

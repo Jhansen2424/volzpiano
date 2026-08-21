@@ -200,3 +200,27 @@ body {
     animation: none;
   }
 }
+
+/* ── Warm "mom" landing-page treatment ────────────────────────────────
+   Warm-tinted shadows (a hint of amber-brown instead of cool black) and
+   warm deep-plum grounds so the dark sections feel cozy, not corporate. */
+.shadow-warm {
+  box-shadow: 0 1px 2px rgba(90, 55, 30, 0.05), 0 14px 30px -14px rgba(120, 80, 45, 0.18);
+}
+.shadow-warm-lg {
+  box-shadow: 0 2px 6px rgba(90, 55, 30, 0.06), 0 26px 50px -18px rgba(120, 80, 45, 0.22);
+}
+.lp-hero-plum {
+  background: linear-gradient(155deg, #35243f 0%, #251a2f 55%, #2c1d30 100%);
+}
+.lp-plum {
+  background: linear-gradient(180deg, #2b1d34 0%, #211628 100%);
+}
+/* Soft warm blob for section backdrops */
+.lp-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.5;
+  pointer-events: none;
+}

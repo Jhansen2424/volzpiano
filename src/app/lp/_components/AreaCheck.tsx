@@ -42,9 +42,9 @@ export default function AreaCheck() {
   }
 
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-cream py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
-        <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-cream shadow-lg">
+        <div className="overflow-hidden rounded-3xl border border-[#efe1d2] bg-white shadow-warm-lg">
           <div className="border-b border-zinc-200 px-7 py-6 sm:px-9">
             <span className="text-xs font-bold uppercase tracking-[0.18em] text-accent">
               30-second check
@@ -117,7 +117,7 @@ export default function AreaCheck() {
             {/* Result */}
             {done && (
               <div
-                className="mt-8 rounded-2xl border border-accent/25 bg-white p-6 shadow-sm"
+                className="mt-8 rounded-3xl border border-accent/20 bg-cream p-6 shadow-warm"
                 role="status"
                 style={{ animation: "fadeScaleIn 0.4s ease-out both" }}
               >

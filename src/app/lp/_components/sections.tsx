@@ -23,7 +23,7 @@ import { BookButton, CallLink, ChipIcon, Stars } from "./ui";
 /* ── Trust bar ───────────────────────────────────────────────────────── */
 export function TrustBar() {
   return (
-    <section className="border-y border-zinc-200 bg-white">
+    <section className="border-y border-[#ecdfce] bg-cream">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6 py-4 sm:justify-between">
         {TRUST_CHIPS.map((chip) => (
           <div key={chip.label} className="flex items-center gap-2 text-sm font-semibold text-zinc-700">
@@ -51,7 +51,7 @@ export function HowItWorks() {
         </div>
         <div className="grid gap-6 sm:grid-cols-3">
           {HOW_IT_WORKS.map((s) => (
-            <div key={s.step} className="relative rounded-2xl border border-zinc-100 bg-white p-7 shadow-sm">
+            <div key={s.step} className="relative rounded-3xl border border-[#efe6d8] bg-white p-7 shadow-warm">
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent text-lg font-extrabold text-white">
                 {s.step}
               </div>
@@ -68,10 +68,10 @@ export function HowItWorks() {
 /* ── Offer card ──────────────────────────────────────────────────────── */
 export function OfferCard() {
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-blush py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
-        <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-b from-white to-cream shadow-lg">
-          <div className="border-b border-zinc-100 bg-zinc-900 px-8 py-10 text-center">
+        <div className="overflow-hidden rounded-3xl border border-[#efe1d2] bg-gradient-to-b from-white to-cream shadow-warm-lg">
+          <div className="lp-plum border-b border-white/5 px-8 py-10 text-center">
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-brand">In-home piano lessons</p>
             <div className="mt-3 flex items-baseline justify-center gap-2">
               <span className="text-5xl font-extrabold text-white sm:text-6xl">{PRICE}</span>
@@ -122,7 +122,7 @@ export function Testimonials({ heading = "Parents and kids love it" }: { heading
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {TESTIMONIALS.map((t) => (
-            <figure key={t.name} className="flex flex-col rounded-2xl border border-zinc-100 bg-white p-7 shadow-sm">
+            <figure key={t.name} className="flex flex-col rounded-3xl border border-[#efe6d8] bg-white p-7 shadow-warm">
               <Stars className="h-4 w-4" />
               <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-zinc-700 italic">
                 &ldquo;{t.quote}&rdquo;
@@ -142,12 +142,12 @@ export function Testimonials({ heading = "Parents and kids love it" }: { heading
 /* ── FAQ (zero-JS <details> accordion) ───────────────────────────────── */
 export function Faq() {
   return (
-    <section className="bg-white py-16 sm:py-24">
+    <section className="bg-blush py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
         <h2 className="mb-10 text-center text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
           Questions parents ask us
         </h2>
-        <div className="divide-y divide-zinc-200 rounded-2xl border border-zinc-200">
+        <div className="divide-y divide-[#efe1d2] rounded-3xl border border-[#efe1d2] bg-white shadow-warm">
           {FAQS.map((f) => (
             <details key={f.q} className="group px-6">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-semibold text-zinc-900 marker:content-[''] [&::-webkit-details-marker]:hidden">
@@ -183,7 +183,7 @@ export function BookingSection({
   sub?: string;
 }) {
   return (
-    <section id="book" className="scroll-mt-20 bg-zinc-900 py-16 sm:py-24">
+    <section id="book" className="lp-plum scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-4xl px-6 sm:px-10">
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">{eyebrow}</span>
