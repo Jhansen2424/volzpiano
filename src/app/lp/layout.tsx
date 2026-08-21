@@ -61,12 +61,14 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
         <div className="mx-auto flex max-w-md items-center gap-3 px-4 py-3">
           <a
             href="#book"
+            data-cta="sticky_bar"
             className="flex-1 rounded-full bg-cta px-5 py-3 text-center text-sm font-bold text-white shadow-md"
           >
             Book Free Call
           </a>
           <a
             href={PHONE_HREF}
+            data-cta="sticky_bar"
             aria-label={`Call ${PHONE_DISPLAY}`}
             className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-accent text-accent"
           >

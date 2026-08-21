@@ -10,6 +10,11 @@ import {
 } from "../_components/sections";
 import { BookButton, CallLink, Stars } from "../_components/ui";
 import { RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
+import LpAnalytics from "../_components/LpAnalytics";
+import CityText from "../_components/CityText";
+import AreaCheck from "../_components/AreaCheck";
+import PlayableKeyboard from "../_components/PlayableKeyboard";
+import LearningStyleQuiz from "../_components/LearningStyleQuiz";
 
 /**
  * VARIANT B — "Outcome / method-forward".
@@ -55,12 +60,7 @@ const PILLARS = [
 export default function VariantBKidsLove() {
   return (
     <main>
-      <script
-        dangerouslySetInnerHTML={{
-          __html:
-            "window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'lp_view',lp_variant:'B',lp_name:'piano-lessons-kids-love'});",
-        }}
-      />
+      <LpAnalytics variant="B" name="piano-lessons-kids-love" />
 
       {/* ── Hero (emotional, photo-led) ── */}
       <section className="relative flex min-h-[70vh] items-center overflow-hidden bg-zinc-900">
@@ -95,7 +95,7 @@ export default function VariantBKidsLove() {
               Most kids quit piano because they&rsquo;re forced to learn one way.
               The Volz Method teaches the music your child <em>wants</em> to play
               — tailored to how their brain actually learns. In-home, across{" "}
-              {SERVICE_AREA}.
+              <CityText fallback={SERVICE_AREA} />.
             </p>
             <div
               className="mt-6 flex items-center gap-3"
@@ -110,7 +110,7 @@ export default function VariantBKidsLove() {
               className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center"
               style={{ animation: "fadeSlideIn 0.6s ease-out 0.32s both" }}
             >
-              <BookButton label="Book My Free Call" />
+              <BookButton label="Book My Free Call" source="hero" />
               <CallLink />
             </div>
           </div>
@@ -194,6 +194,8 @@ export default function VariantBKidsLove() {
         </div>
       </section>
 
+      <LearningStyleQuiz />
+
       <Testimonials heading="Kids who found their thing" />
 
       {/* ── Teacher-training trust nugget ── */}
@@ -207,6 +209,8 @@ export default function VariantBKidsLove() {
         </div>
       </section>
 
+      <PlayableKeyboard />
+      <AreaCheck />
       <OfferCard />
       <HowItWorks />
       <BookingSection heading="Book your free 15-minute call" />

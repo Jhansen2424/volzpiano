@@ -10,6 +10,11 @@ import {
 } from "../_components/sections";
 import { BookButton, CallLink, Stars } from "../_components/ui";
 import { PRICE, RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
+import LpAnalytics from "../_components/LpAnalytics";
+import CityText from "../_components/CityText";
+import AreaCheck from "../_components/AreaCheck";
+import PlayableKeyboard from "../_components/PlayableKeyboard";
+import LearningStyleQuiz from "../_components/LearningStyleQuiz";
 
 /**
  * VARIANT A — "Convenience / offer-forward".
@@ -45,13 +50,7 @@ const BENEFITS = [
 export default function VariantAInHome() {
   return (
     <main>
-      {/* dataLayer tag so GTM/GA can attribute this landing-page variant later */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html:
-            "window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'lp_view',lp_variant:'A',lp_name:'in-home-piano-lessons'});",
-        }}
-      />
+      <LpAnalytics variant="A" name="in-home-piano-lessons" />
 
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-zinc-900">
@@ -66,7 +65,7 @@ export default function VariantAInHome() {
               className="text-sm font-bold uppercase tracking-[0.18em] text-brand"
               style={{ animation: "fadeSlideIn 0.6s ease-out both" }}
             >
-              In-Home Piano Lessons · {SERVICE_AREA}
+              In-Home Piano Lessons · <CityText fallback={SERVICE_AREA} />
             </p>
             <h1
               className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
@@ -106,7 +105,7 @@ export default function VariantAInHome() {
               className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center"
               style={{ animation: "fadeSlideIn 0.6s ease-out 0.32s both" }}
             >
-              <BookButton label="Book My Free Call" />
+              <BookButton label="Book My Free Call" source="hero" />
               <CallLink />
             </div>
           </div>
@@ -143,9 +142,12 @@ export default function VariantAInHome() {
         </div>
       </section>
 
+      <AreaCheck />
       <OfferCard />
+      <PlayableKeyboard />
       <HowItWorks />
       <Testimonials />
+      <LearningStyleQuiz />
       <BookingSection />
       <Faq />
     </main>

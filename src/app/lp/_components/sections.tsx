@@ -6,8 +6,8 @@
  * native lazy-loaded iframe, so the whole page ships as static HTML.
  */
 import Image from "next/image";
+import BookingEmbed from "./BookingEmbed";
 import {
-  CALENDLY_URL,
   FAQS,
   HOW_IT_WORKS,
   PRICE,
@@ -193,15 +193,7 @@ export function BookingSection({
             <CallLink />
           </div>
         </div>
-        <div className="relative -mx-6 overflow-hidden rounded-2xl border border-white/10 bg-white shadow-2xl sm:mx-0">
-          <iframe
-            src={CALENDLY_URL}
-            title="Schedule your free consultation"
-            loading="lazy"
-            className="w-full border-0"
-            style={{ height: "820px" }}
-          />
-        </div>
+        <BookingEmbed height={820} />
       </div>
     </section>
   );

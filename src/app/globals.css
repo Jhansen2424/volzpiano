@@ -179,3 +179,24 @@ body {
     transform: translateY(-6px);
   }
 }
+
+/* ── Landing-page interactive modules ──────────────────────────────────
+   Pulsing ring used to point at the next key in the guided keyboard. */
+@keyframes lpKeyPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 67, 212, 0.55); }
+  50% { box-shadow: 0 0 0 7px rgba(99, 67, 212, 0); }
+}
+
+/* Reusable one-shot reveals for the quiz / area check / keyboard, disabled
+   for visitors who prefer reduced motion. */
+.lp-fade-slide { animation: fadeSlideIn 0.4s ease-out both; }
+.lp-fade-scale { animation: fadeScaleIn 0.4s ease-out both; }
+.lp-key-pulse { animation: lpKeyPulse 1.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-fade-slide,
+  .lp-fade-scale,
+  .lp-key-pulse {
+    animation: none;
+  }
+}

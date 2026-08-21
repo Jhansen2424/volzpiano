@@ -72,15 +72,18 @@ export function BookButton({
   label = "Book My Free Call",
   size = "lg",
   className = "",
+  source = "generic",
 }: {
   label?: string;
   size?: "lg" | "md";
   className?: string;
+  source?: string;
 }) {
   const pad = size === "lg" ? "px-9 py-4 text-lg" : "px-6 py-3 text-base";
   return (
     <a
       href="#book"
+      data-cta={source}
       className={`group inline-flex items-center justify-center gap-2 rounded-full bg-cta ${pad} font-bold text-white shadow-xl shadow-cta/20 transition-all duration-300 hover:bg-cta-hover hover:-translate-y-0.5 hover:shadow-2xl ${className}`}
     >
       {label}
@@ -95,6 +98,7 @@ export function CallLink({ className = "", muted = false }: { className?: string
   return (
     <a
       href={PHONE_HREF}
+      data-cta="call_link"
       className={`inline-flex items-center gap-2 font-semibold transition-colors ${
         muted ? "text-zinc-500 hover:text-zinc-800" : "text-white/80 hover:text-white"
       } ${className}`}
