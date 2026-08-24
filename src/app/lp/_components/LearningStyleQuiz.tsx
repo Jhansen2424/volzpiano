@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track, trackOnce } from "./track";
 
 /**
@@ -89,6 +89,19 @@ export default function LearningStyleQuiz() {
   const scores = useRef<Record<Pillar, number>>({ H: 0, R: 0, C: 0, A: 0 });
   const [result, setResult] = useState<Pillar | null>(null);
   const liveRef = useRef<HTMLDivElement>(null);
+  const regionRef = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
+
+  // Move focus into the new question/result on change (but not on first mount,
+  // which would hijack focus / scroll on page load) so keyboard and screen-
+  // reader users continue from the fresh content.
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    regionRef.current?.focus();
+  }, [step, result]);
 
   function choose(pillar: Pillar) {
     trackOnce("quiz_start", "lp_quiz_start");
@@ -146,7 +159,7 @@ export default function LearningStyleQuiz() {
             />
           </div>
 
-          <div className="p-7 sm:p-9">
+          <div ref={regionRef} tabIndex={-1} className="p-7 outline-none sm:p-9">
             <div ref={liveRef} aria-live="polite" className="sr-only">
               {result
                 ? `Result: ${RESULTS[result].title}`
@@ -155,7 +168,7 @@ export default function LearningStyleQuiz() {
 
             {!result ? (
               <div key={step} className="lp-fade-slide">
-                <p className="mb-1 text-xs font-bold uppercase tracking-wider text-zinc-400">
+                <p className="mb-1 text-xs font-bold uppercase tracking-wider text-zinc-500">
                   Question {step + 1} of {QUESTIONS.length}
                 </p>
                 <h3 className="mb-6 text-xl font-bold leading-snug text-zinc-900">

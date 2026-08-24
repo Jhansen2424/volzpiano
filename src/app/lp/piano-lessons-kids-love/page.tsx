@@ -5,9 +5,9 @@ import {
   Faq,
   HowItWorks,
   OfferCard,
-  Testimonials,
   TrustBar,
 } from "../_components/sections";
+import SocialProof from "../_components/SocialProof";
 import { BookButton, CallLink, Stars } from "../_components/ui";
 import { RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
 import LpAnalytics from "../_components/LpAnalytics";
@@ -66,7 +66,7 @@ export default function VariantBKidsLove() {
       {/* ── Hero (emotional, photo-led) ── */}
       <section className="relative flex min-h-[70vh] items-center overflow-hidden bg-zinc-900">
         <Image
-          src="/hero-bg.jpg"
+          src="/hero-bg-lp.jpg"
           alt="A child playing piano at home during an in-home lesson"
           fill
           priority
@@ -199,7 +199,7 @@ export default function VariantBKidsLove() {
 
       <LearningStyleQuiz />
 
-      <Testimonials heading="Kids who found their thing" />
+      <SocialProof heading="Kids who found their thing" />
 
       {/* ── Teacher-training trust nugget ── */}
       <section className="bg-blush py-14">

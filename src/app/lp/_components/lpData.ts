@@ -96,6 +96,10 @@ export const FAQS: { q: string; a: string }[] = [
     a: "Absolutely. Plenty of the parents we work with have never touched a piano. Each week your teacher leaves a simple, specific practice plan, so you never have to be the music expert — you just help your child show up and cheer them on.",
   },
   {
+    q: "How do you choose your teachers?",
+    a: "Every Volz Method teacher trains for three months in the method before their first lesson, and your child keeps the same teacher every week — someone who really gets to know them. Want the details on how we select and match teachers to your family? Just ask on your free call.",
+  },
+  {
     q: "What happens on the free call?",
     a: "It takes about 15 minutes. We answer your questions, give you an exact price for your area, and — if you're ready — set you up with a teacher. No pressure either way.",
   },

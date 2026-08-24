@@ -258,7 +258,7 @@ export default function PlayableKeyboard() {
 
         {/* Guidance line */}
         {song && !done && (
-          <p className="mb-3 text-center text-sm font-semibold text-zinc-500">
+          <p aria-live="polite" className="mb-3 text-center text-sm font-semibold text-zinc-500">
             {demoing
               ? `Listen to ${SONGS[song].name}…`
               : `Follow the glowing key — note ${idx + 1} of ${SONGS[song].notes.length}`}
@@ -319,13 +319,13 @@ export default function PlayableKeyboard() {
             );
           })}
         </div>
-        <p className="mt-3 text-center text-xs text-zinc-400">
+        <p className="mt-3 text-center text-xs text-zinc-500">
           Tap the keys — or on a computer, use your A–L keyboard row.
         </p>
 
         {/* Completion celebration */}
         {done && (
-          <div className="lp-fade-scale mx-auto mt-8 max-w-xl rounded-3xl border border-accent/20 bg-white p-6 text-center shadow-warm">
+          <div role="status" className="lp-fade-scale mx-auto mt-8 max-w-xl rounded-3xl border border-accent/20 bg-white p-6 text-center shadow-warm">
             <p className="text-lg font-extrabold text-zinc-900">
               🎉 You just played {song ? SONGS[song].name : "a song"}!
             </p>

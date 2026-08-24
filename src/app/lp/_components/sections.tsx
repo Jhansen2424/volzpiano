@@ -205,10 +205,10 @@ export function BookingSection({
 export function DrivingPianoArt({ className = "" }: { className?: string }) {
   return (
     <Image
-      src="/driving-piano.png"
+      src="/driving-piano-lp.png"
       alt="A Volz Method piano teacher driving to your house with a piano on the roof of the car"
-      width={4107}
-      height={3543}
+      width={1600}
+      height={1380}
       priority
       sizes="(max-width: 1024px) 90vw, 620px"
       className={className}

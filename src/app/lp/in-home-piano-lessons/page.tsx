@@ -5,9 +5,9 @@ import {
   Faq,
   HowItWorks,
   OfferCard,
-  Testimonials,
   TrustBar,
 } from "../_components/sections";
+import SocialProof from "../_components/SocialProof";
 import { BookButton, CallLink, Stars } from "../_components/ui";
 import { PRICE, RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
 import LpAnalytics from "../_components/LpAnalytics";
@@ -155,7 +155,7 @@ export default function VariantAInHome() {
       <OfferCard />
       <PlayableKeyboard />
       <HowItWorks />
-      <Testimonials />
+      <SocialProof />
       <LearningStyleQuiz />
       <BookingSection />
       <Faq />

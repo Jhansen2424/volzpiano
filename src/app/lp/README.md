@@ -71,6 +71,11 @@ both variants so the A/B variable stays *only* the angle. They exist to
   Renders the fallback on the server / first paint, then swaps in the sanitized
   `?city` in an effect — no hydration mismatch, no layout shift. Message match
   is the biggest lever in the CRO literature.
+- **`SocialProof.tsx` — anchored proof + video.** A real parent-testimonial
+  VIDEO (facade-loaded YouTube, so it costs nothing until played) paired with
+  one anchored, named review + the rating. Video out-converts text for a
+  high-trust in-home decision, and one specific testimonial beats a wall of
+  anonymous ones. Replaces the old plain testimonial grid.
 
 ## Measurement / instrumentation
 
@@ -102,7 +107,10 @@ booking — not just the final conversion (which Google Ads still records per-UR
   a branded, height-reserved placeholder and injects the heavy scheduler iframe
   via `IntersectionObserver` (600px rootMargin) — protecting LCP/INP with no
   extra click. Verified: no `iframe[src*=calendly]` exists until the booking
-  section nears the viewport.
+  section nears the viewport. The testimonial video uses the same facade idea.
+- **Optimized LP hero images.** `hero-bg-lp.jpg` (130KB, from 10.9MB) and
+  `driving-piano-lp.png` (90KB, from 2.6MB) are LP-only copies (the homepage
+  assets are untouched). Measured LCP/FCP ≈ **232ms** on the built pages.
 - **Accessibility:** quiz/keyboard/area-check are fully keyboard-operable (the
   keyboard even plays on the A–L row when focused), announce state via
   `aria-live`, and every reveal/animation is disabled under
