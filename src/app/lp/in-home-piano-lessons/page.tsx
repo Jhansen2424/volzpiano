@@ -15,6 +15,7 @@ import CityText from "../_components/CityText";
 import AreaCheck from "../_components/AreaCheck";
 import PlayableKeyboard from "../_components/PlayableKeyboard";
 import LearningStyleQuiz from "../_components/LearningStyleQuiz";
+import { FloatingNotes, WaveDivider } from "../_components/Decor";
 
 /**
  * VARIANT A — "Convenience / offer-forward".
@@ -62,6 +63,7 @@ export default function VariantAInHome() {
           className="pointer-events-none absolute right-0 bottom-0 h-72 w-[420px] translate-x-1/4 rounded-full opacity-20 blur-[120px]"
           style={{ background: "radial-gradient(circle, #f0a860 0%, transparent 70%)" }}
         />
+        <FloatingNotes className="text-[#f6b45a]" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 sm:px-10 lg:grid-cols-2 lg:py-24">
           {/* Copy */}
           <div>
@@ -120,6 +122,7 @@ export default function VariantAInHome() {
             <DrivingPianoArt className="mx-auto h-auto w-full max-w-[560px] select-none drop-shadow-[0_20px_40px_rgba(0,0,0,0.45)]" />
           </div>
         </div>
+        <WaveDivider fill="#faf7f2" />
       </section>
 
       <TrustBar />

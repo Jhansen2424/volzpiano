@@ -15,6 +15,7 @@ import CityText from "../_components/CityText";
 import AreaCheck from "../_components/AreaCheck";
 import PlayableKeyboard from "../_components/PlayableKeyboard";
 import LearningStyleQuiz from "../_components/LearningStyleQuiz";
+import { FloatingNotes, WaveDivider } from "../_components/Decor";
 
 /**
  * VARIANT B — "Outcome / method-forward".
@@ -73,6 +74,7 @@ export default function VariantBKidsLove() {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1e1226]/88 via-[#2a1a2e]/72 to-[#33223a]/40" />
+        <FloatingNotes className="text-white" />
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
           <div className="max-w-2xl" style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}>
             <p
@@ -115,6 +117,7 @@ export default function VariantBKidsLove() {
             </div>
           </div>
         </div>
+        <WaveDivider fill="#faf7f2" />
       </section>
 
       <TrustBar />

@@ -7,6 +7,7 @@
  */
 import Image from "next/image";
 import BookingEmbed from "./BookingEmbed";
+import { WaveDivider } from "./Decor";
 import {
   FAQS,
   HOW_IT_WORKS,
@@ -183,7 +184,7 @@ export function BookingSection({
   sub?: string;
 }) {
   return (
-    <section id="book" className="lp-plum scroll-mt-20 py-16 sm:py-24">
+    <section id="book" className="lp-plum relative scroll-mt-20 overflow-hidden py-16 sm:py-24">
       <div className="mx-auto max-w-4xl px-6 sm:px-10">
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">{eyebrow}</span>
@@ -195,6 +196,7 @@ export function BookingSection({
         </div>
         <BookingEmbed height={820} />
       </div>
+      <WaveDivider fill="#fdf2ee" />
     </section>
   );
 }

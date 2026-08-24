@@ -224,3 +224,25 @@ body {
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* Gently drifting music notes in the heroes. Each note rises and fades; the
+   left/size/delay/duration are set per-note inline. Hidden entirely for
+   reduced-motion visitors (base opacity 0, animation removed). */
+@keyframes lpNoteFloat {
+  0% { transform: translateY(10px) rotate(-6deg); opacity: 0; }
+  15% { opacity: var(--note-op, 0.22); }
+  85% { opacity: var(--note-op, 0.22); }
+  100% { transform: translateY(-150px) rotate(10deg); opacity: 0; }
+}
+.lp-note {
+  position: absolute;
+  opacity: 0;
+  line-height: 1;
+  animation-name: lpNoteFloat;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lp-note { animation: none; }
+}
