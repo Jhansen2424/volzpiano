@@ -12,7 +12,6 @@ import { BookButton, CallLink, Stars } from "../_components/ui";
 import { PRICE, RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
 import LpAnalytics from "../_components/LpAnalytics";
 import CityText from "../_components/CityText";
-import AreaCheck from "../_components/AreaCheck";
 import PlayableKeyboard from "../_components/PlayableKeyboard";
 import LearningStyleQuiz from "../_components/LearningStyleQuiz";
 import { FloatingNotes, WaveDivider } from "../_components/Decor";
@@ -151,7 +150,6 @@ export default function VariantAInHome() {
         </div>
       </section>
 
-      <AreaCheck />
       <OfferCard />
       <PlayableKeyboard />
       <HowItWorks />

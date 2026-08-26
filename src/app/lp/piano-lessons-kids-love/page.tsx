@@ -12,7 +12,6 @@ import { BookButton, CallLink, Stars } from "../_components/ui";
 import { RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
 import LpAnalytics from "../_components/LpAnalytics";
 import CityText from "../_components/CityText";
-import AreaCheck from "../_components/AreaCheck";
 import PlayableKeyboard from "../_components/PlayableKeyboard";
 import LearningStyleQuiz from "../_components/LearningStyleQuiz";
 import { FloatingNotes, WaveDivider } from "../_components/Decor";
@@ -213,7 +212,6 @@ export default function VariantBKidsLove() {
       </section>
 
       <PlayableKeyboard />
-      <AreaCheck />
       <OfferCard />
       <HowItWorks />
       <BookingSection heading="Book your free 15-minute call" />
