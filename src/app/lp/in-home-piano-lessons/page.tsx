@@ -13,7 +13,6 @@ import { PRICE, RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData
 import LpAnalytics from "../_components/LpAnalytics";
 import CityText from "../_components/CityText";
 import PlayableKeyboard from "../_components/PlayableKeyboard";
-import LearningStyleQuiz from "../_components/LearningStyleQuiz";
 import { FloatingNotes, WaveDivider } from "../_components/Decor";
 
 /**
@@ -150,13 +149,12 @@ export default function VariantAInHome() {
         </div>
       </section>
 
-      <OfferCard />
-      <PlayableKeyboard />
       <HowItWorks />
+      <PlayableKeyboard />
+      <OfferCard />
       <SocialProof />
-      <LearningStyleQuiz />
       <BookingSection />
-      <Faq />
+      <Faq group="logistics" />
     </main>
   );
 }

@@ -141,7 +141,8 @@ export function Testimonials({ heading = "Parents and kids love it" }: { heading
 }
 
 /* ── FAQ (zero-JS <details> accordion) ───────────────────────────────── */
-export function Faq() {
+export function Faq({ group }: { group?: "logistics" | "method" }) {
+  const items = group ? FAQS.filter((f) => f.group === group || f.group === "both") : FAQS;
   return (
     <section className="bg-blush py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
@@ -149,7 +150,7 @@ export function Faq() {
           Questions parents ask us
         </h2>
         <div className="divide-y divide-[#efe1d2] rounded-3xl border border-[#efe1d2] bg-white shadow-warm">
-          {FAQS.map((f) => (
+          {items.map((f) => (
             <details key={f.q} className="group px-6">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-semibold text-zinc-900 marker:content-[''] [&::-webkit-details-marker]:hidden">
                 {f.q}

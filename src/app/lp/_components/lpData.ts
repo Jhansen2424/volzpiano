@@ -73,38 +73,49 @@ export const TESTIMONIALS: { quote: string; name: string; role: string }[] = [
   },
 ];
 
-/** Objection-handling FAQ, ordered by how often a PPC visitor asks it. */
-export const FAQS: { q: string; a: string }[] = [
+/** Objection-handling FAQ. `group` lets each landing page show the questions
+ *  that match its angle: "logistics" (convenience page), "method" (method page),
+ *  or "both" (universal). */
+export type FaqGroup = "logistics" | "method" | "both";
+export const FAQS: { q: string; a: string; group: FaqGroup }[] = [
   {
     q: "How much do lessons cost?",
     a: `Lessons are ${PRICE} ${PRICE_UNIT}, depending on your city and how many students are in your home. Multi-student discounts are available, and you'll get your exact price on the free call.`,
+    group: "logistics",
   },
   {
     q: "Do you really come to my house?",
     a: `Yes. Our teachers drive to your home across ${SERVICE_AREA}. You never have to load the kids in the car, fight traffic, or sit in a waiting room.`,
+    group: "logistics",
   },
   {
     q: "Is there a contract?",
     a: "No long-term contract. Lessons are month-to-month, so you can adjust, pause, or stop whenever you need to.",
-  },
-  {
-    q: "My child has never played piano. Is that okay?",
-    a: "Perfect — most of our students start as complete beginners. We teach to how your child naturally learns, so they get real wins early and actually enjoy it.",
-  },
-  {
-    q: "I'm not musical myself — can I still help my child?",
-    a: "Absolutely. Plenty of the parents we work with have never touched a piano. Each week your teacher leaves a simple, specific practice plan, so you never have to be the music expert — you just help your child show up and cheer them on.",
-  },
-  {
-    q: "How do you choose your teachers?",
-    a: "Every Volz Method teacher trains for three months in the method before their first lesson, and your child keeps the same teacher every week — someone who really gets to know them. Want the details on how we select and match teachers to your family? Just ask on your free call.",
-  },
-  {
-    q: "What happens on the free call?",
-    a: "It takes about 15 minutes. We answer your questions, give you an exact price for your area, and — if you're ready — set you up with a teacher. No pressure either way.",
+    group: "logistics",
   },
   {
     q: "Do you accept the Utah Fits All Scholarship?",
     a: "Yes. If you're using Utah Fits All or another education-funding source, just mention it on your call and we'll help you sort out what you need.",
+    group: "logistics",
+  },
+  {
+    q: "My child has never played piano. Is that okay?",
+    a: "Perfect — most of our students start as complete beginners. We teach to how your child naturally learns, so they get real wins early and actually enjoy it.",
+    group: "method",
+  },
+  {
+    q: "I'm not musical myself — can I still help my child?",
+    a: "Absolutely. Plenty of the parents we work with have never touched a piano. Each week your teacher leaves a simple, specific practice plan, so you never have to be the music expert — you just help your child show up and cheer them on.",
+    group: "method",
+  },
+  {
+    q: "How do you choose your teachers?",
+    a: "Every Volz Method teacher trains for three months in the method before their first lesson, and your child keeps the same teacher every week — someone who really gets to know them. Want the details on how we select and match teachers to your family? Just ask on your free call.",
+    group: "method",
+  },
+  {
+    q: "What happens on the free call?",
+    a: "It takes about 15 minutes. We answer your questions, give you an exact price for your area, and — if you're ready — set you up with a teacher. No pressure either way.",
+    group: "both",
   },
 ];

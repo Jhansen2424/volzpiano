@@ -3,7 +3,6 @@ import Image from "next/image";
 import {
   BookingSection,
   Faq,
-  HowItWorks,
   OfferCard,
   TrustBar,
 } from "../_components/sections";
@@ -12,7 +11,6 @@ import { BookButton, CallLink, Stars } from "../_components/ui";
 import { RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
 import LpAnalytics from "../_components/LpAnalytics";
 import CityText from "../_components/CityText";
-import PlayableKeyboard from "../_components/PlayableKeyboard";
 import LearningStyleQuiz from "../_components/LearningStyleQuiz";
 import { FloatingNotes, WaveDivider } from "../_components/Decor";
 
@@ -198,8 +196,6 @@ export default function VariantBKidsLove() {
 
       <LearningStyleQuiz />
 
-      <SocialProof heading="Kids who found their thing" />
-
       {/* ── Teacher-training trust nugget ── */}
       <section className="bg-blush py-14">
         <div className="mx-auto max-w-3xl px-6 text-center">
@@ -211,11 +207,10 @@ export default function VariantBKidsLove() {
         </div>
       </section>
 
-      <PlayableKeyboard />
+      <SocialProof heading="Kids who found their thing" />
       <OfferCard />
-      <HowItWorks />
       <BookingSection heading="Book your free 15-minute call" />
-      <Faq />
+      <Faq group="method" />
     </main>
   );
 }
