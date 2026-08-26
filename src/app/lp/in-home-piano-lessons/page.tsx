@@ -77,8 +77,8 @@ export default function VariantAInHome() {
               className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl"
               style={{ animation: "fadeSlideIn 0.6s ease-out 0.08s both" }}
             >
-              Piano Lessons —{" "}
-              <span className="text-brand">Without the Drive.</span>
+              We Drive to{" "}
+              <span className="text-brand">Your House.</span>
             </h1>
             <p
               className="mt-5 max-w-xl text-lg text-white/70"
