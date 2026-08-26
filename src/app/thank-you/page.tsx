@@ -97,8 +97,8 @@ export default function ThankYouPage() {
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
-            Thank You for{" "}
-            <span className="text-brand">Signing Up!</span>
+            Thanks for Booking Your{" "}
+            <span className="text-brand">Phone Consultation!</span>
           </h1>
 
           <p
@@ -109,8 +109,9 @@ export default function ThankYouPage() {
               transition: "all 0.7s ease-out 0.5s",
             }}
           >
-            Your free consultation is booked. We&rsquo;re looking forward to
-            talking with you and helping your family get started with piano.
+            Your free 15-minute phone consultation is booked. We&rsquo;re looking
+            forward to talking with you and helping your family get started with
+            piano.
           </p>
         </div>
         <WaveDivider fill="#faf7f2" />
