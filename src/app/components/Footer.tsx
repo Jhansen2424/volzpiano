@@ -9,6 +9,10 @@ export default function Footer() {
   const hideCtaBanner = pathname === "/schedule-call";
   const [sectionRef, visible] = useInView<HTMLElement>();
 
+  // PPC landing pages under /lp render their own minimal footer — hide the
+  // full site footer so nothing competes with the booking CTA. (After hooks.)
+  if (pathname === "/lp" || pathname?.startsWith("/lp/")) return null;
+
   return (
     <footer ref={sectionRef} className="relative overflow-hidden bg-zinc-950">
       <div

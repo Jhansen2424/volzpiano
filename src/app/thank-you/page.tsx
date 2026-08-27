@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FloatingNotes, WaveDivider } from "../lp/_components/Decor";
 
 // "Book appointment" conversion action in Google Ads (id 6558605213). The
 // base tag itself loads site-wide from the root layout — it must be on the
@@ -37,17 +38,18 @@ export default function ThankYouPage() {
     <main>
 
       {/* Hero */}
-      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-zinc-900 pt-40 pb-20">
+      <section className="lp-hero-plum relative flex min-h-[60vh] items-center justify-center overflow-hidden pt-40 pb-20">
         <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-20 blur-[120px]"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-25 blur-[120px]"
           style={{
-            background: "radial-gradient(circle, #6343d4 0%, transparent 70%)",
+            background: "radial-gradient(circle, #f0a860 0%, transparent 70%)",
           }}
         />
+        <FloatingNotes className="text-white" />
         <div className="relative z-[2] text-center px-6 max-w-3xl">
           {/* Success check icon */}
           <div
-            className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-accent/20 ring-4 ring-accent/10"
+            className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand/20 ring-4 ring-brand/15"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "scale(1)" : "scale(0.6)",
@@ -55,7 +57,7 @@ export default function ThankYouPage() {
             }}
           >
             <svg
-              className="h-8 w-8 text-accent"
+              className="h-8 w-8 text-brand"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -76,7 +78,7 @@ export default function ThankYouPage() {
           </div>
 
           <span
-            className="mb-4 inline-block rounded-full bg-accent/15 px-4 py-1 text-xs font-bold uppercase tracking-wider text-accent"
+            className="mb-4 inline-block rounded-full bg-brand/20 px-4 py-1 text-xs font-bold uppercase tracking-wider text-brand"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(10px)",
@@ -95,8 +97,8 @@ export default function ThankYouPage() {
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
-            Thank You for{" "}
-            <span className="text-accent">Signing Up!</span>
+            Thanks for Booking Your{" "}
+            <span className="text-brand">Phone Consultation!</span>
           </h1>
 
           <p
@@ -107,15 +109,16 @@ export default function ThankYouPage() {
               transition: "all 0.7s ease-out 0.5s",
             }}
           >
-            Your free consultation is booked. We&rsquo;re looking forward to
-            talking with you and helping your family get started with piano.
+            Your free 15-minute phone consultation is booked. We&rsquo;re looking
+            forward to talking with you and helping your family get started with
+            piano.
           </p>
         </div>
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent z-[1]" />
+        <WaveDivider fill="#faf7f2" />
       </section>
 
       {/* Body */}
-      <section className="bg-white py-16 sm:py-24">
+      <section className="bg-cream py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-6 sm:px-12">
           <h2 className="mb-6 text-2xl font-extrabold text-zinc-900 sm:text-3xl">
             What happens next?
@@ -154,7 +157,7 @@ export default function ThankYouPage() {
           </ol>
 
           {/* Meanwhile section */}
-          <div className="mt-14 rounded-2xl border border-zinc-200 bg-zinc-50 p-6 sm:p-8">
+          <div className="mt-14 rounded-3xl border border-[#efe1d2] bg-white p-6 shadow-warm sm:p-8">
             <h3 className="mb-3 text-xl font-extrabold text-zinc-900">
               In the meantime&hellip;
             </h3>
@@ -165,7 +168,7 @@ export default function ThankYouPage() {
             <div className="grid gap-3 sm:grid-cols-3">
               <Link
                 href="/volz-method-best-piano-teaching-medthod"
-                className="group flex items-center justify-between rounded-xl bg-white px-4 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group flex items-center justify-between rounded-xl border border-[#efe6d8] bg-cream px-4 py-3 transition-all hover:-translate-y-0.5 hover:shadow-warm"
               >
                 <span className="text-sm font-bold text-zinc-800 group-hover:text-accent">
                   The Volz Method
@@ -183,7 +186,7 @@ export default function ThankYouPage() {
               </Link>
               <Link
                 href="/digital-piano"
-                className="group flex items-center justify-between rounded-xl bg-white px-4 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group flex items-center justify-between rounded-xl border border-[#efe6d8] bg-cream px-4 py-3 transition-all hover:-translate-y-0.5 hover:shadow-warm"
               >
                 <span className="text-sm font-bold text-zinc-800 group-hover:text-accent">
                   Recommended Pianos
@@ -201,7 +204,7 @@ export default function ThankYouPage() {
               </Link>
               <Link
                 href="/blog"
-                className="group flex items-center justify-between rounded-xl bg-white px-4 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group flex items-center justify-between rounded-xl border border-[#efe6d8] bg-cream px-4 py-3 transition-all hover:-translate-y-0.5 hover:shadow-warm"
               >
                 <span className="text-sm font-bold text-zinc-800 group-hover:text-accent">
                   Read the Blog
@@ -221,7 +224,7 @@ export default function ThankYouPage() {
           </div>
 
           {/* Contact info */}
-          <div className="mt-10 rounded-2xl border border-zinc-200 p-6 sm:p-8">
+          <div className="mt-10 rounded-3xl border border-[#efe1d2] bg-white p-6 shadow-warm sm:p-8">
             <h3 className="mb-3 text-lg font-bold text-zinc-900">
               Need to reach us before then?
             </h3>
@@ -248,7 +251,7 @@ export default function ThankYouPage() {
           <div className="mt-10 flex justify-center">
             <Link
               href="/"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-zinc-200 px-8 py-4 text-base font-bold text-zinc-700 transition-all duration-200 hover:border-accent hover:text-accent hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#e5d8c8] px-8 py-4 text-base font-bold text-zinc-700 transition-all duration-200 hover:border-accent hover:text-accent hover:-translate-y-0.5"
             >
               Back to Home
             </Link>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const TITLE = "Thank You";
 const DESCRIPTION =
-  "Your free consultation with Volz Method Piano Lessons is confirmed. Here's what to expect next.";
+  "Your free phone consultation with Volz Method Piano Lessons is booked. Here's what to expect next.";
 
 export const metadata: Metadata = {
   title: TITLE,
