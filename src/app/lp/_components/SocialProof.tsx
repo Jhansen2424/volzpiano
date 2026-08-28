@@ -114,8 +114,8 @@ export default function SocialProof({
         </div>
 
         <p className="mx-auto mt-10 max-w-2xl text-center text-sm text-zinc-500">
-          Every Volz teacher trains three months in the Method before their first
-          lesson &mdash; and your child keeps the same teacher every week.
+          Your child keeps the same teacher every week &mdash; someone who trains
+          in the Volz Method over their first three months of teaching.
         </p>
       </div>
     </section>
