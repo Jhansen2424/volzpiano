@@ -22,13 +22,13 @@ export const PRICE_UNIT = "per half hour";
 
 export const RATING = "5.0";
 export const REVIEW_COUNT = "134";
-export const SERVICE_AREA = "Utah & Idaho";
+export const SERVICE_AREA = "Utah";
 
 /** Compact trust chips shown in the trust bar under the hero. */
 export const TRUST_CHIPS: { icon: "star" | "home" | "shield" | "clock"; label: string }[] = [
   { icon: "star", label: `${RATING}★ from ${REVIEW_COUNT} Google reviews` },
   { icon: "home", label: "The teacher drives to your house" },
-  { icon: "shield", label: "Month-to-month — no contracts" },
+  { icon: "shield", label: "Flexible month-to-month billing" },
   { icon: "clock", label: "We accept the Utah Fits All Scholarship" },
 ];
 
@@ -90,7 +90,7 @@ export const FAQS: { q: string; a: string; group: FaqGroup }[] = [
   },
   {
     q: "Is there a contract?",
-    a: "No long-term contract. Lessons are month-to-month, so you can adjust, pause, or stop whenever you need to.",
+    a: "There's a simple month-to-month service agreement — no long-term contract to lock you in. There isn't a formal pause option, but you can stop whenever you need to with one month's notice.",
     group: "logistics",
   },
   {
@@ -110,7 +110,7 @@ export const FAQS: { q: string; a: string; group: FaqGroup }[] = [
   },
   {
     q: "How do you choose your teachers?",
-    a: "Every Volz Method teacher trains for three months in the method before their first lesson, and your child keeps the same teacher every week — someone who really gets to know them. Want the details on how we select and match teachers to your family? Just ask on your free call.",
+    a: "Every Volz Method teacher goes through three months of Volz Method training as they begin teaching, and your child keeps the same teacher every week — someone who really gets to know them. Want the details on how we select and match teachers to your family? Just ask on your free call.",
     group: "method",
   },
   {

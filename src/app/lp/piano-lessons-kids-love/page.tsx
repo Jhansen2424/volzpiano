@@ -7,7 +7,7 @@ import {
   TrustBar,
 } from "../_components/sections";
 import SocialProof from "../_components/SocialProof";
-import { BookButton, CallLink, Stars } from "../_components/ui";
+import { BookButton, Stars } from "../_components/ui";
 import { RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
 import LpAnalytics from "../_components/LpAnalytics";
 import CityText from "../_components/CityText";
@@ -21,7 +21,7 @@ import { FloatingNotes, WaveDivider } from "../_components/Decor";
  * via a method tailored to how their brain learns. Longer, problem→proof→offer.
  */
 export const metadata: Metadata = {
-  title: "Piano Lessons Kids Actually Love | Volz Method — In-Home in Utah & Idaho",
+  title: "Piano Lessons Kids Actually Love | Volz Method — In-Home in Utah",
   description:
     "Most kids quit piano because they're forced to learn one way. The Volz Method teaches the music your child wants to play, tailored to how they learn. In-home lessons, free 15-minute call.",
   alternates: { canonical: "/lp/piano-lessons-kids-love" },
@@ -110,7 +110,6 @@ export default function VariantBKidsLove() {
               style={{ animation: "fadeSlideIn 0.6s ease-out 0.32s both" }}
             >
               <BookButton label="Book My Free Call" source="hero" />
-              <CallLink />
             </div>
           </div>
         </div>
@@ -201,8 +200,8 @@ export default function VariantBKidsLove() {
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="text-xl font-semibold leading-relaxed text-zinc-800 sm:text-2xl">
             Every Volz Method teacher trains for{" "}
-            <span className="text-accent">three months</span> in the method
-            before they ever teach a single lesson.
+            <span className="text-accent">three months</span> in the method as
+            they begin teaching.
           </p>
         </div>
       </section>

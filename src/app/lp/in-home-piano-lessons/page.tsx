@@ -8,7 +8,7 @@ import {
   TrustBar,
 } from "../_components/sections";
 import SocialProof from "../_components/SocialProof";
-import { BookButton, CallLink, Stars } from "../_components/ui";
+import { BookButton, Stars } from "../_components/ui";
 import { PRICE, RATING, REVIEW_COUNT, SERVICE_AREA } from "../_components/lpData";
 import LpAnalytics from "../_components/LpAnalytics";
 import CityText from "../_components/CityText";
@@ -21,9 +21,9 @@ import { FloatingNotes, WaveDivider } from "../_components/Decor";
  * a transparent, low-commitment offer. Short, price-and-benefit-led.
  */
 export const metadata: Metadata = {
-  title: "In-Home Piano Lessons in Utah & Idaho | Volz Method",
+  title: "In-Home Piano Lessons in Utah | Volz Method",
   description:
-    "A trained piano teacher comes to your home — you never drive. Free 15-minute call, exact price, no contracts. $29–$52 per half hour across Utah & Idaho.",
+    "A trained piano teacher comes to your home — you never drive. Free 15-minute call, exact price, flexible month-to-month. $29–$52 per half hour across Utah.",
   alternates: { canonical: "/lp/in-home-piano-lessons" },
 };
 
@@ -38,11 +38,11 @@ const BENEFITS = [
   },
   {
     title: "One teacher your child bonds with",
-    body: "The same friendly face every week — someone who gets to know your child, trained three months in the Volz Method before their very first lesson.",
+    body: "The same friendly face every week — someone who gets to know your child, trained in the Volz Method over their first three months of teaching.",
   },
   {
-    title: "No contracts, ever",
-    body: "Month-to-month billing. Life with kids changes fast — adjust, pause, or stop whenever you need. Nothing to lock into.",
+    title: "Flexible, month-to-month",
+    body: "A simple month-to-month service agreement — no long-term contract to lock you into. Life with kids changes fast, so you can stop whenever you need with one month's notice.",
   },
 ];
 
@@ -111,7 +111,6 @@ export default function VariantAInHome() {
               style={{ animation: "fadeSlideIn 0.6s ease-out 0.32s both" }}
             >
               <BookButton label="Book My Free Call" source="hero" />
-              <CallLink />
             </div>
           </div>
 

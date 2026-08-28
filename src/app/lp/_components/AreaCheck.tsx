@@ -19,7 +19,6 @@ const REGIONS: { id: string; label: string; served: boolean }[] = [
   { id: "utah-county", label: "Utah County", served: true },
   { id: "davis", label: "Davis County", served: true },
   { id: "weber", label: "Weber County", served: true },
-  { id: "idaho", label: "Idaho", served: true },
   { id: "other", label: "Somewhere else", served: false },
 ];
 
@@ -151,7 +150,7 @@ export default function AreaCheck() {
                     </span>
                     <div>
                       <p className="font-bold text-zinc-900">
-                        We&rsquo;re growing fast across Utah &amp; Idaho.
+                        We&rsquo;re growing fast across Utah.
                       </p>
                       <p className="mt-1 text-sm leading-relaxed text-zinc-600">
                         Book a quick call and we&rsquo;ll confirm we can reach your street —

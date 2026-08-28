@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PHONE_DISPLAY, PHONE_HREF } from "./_components/lpData";
 import { ChipIcon, FooterLinks } from "./_components/ui";
 
 /**
@@ -7,11 +6,11 @@ import { ChipIcon, FooterLinks } from "./_components/ui";
  *
  * - noindex/nofollow: paid landing pages should never compete with organic
  *   results or dilute ranking signals. They're reached via ad clicks only.
- * - Minimal chrome: a slim top bar (wordmark + tap-to-call) and a small
- *   footer. The site Navbar/Footer are suppressed on /lp (see Navbar/Footer).
- * - A sticky bottom CTA bar on mobile keeps "Book Free Call" + "Call" one tap
- *   away at all times — most paid traffic is mobile and the conversion is a
- *   phone consult.
+ * - Minimal chrome: a prominent Utah Fits All banner, a slim top bar
+ *   (wordmark + book CTA) and a small footer. The site Navbar/Footer are
+ *   suppressed on /lp (see Navbar/Footer).
+ * - A sticky bottom "Book Free Call" bar on mobile keeps the one conversion
+ *   action one tap away — most paid traffic is mobile.
  */
 export const metadata: Metadata = {
   robots: {
@@ -24,6 +23,19 @@ export const metadata: Metadata = {
 export default function LpLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-cream pb-20 lg:pb-0">
+      {/* ── Prominent Utah Fits All Scholarship banner ──
+          TODO: when the client provides the official Utah Fits All logo
+          (PNG/SVG), drop it in beside the text here (e.g. an <img> before the
+          label) to feature the actual logo. */}
+      <div className="w-full bg-accent text-white">
+        <div className="mx-auto flex max-w-6xl items-center justify-center gap-2.5 px-4 py-2.5 text-center">
+          <ChipIcon name="shield" className="h-5 w-5 shrink-0" />
+          <span className="text-sm font-extrabold uppercase tracking-wide sm:text-base">
+            We proudly accept the Utah Fits All Scholarship
+          </span>
+        </div>
+      </div>
+
       {/* Slim top bar */}
       <header className="border-b border-[#ecdfce] bg-cream/90 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
@@ -31,12 +43,12 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
             Volz<span className="text-accent">Piano</span>
           </span>
           <a
-            href={PHONE_HREF}
-            className="inline-flex items-center gap-2 text-sm font-bold text-zinc-800 hover:text-accent"
+            href="#book"
+            data-cta="header"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-accent hover:text-accent-hover"
           >
-            <ChipIcon name="phone" className="h-4 w-4 text-accent" />
-            <span className="hidden sm:inline">{PHONE_DISPLAY}</span>
-            <span className="sm:hidden">Call</span>
+            Book a free call
+            <ChipIcon name="arrow" className="h-4 w-4" />
           </a>
         </div>
       </header>
@@ -47,7 +59,7 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
       <footer className="border-t border-[#ecdfce] bg-cream py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 text-center">
           <span className="text-sm font-bold text-zinc-700">
-            Volz Method Piano Lessons · In-home lessons across Utah &amp; Idaho
+            Volz Method Piano Lessons · In-home lessons across Utah
           </span>
           <FooterLinks />
           <span className="text-xs text-zinc-400">
@@ -56,23 +68,15 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
 
-      {/* Sticky mobile CTA bar — zero JS, anchor + tel links only */}
+      {/* Sticky mobile CTA bar — zero JS, anchor link only */}
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-[#ecdfce] bg-cream/95 backdrop-blur-sm shadow-[0_-4px_20px_rgba(120,80,45,0.10)] lg:hidden">
-        <div className="mx-auto flex max-w-md items-center gap-3 px-4 py-3">
+        <div className="mx-auto max-w-md px-4 py-3">
           <a
             href="#book"
             data-cta="sticky_bar"
-            className="flex-1 rounded-full bg-cta px-5 py-3 text-center text-sm font-bold text-white shadow-md"
+            className="block rounded-full bg-cta px-5 py-3 text-center text-sm font-bold text-white shadow-md"
           >
             Book Free Call
-          </a>
-          <a
-            href={PHONE_HREF}
-            data-cta="sticky_bar"
-            aria-label={`Call ${PHONE_DISPLAY}`}
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-accent text-accent"
-          >
-            <ChipIcon name="phone" className="h-5 w-5" />
           </a>
         </div>
       </div>

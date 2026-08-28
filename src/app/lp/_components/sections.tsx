@@ -19,7 +19,7 @@ import {
   TESTIMONIALS,
   TRUST_CHIPS,
 } from "./lpData";
-import { BookButton, CallLink, ChipIcon, Stars } from "./ui";
+import { BookButton, ChipIcon, Stars } from "./ui";
 
 /* ── Trust bar ───────────────────────────────────────────────────────── */
 export function TrustBar() {
@@ -87,8 +87,8 @@ export function OfferCard() {
               {[
                 "Free 15-minute call — no cost, no obligation",
                 "The teacher drives to your home each week",
-                "Month-to-month — cancel or pause anytime",
-                "Same teacher every lesson, trained 3 months in the Method",
+                "Month-to-month — stop anytime with one month's notice",
+                "Same teacher every lesson, trained in the Volz Method",
               ].map((line) => (
                 <li key={line} className="flex items-start gap-3 text-zinc-700">
                   <svg className="mt-0.5 h-5 w-5 shrink-0 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden>
@@ -100,7 +100,6 @@ export function OfferCard() {
             </ul>
             <div className="mt-8 flex flex-col items-center gap-3">
               <BookButton label="Get My Exact Price" />
-              <CallLink muted />
             </div>
           </div>
         </div>
@@ -191,9 +190,6 @@ export function BookingSection({
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand">{eyebrow}</span>
           <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{heading}</h2>
           <p className="mt-4 text-white/60">{sub}</p>
-          <div className="mt-5 flex items-center justify-center">
-            <CallLink />
-          </div>
         </div>
         <BookingEmbed height={820} />
       </div>
