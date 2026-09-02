@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ChatWidget from "./components/ChatWidget";
 import { serializeJsonLd } from "@/lib/json-ld";
 import { SITE_URL } from "@/lib/site";
 
@@ -134,6 +135,11 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        {/* AI chat assistant — floats site-wide (fixed position). It reads the
+            current pathname and guides visitors from whatever page they're on
+            toward booking a free call. It removes itself on /lp* landing pages
+            (see the guard inside the component) to keep those A/B funnels clean. */}
+        <ChatWidget />
         {/* Google Ads base tag — must load on EVERY page, not just /thank-you.
             Ad clicks land on the homepage or /ppc-b-test with a ?gclid= param;
             the base tag stores it in the _gcl_aw cookie. Without that capture

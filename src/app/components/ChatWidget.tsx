@@ -44,13 +44,27 @@ function getProactiveMessage(pathname: string): string {
   if (pathname === "/digital-piano") {
     return "Looking for a digital piano? I can help you figure out what you need to get started!";
   }
-  if (pathname.startsWith("/blog/")) {
-    return "Great read! Have questions about starting piano lessons for your child? I\u2019m here to help.";
+  if (pathname === "/schedule-call" || pathname === "/contact-us") {
+    return "Ready to book your free call? I can answer any last questions first \u2014 just ask!";
   }
-  if (pathname === "/volz-method-best-piano-teaching-medthod" || pathname === "/core-values") {
+  if (pathname === "/blog") {
+    return "Looking for tips? I can point you to the right article \u2014 or help you get your child started with lessons.";
+  }
+  if (
+    pathname === "/volz-method-best-piano-teaching-medthod" ||
+    pathname === "/core-values"
+  ) {
     return "Curious about the Volz Method? I can explain how it works or help you schedule a free call!";
   }
-  return "Hi! I\u2019m here to help you find the perfect piano lessons for your child. What would you like to know?";
+  if (pathname === "/teaching-positions" || pathname === "/jobs") {
+    return "Interested in teaching with us? I can tell you how our teachers are trained and supported!";
+  }
+  if (pathname === "/") {
+    return "Hi! I\u2019m here to help you find the perfect piano lessons for your child. What would you like to know?";
+  }
+  // Everything else (individual blog articles live at root-level slugs, plus any
+  // other page) gets a warm, contextual nudge back toward getting started.
+  return "Enjoying the read? I\u2019m happy to answer any questions about piano lessons for your child \u2014 or help you book a free call.";
 }
 
 // ─── Markdown Link Renderer ───────────────────────────────────────────────────
@@ -299,6 +313,15 @@ export default function ChatWidget() {
   // Which quick actions to show
   const quickActions = hasInteracted ? FOLLOW_UP_ACTIONS : INITIAL_ACTIONS;
   const showQuickActions = !isStreaming && messages.length > 0 && (messages[messages.length - 1]?.role === "assistant" && !messages[messages.length - 1]?.isStreaming);
+
+  // The landing pages (/lp*) are controlled, single-goal A/B PPC funnels that
+  // suppress the site chrome (navbar/footer) for a distraction-free experience.
+  // Keep the assistant off them so it doesn't add a variable to the A/B test or
+  // pull attention from the one call-to-action. (This runs after every hook, so
+  // the rules of hooks are respected.)
+  if (pathname === "/lp" || pathname?.startsWith("/lp/")) {
+    return null;
+  }
 
   // ─── Render ───────────────────────────────────────────────────────────────────
 
