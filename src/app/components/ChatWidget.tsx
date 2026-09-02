@@ -197,7 +197,7 @@ export default function ChatWidget() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
-  // Proactive bubble: show after 2s delay on each page change
+  // Proactive bubble: show after a short delay on each page change
   useEffect(() => {
     setProactiveShown(false);
     setProactiveDismissed(false);
@@ -206,7 +206,7 @@ export default function ChatWidget() {
       if (!isOpen) {
         setProactiveShown(true);
       }
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
