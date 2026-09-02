@@ -67,31 +67,45 @@ function getProactiveMessage(pathname: string): string {
   return "Enjoying the read? I\u2019m happy to answer any questions about piano lessons for your child \u2014 or help you book a free call.";
 }
 
-// ─── Markdown Link Renderer ───────────────────────────────────────────────────
+// ─── Inline Markdown Renderer ─────────────────────────────────────────────────
+// Renders the small subset of markdown the assistant actually emits: **bold**
+// spans and [text](url) links (which can appear interleaved in one message).
+// Newlines are preserved by the message bubble's `whitespace-pre-wrap`, so we
+// don't need to handle them here. Anything else falls through as plain text.
 
-function renderMarkdownLinks(text: string): React.ReactNode[] {
+function renderInlineMarkdown(text: string): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  // Match a link OR a bold span. Bold is non-greedy and must contain no other
+  // asterisk so "**a** and **b**" splits into two spans, not one.
+  const tokenRegex = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+?)\*\*/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
 
-  while ((match = linkRegex.exec(text)) !== null) {
+  while ((match = tokenRegex.exec(text)) !== null) {
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
-    const [, linkText, href] = match;
-    const isExternal = href.startsWith("http");
-    parts.push(
-      <a
-        key={match.index}
-        href={href}
-        target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noopener noreferrer" : undefined}
-        className="underline text-accent hover:text-accent-hover font-semibold transition-colors duration-150"
-      >
-        {linkText}
-      </a>
-    );
+    const [, linkText, href, boldText] = match;
+    if (linkText !== undefined && href !== undefined) {
+      const isExternal = href.startsWith("http");
+      parts.push(
+        <a
+          key={match.index}
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          className="underline text-accent hover:text-accent-hover font-semibold transition-colors duration-150"
+        >
+          {linkText}
+        </a>
+      );
+    } else if (boldText !== undefined) {
+      parts.push(
+        <strong key={match.index} className="font-bold text-white">
+          {boldText}
+        </strong>
+      );
+    }
     lastIndex = match.index + match[0].length;
   }
 
@@ -423,7 +437,7 @@ export default function ChatWidget() {
                   {msg.isStreaming && msg.content === "" ? (
                     <TypingIndicator />
                   ) : (
-                    <span>{renderMarkdownLinks(msg.content)}</span>
+                    <span className="whitespace-pre-wrap">{renderInlineMarkdown(msg.content)}</span>
                   )}
                 </div>
               </div>
