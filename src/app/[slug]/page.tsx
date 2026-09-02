@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import AnimatedSection from "@/app/components/AnimatedSection";
-import { getAllPublishedSlugs, getPostBySlug } from "@/lib/blog";
+import { getAllPublishedSlugs, getPostBySlug, getPublishedPosts } from "@/lib/blog";
 
 // Re-render at most once per hour. Combined with `dynamicParams = true`,
 // scheduled posts go live within an hour of their publishDate without a
@@ -30,6 +30,15 @@ export default async function BlogPostPage({
   // Sanitize at build time — DOMPurify is isomorphic so this runs server-side.
   const sanitizedHtml = DOMPurify.sanitize(post.content);
 
+  // Related posts for internal linking — prefer the same category, then fill
+  // with the most recent others. Every post (including the legacy imports that
+  // have no in-body links) gets internal links to peers + key pages this way.
+  const others = getPublishedPosts().filter((p) => p.slug !== post.slug);
+  const related = [
+    ...others.filter((p) => p.category === post.category),
+    ...others.filter((p) => p.category !== post.category),
+  ].slice(0, 3);
+
   return (
     <main>
       {/* Hero */}
@@ -41,6 +50,16 @@ export default async function BlogPostPage({
           }}
         />
         <div className="relative z-[2] text-center px-6">
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-5 flex items-center justify-center gap-2 text-xs font-medium text-white/50"
+          >
+            <Link href="/" className="hover:text-white/80">Home</Link>
+            <span aria-hidden>/</span>
+            <Link href="/blog" className="hover:text-white/80">Blog</Link>
+            <span aria-hidden>/</span>
+            <span className="text-white/70">{post.category}</span>
+          </nav>
           <span className="inline-block rounded-full bg-brand/20 px-4 py-1 text-xs font-bold uppercase tracking-wider text-brand mb-6">
             {post.category}
           </span>
@@ -94,8 +113,61 @@ export default async function BlogPostPage({
             />
           </AnimatedSection>
 
+          {/* End-of-article CTA — conversion + internal link on every post */}
+          <AnimatedSection delay={0.15}>
+            <div className="mt-14 overflow-hidden rounded-2xl bg-zinc-900 p-8 text-center sm:p-10">
+              <h2 className="text-2xl font-extrabold text-white sm:text-3xl">
+                Ready to get your child started with piano?
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl text-white/60">
+                Volz Method lessons are in-home and one-on-one across Utah. Book a
+                free 15-minute call and we&rsquo;ll find the right fit for your family.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href="/schedule-call"
+                  className="inline-flex items-center gap-2 rounded-full bg-cta px-8 py-4 text-base font-bold text-white transition-all hover:bg-cta-hover hover:-translate-y-0.5"
+                >
+                  Book a Free Call
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="text-sm font-bold text-white/70 hover:text-white"
+                >
+                  See pricing &rarr;
+                </Link>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Related posts — internal linking + engagement */}
+          {related.length > 0 && (
+            <AnimatedSection delay={0.2} className="mt-16 border-t border-zinc-200 pt-10">
+              <h2 className="mb-6 text-xl font-extrabold text-zinc-900">Keep reading</h2>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {related.map((r) => (
+                  <Link
+                    key={r.slug}
+                    href={`/${r.slug}`}
+                    className="group flex flex-col rounded-2xl border border-zinc-200 bg-white p-5 transition-all hover:border-brand/40 hover:shadow-lg hover:-translate-y-0.5"
+                  >
+                    <span className="mb-2 text-xs font-bold uppercase tracking-wider text-brand">
+                      {r.category}
+                    </span>
+                    <span className="text-sm font-bold leading-snug text-zinc-900 group-hover:text-brand">
+                      {r.title}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </AnimatedSection>
+          )}
+
           {/* Back link */}
-          <AnimatedSection delay={0.2} className="mt-16 pt-8 border-t border-zinc-200">
+          <AnimatedSection delay={0.25} className="mt-10">
             <Link
               href="/blog"
               className="inline-flex items-center gap-2 text-sm font-bold text-brand hover:underline"
