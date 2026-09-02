@@ -3,6 +3,23 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+  }
+}
+
+// ─── Funnel Instrumentation ───────────────────────────────────────────────────
+// Pushes chat events onto the same dataLayer the Google Ads tag already uses, so
+// they're available to GTM/GA4 the moment a container is added — and harmlessly
+// queue if one isn't. This is how we'll measure whether the assistant actually
+// moves people toward booking (opened → engaged → clicked "book a call").
+function track(event: string, params: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event, ...params });
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Message {
@@ -26,9 +43,9 @@ const INITIAL_ACTIONS: QuickAction[] = [
 ];
 
 const FOLLOW_UP_ACTIONS: QuickAction[] = [
-  { label: "Tell me about pricing", message: "What does pricing look like?" },
-  { label: "How are teachers trained?", message: "How are your teachers trained?" },
-  { label: "What ages do you teach?", message: "What age should my child be to start?" },
+  { label: "Utah Fits All scholarship", message: "Can I use the Utah Fits All Scholarship for lessons?" },
+  { label: "Is there a contract?", message: "Is there a contract or long-term commitment?" },
+  { label: "What's the first lesson like?", message: "What happens in the first piano lesson?" },
   { label: "Schedule a free call", message: "I'd like to schedule a free consultation." },
 ];
 
@@ -212,11 +229,13 @@ export default function ChatWidget() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  // Dismiss proactive bubble when panel opens
+  // Dismiss proactive bubble when panel opens, and log the open for the funnel.
   useEffect(() => {
     if (isOpen) {
       setProactiveShown(false);
+      track("chat_opened", { path: pathname });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   // ── Send Message ─────────────────────────────────────────────────────────────
@@ -226,6 +245,7 @@ export default function ChatWidget() {
       const trimmed = content.trim();
       if (!trimmed || isStreaming) return;
 
+      track("chat_message_sent", { path: pathname });
       setHasInteracted(true);
       abortRef.current?.abort();
       abortRef.current = new AbortController();
@@ -419,6 +439,21 @@ export default function ChatWidget() {
               </svg>
             </button>
           </div>
+
+          {/* Always-visible primary CTA — booking the free call is one tap away
+              no matter where the conversation goes. Links to the on-site
+              /schedule-call page (keeps the Google Ads conversion tracking that
+              lives there in play) and logs the click for the funnel. */}
+          <a
+            href="/schedule-call"
+            onClick={() => track("chat_cta_click", { location: "panel_banner", path: pathname })}
+            className="flex items-center justify-center gap-1.5 bg-accent px-4 py-2 text-xs font-bold text-white transition-colors duration-150 hover:bg-accent-hover flex-shrink-0"
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            Book your free 15-min call
+          </a>
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto px-3 py-3 flex flex-col gap-2">
