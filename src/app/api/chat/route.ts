@@ -231,15 +231,20 @@ export async function POST(req: NextRequest) {
 
   // Forward only the most recent slice of conversation history to the LLM —
   // avoids ballooning prompts (and Groq token spend) on long sessions, and
-  // keeps us comfortably under llama-3.1-8b's context window.
+  // keeps us comfortably under the model's context window.
   const forwardedMessages = messages.slice(-MAX_HISTORY_TO_FORWARD);
+
+  // Groq rotates its hosted models, so the model id is env-overridable
+  // (GROQ_MODEL) with a current, chat-clean default. Note: reasoning models
+  // like openai/gpt-oss-* stream empty `content`, so avoid those here.
+  const model = process.env.GROQ_MODEL || "qwen/qwen3.8-27b";
 
   const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();
       try {
         const completion = await getClient().chat.completions.create({
-          model: "llama-3.1-8b-instant",
+          model,
           max_tokens: 1024,
           stream: true,
           messages: [
