@@ -91,12 +91,30 @@ export default function InteractiveKeyboard() {
   }, []);
 
   useEffect(() => {
+    // The "play piano with your computer keyboard" shortcut listens on the
+    // whole window, so it must bow out whenever the visitor is actually typing
+    // somewhere — the chat box, a form field, anything editable — or every
+    // letter they type would trigger a note. Also ignore modifier combos so
+    // shortcuts like Ctrl+S don't play notes.
+    const isTypingInField = (target: EventTarget | null) => {
+      const el = target as HTMLElement | null;
+      if (!el || !el.tagName) return false;
+      const tag = el.tagName;
+      return (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        el.isContentEditable
+      );
+    };
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.repeat) return;
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (isTypingInField(e.target)) return;
       const index = KEY_MAP[e.key.toLowerCase()];
       if (index !== undefined) playNote(index);
     };
     const handleKeyUp = (e: KeyboardEvent) => {
+      if (isTypingInField(e.target)) return;
       const index = KEY_MAP[e.key.toLowerCase()];
       if (index !== undefined) stopNote(index);
     };
