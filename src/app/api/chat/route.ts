@@ -265,8 +265,17 @@ export async function POST(req: NextRequest) {
   const forwardedMessages = messages.slice(-MAX_HISTORY_TO_FORWARD);
 
   // Groq rotates its hosted models, so the model id is env-overridable
-  // (GROQ_MODEL) with a current, chat-clean default. Note: reasoning models
-  // like openai/gpt-oss-* stream empty `content`, so avoid those here.
+  // (GROQ_MODEL). Bake-off (2026-09) on our real prompt:
+  //   - qwen/qwen3.8-27b  → default. Cleanest + warmest, one-question nudges,
+  //                          accurate, no leaked reasoning. Winner.
+  //   - openai/gpt-oss-120b → works well (streams clean content), viable
+  //                          fallback, but emits odd typography (non-breaking
+  //                          hyphens, spaced dashes).
+  //   - qwen/qwen3.6-27b  → AVOID: leaks its <think> chain-of-thought into the
+  //                          reply and truncates the real answer.
+  //   - openai/gpt-oss-20b → AVOID: streams empty `content`.
+  //   - groq/compound[-mini] → AVOID: errors with this request shape, and its
+  //                          agentic web search is a liability for a brand bot.
   const model = process.env.GROQ_MODEL || "qwen/qwen3.8-27b";
 
   const stream = new ReadableStream({
