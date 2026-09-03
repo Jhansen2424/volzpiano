@@ -114,7 +114,11 @@ export default function InteractiveKeyboard() {
       if (index !== undefined) playNote(index);
     };
     const handleKeyUp = (e: KeyboardEvent) => {
-      if (isTypingInField(e.target)) return;
+      // NOTE: never gate keyup on isTypingInField. A note may have started while
+      // the page was focused and then focus moved into a field before release —
+      // if we skipped stopNote here, the oscillator would sustain forever.
+      // stopNote is a no-op for keys that aren't currently playing, so this is
+      // always safe.
       const index = KEY_MAP[e.key.toLowerCase()];
       if (index !== undefined) stopNote(index);
     };

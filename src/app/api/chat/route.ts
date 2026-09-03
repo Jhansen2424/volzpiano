@@ -173,11 +173,15 @@ const INJECTION_PATTERNS: RegExp[] = [
   // identity / persona swaps
   /\byou\s+are\s+now\s+(an?|the)\b/i,
   /\byou\s+are\s+(no\s+longer|not)\s+(an?|the|bound|restricted)\b/i,
-  /\b(pretend|roleplay|role-play)\b/i,
-  /\bact\s+as\s+(an?|the|my|you'?re|if)\b/i,
-  // "unlock a mode"
+  // "pretend/act as ..." — but only when aimed at the assistant, so innocent
+  // parent messages ("she likes to pretend she's a pianist", "piano acts as a
+  // great outlet") don't get deflected.
+  /\b(roleplay|role-play)\b/i,
+  /\bpretend\s+(you|that\s+you)\b/i,
+  /\bact\s+as\s+(an?\s+)?(ai|assistant|chat\s?bot|bot|language\s+model|character|persona|dan|unrestricted|uncensored)\b/i,
+  // "unlock a mode" (covers "DAN mode"; the bare token "DAN" alone is too
+  // common a name to block outright, and "act as DAN" is caught above)
   /\b(developer|debug|god|admin|jailbreak|unrestricted|uncensored|dan|sudo|root)\s+mode\b/i,
-  /\bDAN\b/,
   // disable the safety layer
   /\b(ignore|bypass|override|disable|turn\s+off|remove|lift|drop)\s+(your\s+|the\s+|all\s+)?(safety|filters?|guardrails?|restrictions?|limitations?|constraints?)\b/i,
   // injected "new instructions:" block
@@ -269,9 +273,18 @@ function validateBody(raw: unknown): ValidationResult {
     cleaned.push({ role: msg.role, content: msg.content });
   }
 
+  // currentPath is client-controlled and gets interpolated into the SYSTEM
+  // prompt, so sanitize it hard: keep only characters that appear in a real URL
+  // path. This strips spaces, newlines, ":" and "=", so it can't be used to
+  // smuggle fake instructions into the system role (a channel the user-message
+  // injection filter never inspects).
   let currentPath = "/";
   if (typeof body.currentPath === "string") {
-    currentPath = body.currentPath.slice(0, MAX_PATH_LENGTH);
+    const cleanedPath = body.currentPath
+      .slice(0, MAX_PATH_LENGTH)
+      .replace(/[^a-zA-Z0-9/_-]/g, "")
+      .slice(0, 128);
+    currentPath = cleanedPath.startsWith("/") ? cleanedPath : `/${cleanedPath}`;
   }
 
   return { ok: true, messages: cleaned, currentPath };

@@ -221,9 +221,11 @@ export default function ChatWidget() {
     }
   }, []);
 
-  // Persist the conversation as it changes (strip the transient streaming flag;
-  // keep only the last MAX_MESSAGES so storage can't grow without bound).
+  // Persist the conversation (strip the transient streaming flag; cap length).
+  // Skip while a reply is streaming so we don't re-serialize + write the whole
+  // conversation on every token — we save once when streaming settles.
   useEffect(() => {
+    if (isStreaming) return;
     try {
       if (messages.length === 0) {
         sessionStorage.removeItem(SESSION_KEY);
@@ -237,7 +239,7 @@ export default function ChatWidget() {
     } catch {
       /* ignore persistence failures */
     }
-  }, [messages, hasInteracted]);
+  }, [messages, hasInteracted, isStreaming]);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -313,10 +315,13 @@ export default function ChatWidget() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            messages: [...messages, userMessage].map(({ role, content }) => ({
-              role,
-              content,
-            })),
+            // Send only the most recent turns. Keeps us safely under the
+            // server's 30-message cap even for long or restored conversations
+            // (the server only forwards the last ~20 to the model anyway), so a
+            // long chat never dies with a 413.
+            messages: [...messages, userMessage]
+              .slice(-24)
+              .map(({ role, content }) => ({ role, content })),
             currentPath: pathname,
           }),
           signal: abortRef.current.signal,
@@ -379,7 +384,13 @@ export default function ChatWidget() {
     setProactiveDismissed(true);
     setProactiveShown(false);
     setIsOpen(true);
-    setMessages([{ role: "assistant", content: getProactiveMessage(pathname) }]);
+    // Only seed the welcome message if there's no conversation yet — never
+    // overwrite one restored from a previous visit (matches the open-effect).
+    setMessages((prev) =>
+      prev.length > 0
+        ? prev
+        : [{ role: "assistant", content: getProactiveMessage(pathname) }]
+    );
   }, [pathname]);
 
   // Close the panel and return focus to the launcher (a11y: focus should never
@@ -462,8 +473,8 @@ export default function ChatWidget() {
         ref={toggleButtonRef}
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close chat assistant" : "Open chat assistant"}
+        aria-haspopup="dialog"
         aria-expanded={isOpen}
-        aria-controls="volz-chat-panel"
         className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-accent shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-accent-hover hover:-translate-y-0.5 active:scale-95 cursor-pointer"
         style={{ boxShadow: "0 4px 24px rgba(99,67,212,0.35)" }}
       >
