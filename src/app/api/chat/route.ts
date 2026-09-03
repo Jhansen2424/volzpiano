@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { NextRequest } from "next/server";
+import { buildAssistantLinksSection } from "@/lib/assistant-links";
 
 function getClient() {
   return new OpenAI({
@@ -76,29 +77,9 @@ TESTIMONIALS (real Google reviews):
 - "Jarus inspired my boys to love piano and create their own music." — Camille Waller
 - Families consistently praise patience, adaptability, rapid progress, and the personalized approach
 
-HELPFUL PAGES & ARTICLES — use these ROOT paths EXACTLY (there is NO "/blog/" prefix; a "/blog/..." link is broken):
-- Best age to start: /best-age-to-start-piano-lessons (ages ~5–9 sweet spot; readiness matters more than age)
-- Motivating your child to practice: /how-to-motivate-your-child-to-practice-piano
-- Piano lessons vs. apps: /piano-lessons-vs-apps
-- What lessons cost in Utah: /how-much-do-piano-lessons-cost-in-utah-a-2026-parents-guide
-- What happens in the first lesson: /what-happens-in-the-first-piano-lesson-parent-guide
-- How long it takes to learn: /how-long-does-it-take-to-learn-piano-realistic-timeline-for-kids
-- Does piano make kids smarter: /does-learning-piano-make-kids-smarter-what-research-says
-- Paying for lessons / Utah Fits All: /how-to-afford-piano-lessons-in-utah-scholarships-and-budgeting
-- Browse all articles: /blog
+${buildAssistantLinksSection()}
 
-DIGITAL PIANO DEAL:
-- We have a page with recommended digital pianos: /digital-piano
-- We recommend pianos that have all the features needed to learn piano properly
-
-== SITE PAGES FOR REFERENCE ==
-- Homepage: /
-- Testimonials: /testimonials
-- Blog: /blog
-- The Volz Method: /volz-method-best-piano-teaching-medthod (4 pillars: Reading, Composing, Hearing, Arranging)
-- How It Works / Pricing: /pricing
-- Core Values: /core-values
-- Digital Piano Deal: /digital-piano
+DIGITAL PIANO: We recommend a weighted-key digital piano with all the features needed to learn properly — point families to the Recommended Digital Pianos page above.
 
 == RESPONSE GUIDELINES ==
 - You're usually talking to a parent (often a mom). Be warm, empathetic, encouraging, and conversational — like a helpful friend who happens to know everything about piano lessons.

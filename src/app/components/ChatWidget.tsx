@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { isAllowedAssistantHref } from "@/lib/assistant-links";
 
 declare global {
   interface Window {
@@ -104,18 +105,25 @@ function renderInlineMarkdown(text: string): React.ReactNode[] {
     }
     const [, linkText, href, boldText] = match;
     if (linkText !== undefined && href !== undefined) {
-      const isExternal = href.startsWith("http");
-      parts.push(
-        <a
-          key={match.index}
-          href={href}
-          target={isExternal ? "_blank" : undefined}
-          rel={isExternal ? "noopener noreferrer" : undefined}
-          className="underline text-accent hover:text-accent-hover font-semibold transition-colors duration-150"
-        >
-          {linkText}
-        </a>
-      );
+      // Safety net: never render a link the assistant isn't allowed to emit. If
+      // the model hallucinated an internal slug (a 404 waiting to happen), drop
+      // the href and show the text plainly rather than a broken clickable link.
+      if (!isAllowedAssistantHref(href)) {
+        parts.push(linkText);
+      } else {
+        const isExternal = /^https?:/i.test(href);
+        parts.push(
+          <a
+            key={match.index}
+            href={href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noopener noreferrer" : undefined}
+            className="underline text-accent hover:text-accent-hover font-semibold transition-colors duration-150"
+          >
+            {linkText}
+          </a>
+        );
+      }
     } else if (boldText !== undefined) {
       parts.push(
         <strong key={match.index} className="font-bold text-white">
@@ -190,7 +198,46 @@ export default function ChatWidget() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+
+  const SESSION_KEY = "volz-chat";
+
+  // Restore an in-progress conversation after a page reload (per-tab, so it
+  // doesn't resurface days later). Runs AFTER mount so server and first client
+  // render match (no hydration mismatch). Wrapped in try/catch because storage
+  // can be unavailable or throw (private mode, blocked cookies).
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(SESSION_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as { messages?: Message[]; hasInteracted?: boolean };
+      if (Array.isArray(saved.messages) && saved.messages.length > 0) {
+        setMessages(saved.messages.map((m) => ({ role: m.role, content: m.content })));
+        setHasInteracted(Boolean(saved.hasInteracted));
+      }
+    } catch {
+      /* storage unavailable — start fresh */
+    }
+  }, []);
+
+  // Persist the conversation as it changes (strip the transient streaming flag;
+  // keep only the last MAX_MESSAGES so storage can't grow without bound).
+  useEffect(() => {
+    try {
+      if (messages.length === 0) {
+        sessionStorage.removeItem(SESSION_KEY);
+        return;
+      }
+      const toSave = messages
+        .filter((m) => m.content !== "")
+        .slice(-30)
+        .map((m) => ({ role: m.role, content: m.content }));
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({ messages: toSave, hasInteracted }));
+    } catch {
+      /* ignore persistence failures */
+    }
+  }, [messages, hasInteracted]);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -335,12 +382,27 @@ export default function ChatWidget() {
     setMessages([{ role: "assistant", content: getProactiveMessage(pathname) }]);
   }, [pathname]);
 
+  // Close the panel and return focus to the launcher (a11y: focus should never
+  // be lost to the document body when a dialog closes).
+  const closePanel = useCallback(() => {
+    setIsOpen(false);
+    setTimeout(() => toggleButtonRef.current?.focus(), 0);
+  }, []);
+
   // ── Keyboard Handler ──────────────────────────────────────────────────────────
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage(inputValue);
+    }
+  };
+
+  // Escape closes the panel (standard dialog behavior).
+  const handlePanelKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      closePanel();
     }
   };
 
@@ -397,8 +459,11 @@ export default function ChatWidget() {
 
       {/* Floating Toggle Button */}
       <button
+        ref={toggleButtonRef}
         onClick={() => setIsOpen((v) => !v)}
-        aria-label={isOpen ? "Close chat" : "Open chat assistant"}
+        aria-label={isOpen ? "Close chat assistant" : "Open chat assistant"}
+        aria-expanded={isOpen}
+        aria-controls="volz-chat-panel"
         className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-accent shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-accent-hover hover:-translate-y-0.5 active:scale-95 cursor-pointer"
         style={{ boxShadow: "0 4px 24px rgba(99,67,212,0.35)" }}
       >
@@ -416,9 +481,14 @@ export default function ChatWidget() {
       {/* Chat Panel */}
       {isOpen && (
         <div
-          className="fixed bottom-24 right-6 z-50 flex flex-col w-80 rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl overflow-hidden"
+          id="volz-chat-panel"
+          role="dialog"
+          aria-label="Volz Piano chat assistant"
+          onKeyDown={handlePanelKeyDown}
+          className="fixed bottom-24 right-6 z-50 flex flex-col w-80 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl overflow-hidden"
           style={{
             height: "520px",
+            maxHeight: "calc(100vh - 7rem)",
             animation: "fadeScaleIn 0.2s ease-out",
             transformOrigin: "bottom right",
           }}
@@ -430,7 +500,7 @@ export default function ChatWidget() {
               <span className="text-sm font-bold text-white">Volz Piano Assistant</span>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={closePanel}
               className="text-white/40 hover:text-white transition-colors duration-150 cursor-pointer"
               aria-label="Close chat"
             >
@@ -455,8 +525,15 @@ export default function ChatWidget() {
             Book your free 15-min call
           </a>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-3 py-3 flex flex-col gap-2">
+          {/* Messages — a live region so screen readers announce new replies */}
+          <div
+            className="flex-1 overflow-y-auto px-3 py-3 flex flex-col gap-2"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+            aria-atomic="false"
+            aria-label="Conversation"
+          >
             {messages.map((msg, i) => (
               <div
                 key={i}
@@ -469,6 +546,7 @@ export default function ChatWidget() {
                       : "bg-zinc-800 text-white/90 rounded-bl-sm"
                   }`}
                 >
+                  <span className="sr-only">{msg.role === "user" ? "You said: " : "Assistant said: "}</span>
                   {msg.isStreaming && msg.content === "" ? (
                     <TypingIndicator />
                   ) : (
