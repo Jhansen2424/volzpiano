@@ -296,9 +296,87 @@ function validateBody(raw: unknown): ValidationResult {
   return { ok: true, messages: cleaned, currentPath };
 }
 
+// ─── Rate limiting (abuse & cost protection) ──────────────────────────────────
+// This endpoint is public and every allowed request costs a paid model call, so
+// without a throttle a script could run up the Groq bill or knock the bot
+// offline. This is an in-memory sliding window: it FULLY protects a single
+// long-running instance, and still blunts sustained bursts on serverless (each
+// warm instance enforces its own budget, and a flood from one source tends to
+// reuse the same warm instance). For hard, cross-instance guarantees in
+// production, back this with a shared store (Vercel KV / Upstash Redis) using the
+// same window logic.
+const RL_WINDOW_MS = 60_000; // rolling one-minute window
+const RL_PER_IP = 15; // max requests per IP per window (a fast human sends ~2–4)
+const RL_GLOBAL = 300; // circuit breaker: max requests across ALL IPs per window
+
+const ipHits = new Map<string, number[]>();
+let globalHits: number[] = [];
+
+function getClientIp(req: NextRequest): string {
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0].trim();
+  return req.headers.get("x-real-ip") || "unknown";
+}
+
+// Drop timestamps older than the window. They're appended in order, so we only
+// ever trim from the front.
+function pruneOld(list: number[], now: number): number[] {
+  const cutoff = now - RL_WINDOW_MS;
+  let i = 0;
+  while (i < list.length && list[i] < cutoff) i++;
+  return i > 0 ? list.slice(i) : list;
+}
+
+function rateLimit(ip: string): { limited: boolean; scope?: "ip" | "global" } {
+  const now = Date.now();
+
+  // Global circuit breaker first — protects the bill under a distributed flood.
+  globalHits = pruneOld(globalHits, now);
+  if (globalHits.length >= RL_GLOBAL) return { limited: true, scope: "global" };
+
+  // Per-IP window.
+  const hits = pruneOld(ipHits.get(ip) ?? [], now);
+  if (hits.length >= RL_PER_IP) {
+    ipHits.set(ip, hits);
+    return { limited: true, scope: "ip" };
+  }
+
+  // Record this (allowed) request. Blocked requests are NOT recorded, so a
+  // relentless flood can't keep pushing the window forward.
+  hits.push(now);
+  ipHits.set(ip, hits);
+  globalHits.push(now);
+
+  // Opportunistic cleanup so the map can't grow unbounded from many IPs.
+  if (ipHits.size > 5000) {
+    for (const [k, v] of ipHits) {
+      const pv = pruneOld(v, now);
+      if (pv.length === 0) ipHits.delete(k);
+      else ipHits.set(k, pv);
+    }
+  }
+  return { limited: false };
+}
+
+const THROTTLE_MESSAGE =
+  "You're sending messages a little too quickly for me to keep up! Please give it a few seconds and try again — or, to talk to a real person, just [book a free call](/schedule-call).";
+
 // ─── Route Handler ────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
+  // Throttle before doing any work — the cheapest possible rejection for a flood.
+  const ip = getClientIp(req);
+  const rl = rateLimit(ip);
+  if (rl.limited) {
+    console.warn(`[/api/chat] rate limited (${rl.scope}) ip=${ip}`);
+    return new Response(THROTTLE_MESSAGE, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+      },
+    });
+  }
+
   let raw: unknown;
   try {
     raw = await req.json();
