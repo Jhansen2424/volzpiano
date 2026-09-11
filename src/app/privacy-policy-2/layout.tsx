@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Privacy Policy";
 const DESCRIPTION =
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: "/privacy-policy-2",
     type: "website",
+    images: OG_IMAGES,
   },
 };
 

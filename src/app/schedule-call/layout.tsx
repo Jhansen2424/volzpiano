@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Schedule a Call to Enroll";
 const DESCRIPTION =
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: "/schedule-call",
     type: "website",
+    images: OG_IMAGES,
   },
   twitter: {
     card: "summary_large_image",

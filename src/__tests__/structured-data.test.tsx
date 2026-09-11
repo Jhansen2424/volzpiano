@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { RATING, REVIEW_COUNT } from "@/lib/site";
 
 const SRC_DIR = path.join(process.cwd(), "src");
 
@@ -46,8 +47,20 @@ describe("Root layout JSON-LD (Organization)", () => {
   });
 
   it("aggregateRating uses 5.0 and the latest review count of 134", () => {
-    expect(src).toMatch(/ratingValue:\s*"5\.0"/);
-    expect(src).toMatch(/ratingCount:\s*"134"/);
+    // The numbers live in lib/site.ts so the JSON-LD and the visible copy on
+    // the landing pages cannot drift apart — the layout references the shared
+    // constants rather than repeating the literals.
+    expect(src).toMatch(/ratingValue:\s*RATING/);
+    expect(src).toMatch(/ratingCount:\s*REVIEW_COUNT/);
+    expect(RATING).toBe("5.0");
+    expect(REVIEW_COUNT).toBe("134");
+  });
+
+  it("sources the rating from lib/site so the landing pages agree", () => {
+    const lpData = read("app/lp/_components/lpData.ts");
+    expect(lpData).toMatch(
+      /export\s*\{[^}]*RATING[^}]*REVIEW_COUNT[^}]*\}\s*from\s*"@\/lib\/site"/
+    );
   });
 
   it("renders the JSON-LD via a script tag with type application/ld+json", () => {

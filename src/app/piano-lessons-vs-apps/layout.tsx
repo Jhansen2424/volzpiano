@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { serializeJsonLd } from "@/lib/json-ld";
+import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Piano Lessons vs. Piano Apps: What Actually Works for Kids?";
 const DESCRIPTION =
@@ -8,7 +9,10 @@ const SLUG = "piano-lessons-vs-apps";
 const CANONICAL = `/${SLUG}`;
 
 export const metadata: Metadata = {
-  title: TITLE,
+  // `absolute` for the same reason as the data-driven posts: these are blog
+  // articles with long descriptive titles, and the root template's
+  // 28-character brand suffix only ever got truncated off the end.
+  title: { absolute: TITLE },
   description: DESCRIPTION,
   alternates: { canonical: CANONICAL },
   openGraph: {
@@ -16,6 +20,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: CANONICAL,
     type: "article",
+    images: OG_IMAGES,
   },
   twitter: {
     card: "summary_large_image",

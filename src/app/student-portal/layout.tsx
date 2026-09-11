@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Student Portal";
 const DESCRIPTION =
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: "/student-portal",
     type: "website",
+    images: OG_IMAGES,
   },
 };
 

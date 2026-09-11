@@ -21,7 +21,9 @@ import { FloatingNotes, WaveDivider } from "../_components/Decor";
  * via a method tailored to how their brain learns. Longer, problem→proof→offer.
  */
 export const metadata: Metadata = {
-  title: "Piano Lessons Kids Actually Love | Volz Method — In-Home in Utah",
+  // `absolute` — see the sibling landing page. The brand is already in the
+  // title, so the root template would otherwise double it.
+  title: { absolute: "Piano Lessons Kids Actually Love | Volz Method" },
   description:
     "Most kids quit piano because they're forced to learn one way. The Volz Method teaches the music your child wants to play, tailored to how they learn. In-home lessons, free 15-minute call.",
   alternates: { canonical: "/lp/piano-lessons-kids-love" },

@@ -7,6 +7,8 @@
  * _components with a different hero + section order — never fork these facts.
  */
 
+import { RATING, REVIEW_COUNT } from "@/lib/site";
+
 /** The one and only conversion action. After a booking, Calendly is configured
  *  to redirect to /thank-you, where the Google Ads conversion tag fires. Keep
  *  this identical across variants so every landing page reports into the same
@@ -20,8 +22,7 @@ export const PHONE_HREF = "tel:+13854820122";
 export const PRICE = "$29–$52";
 export const PRICE_UNIT = "per half hour";
 
-export const RATING = "5.0";
-export const REVIEW_COUNT = "134";
+export { RATING, REVIEW_COUNT } from "@/lib/site";
 export const SERVICE_AREA = "Utah";
 
 /** Compact trust chips shown in the trust bar under the hero. */

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { serializeJsonLd } from "@/lib/json-ld";
+import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "How to Motivate Your Child to Practice Piano";
 const DESCRIPTION =
@@ -8,7 +9,8 @@ const SLUG = "how-to-motivate-your-child-to-practice-piano";
 const CANONICAL = `/${SLUG}`;
 
 export const metadata: Metadata = {
-  title: TITLE,
+  // `absolute` — see the note on the sibling article layouts.
+  title: { absolute: TITLE },
   description: DESCRIPTION,
   alternates: { canonical: CANONICAL },
   openGraph: {
@@ -16,6 +18,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: CANONICAL,
     type: "article",
+    images: OG_IMAGES,
   },
   twitter: {
     card: "summary_large_image",

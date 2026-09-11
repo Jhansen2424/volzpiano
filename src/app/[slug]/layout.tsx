@@ -4,6 +4,23 @@ import { serializeJsonLd } from "@/lib/json-ld";
 import { SITE_URL } from "@/lib/site";
 import { getPostBySlug } from "@/lib/blog";
 
+/**
+ * Duplicate WordPress imports: these "-2" URLs are near-identical copies of the
+ * originals. We keep the URLs live (slug parity, no redirects) but point their
+ * canonical at the original so Google consolidates the duplicate signals instead
+ * of splitting ranking between two competing pages.
+ */
+const CANONICAL_OVERRIDES: Record<string, string> = {
+  "start-your-musical-journey-with-beginners-piano-lessons-at-volz-piano-2":
+    "start-your-musical-journey-with-beginners-piano-lessons-at-volz-piano",
+  "discover-the-joy-of-music-with-salt-lake-piano-lessons-at-volz-piano-2":
+    "discover-the-joy-of-music-with-salt-lake-piano-lessons-at-volz-piano",
+  "elevate-your-music-journey-with-orem-piano-lessons-at-volz-piano-2":
+    "elevate-your-music-journey-with-orem-piano-lessons-at-volz-piano",
+  "master-the-art-of-piano-with-utah-piano-lessons-at-volz-piano-2":
+    "master-the-art-of-piano-with-utah-piano-lessons-at-volz-piano",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -13,11 +30,19 @@ export async function generateMetadata({
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  const canonical = `/${post.slug}`;
+  const canonical = `/${CANONICAL_OVERRIDES[post.slug] || post.slug}`;
   const imageRelative = post.image || undefined;
 
   return {
-    title: post.title,
+    // `absolute` opts out of the root layout's "%s | Volz Method Piano
+    // Lessons" template. These imported posts carry long, descriptive titles
+    // (median 68 characters, and they double as the on-page H1), so appending
+    // a 28-character brand suffix pushed the rendered title to a median of 96
+    // — well past the ~60 Google displays. The suffix sits at the end, so it
+    // was the part being truncated: it cost every post 28 characters of the
+    // title budget and never actually appeared. Marketing pages are shorter
+    // and keep the template.
+    title: { absolute: post.title },
     description: post.description,
     alternates: { canonical },
     openGraph: {
@@ -70,7 +95,22 @@ export default async function BlogPostLayout({
         url: `${SITE_URL}/icon.svg`,
       },
     },
-    mainEntityOfPage: `${SITE_URL}/${post.slug}`,
+    mainEntityOfPage: `${SITE_URL}/${CANONICAL_OVERRIDES[post.slug] || post.slug}`,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `${SITE_URL}/${post.slug}`,
+      },
+    ],
   };
 
   return (
@@ -78,6 +118,10 @@ export default async function BlogPostLayout({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }}
       />
       {children}
     </>

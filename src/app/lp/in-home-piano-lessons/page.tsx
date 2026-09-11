@@ -21,7 +21,10 @@ import { FloatingNotes, WaveDivider } from "../_components/Decor";
  * a transparent, low-commitment offer. Short, price-and-benefit-led.
  */
 export const metadata: Metadata = {
-  title: "In-Home Piano Lessons in Utah | Volz Method",
+  // `absolute` because this title already carries the brand — without it the
+  // root template appends " | Volz Method Piano Lessons" on top, rendering as
+  // "… | Volz Method | Volz Method Piano Lessons".
+  title: { absolute: "In-Home Piano Lessons in Utah | Volz Method" },
   description:
     "A trained piano teacher comes to your home — you never drive. Free 15-minute call, exact price, flexible month-to-month. $29–$52 per half hour across Utah.",
   alternates: { canonical: "/lp/in-home-piano-lessons" },

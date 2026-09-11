@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { serializeJsonLd } from "@/lib/json-ld";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, OG_IMAGES } from "@/lib/site";
 const TITLE = "How It Works & Pricing";
 const DESCRIPTION =
   "How Volz Method in-home piano lessons work: scheduling, what to expect, and pricing. Lessons are $29–$52 per half hour, with multi-student discounts and no long-term contracts.";
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: "/pricing",
     type: "article",
+    images: OG_IMAGES,
   },
   twitter: {
     card: "summary_large_image",
