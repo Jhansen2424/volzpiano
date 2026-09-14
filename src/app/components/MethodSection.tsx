@@ -5,10 +5,41 @@ import { useState } from "react";
 import VideoModal from "./VideoModal";
 import { useInView } from "@/lib/use-in-view";
 
+// The four approaches of the Volz Method. Every student is taught music
+// reading; the other three play to whatever the child is naturally strong at.
 const learningPaths = [
   {
-    label: "By Ear",
-    description: "Learn to hear patterns, play melodies by listening, and develop musical intuition.",
+    label: "Reading",
+    description: "Read sheet music and chord charts with confidence — taught to every student.",
+    color: "from-brand/20 to-brand/5",
+    borderColor: "border-brand/30",
+    iconBg: "bg-brand",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7 text-white">
+        <rect x="5" y="4" width="22" height="24" rx="2" stroke="currentColor" strokeWidth="2" />
+        <path d="M9 10h9M9 14h11M9 18h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="19" cy="22" r="2.5" stroke="currentColor" strokeWidth="2" />
+        <path d="M21.5 22v-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Composing",
+    description: "Write original music and understand the patterns behind how music works.",
+    color: "from-zinc-900/10 to-zinc-900/5",
+    borderColor: "border-zinc-900/20",
+    iconBg: "bg-zinc-900",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7 text-white">
+        <path d="M21.5 4.5a2.5 2.5 0 0 1 3.5 3.5L12 21l-5 1.5L8.5 17 21.5 4.5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M19.5 6.5l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M6 28h20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Hearing",
+    description: "Learn by ear — hear patterns, pick out melodies, and build musical intuition.",
     color: "from-brand/20 to-brand/5",
     borderColor: "border-brand/30",
     iconBg: "bg-brand",
@@ -23,29 +54,17 @@ const learningPaths = [
     ),
   },
   {
-    label: "By Sight",
-    description: "Read sheet music, chord charts, and visual guides with confidence.",
+    label: "Arranging",
+    description: "Take songs they already love and reshape them into something new.",
     color: "from-zinc-900/10 to-zinc-900/5",
     borderColor: "border-zinc-900/20",
     iconBg: "bg-zinc-900",
     icon: (
       <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7 text-white">
-        <path d="M4 16s4-8 12-8 12 8 12 8-4 8-12 8-12-8-12-8z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-        <circle cx="16" cy="16" r="4" stroke="currentColor" strokeWidth="2" />
-        <circle cx="16" cy="16" r="1.5" fill="currentColor" />
-      </svg>
-    ),
-  },
-  {
-    label: "By Feel",
-    description: "Build muscle memory, finger technique, and physical comfort at the keys.",
-    color: "from-brand/20 to-brand/5",
-    borderColor: "border-brand/30",
-    iconBg: "bg-brand",
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7 text-white">
-        <path d="M18 4v8l4-2v12a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5v-4l-2-1V9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M10 12l4-2M14 10l4-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M4 10h6l12 12h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M4 22h6l12-12h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M23 7l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M23 19l3 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
