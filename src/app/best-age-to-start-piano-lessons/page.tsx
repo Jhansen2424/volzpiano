@@ -314,7 +314,7 @@ export default function BestAgeBlogPost() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }} />
         <FloatingAgesAnimation visible={visible} />

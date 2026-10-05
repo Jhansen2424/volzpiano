@@ -39,7 +39,7 @@ export default function StubPage({
   return (
     <main>
       {/* Hero */}
-      <section className="relative flex min-h-[55vh] items-center justify-center overflow-hidden bg-zinc-900 pt-40 pb-20">
+      <section className="relative flex min-h-[55vh] items-center justify-center overflow-hidden bg-zinc-900 pt-40 pb-28">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{
@@ -50,7 +50,7 @@ export default function StubPage({
         <div className="relative z-[2] text-center px-6 max-w-3xl">
           {badge && (
             <span
-              className="mb-6 inline-block rounded-full bg-accent/15 px-4 py-1 text-xs font-bold uppercase tracking-wider text-accent"
+              className="mb-6 inline-block rounded-full bg-accent/15 px-4 py-1 text-xs font-bold uppercase tracking-wider text-accent-light"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(10px)",
@@ -73,7 +73,7 @@ export default function StubPage({
             {highlight && (
               <>
                 {" "}
-                <span className="text-accent">{highlight}</span>
+                <span className="text-accent-light">{highlight}</span>
               </>
             )}
           </h1>

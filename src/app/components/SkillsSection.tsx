@@ -167,14 +167,20 @@ export default function SkillsSection() {
                   }`}
                 />
 
-                {/* Collapsed state — vertical label */}
-                <div
-                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
-                    isActive ? "opacity-0" : "opacity-100"
-                  }`}
+                {/* Collapsed state — vertical label. A real button so keyboard
+                    users can expand each card (focus or Enter), not just mouse. */}
+                <button
+                  type="button"
+                  aria-expanded={isActive}
+                  aria-controls={`skill-panel-${i}`}
+                  onFocus={() => setActive(i)}
+                  onClick={() => setActive(i)}
+                  className="absolute inset-0 flex items-center justify-center rounded-3xl focus-visible:outline-offset-[-6px]! focus-visible:shadow-[inset_0_0_0_8px_#1a1035]!"
                 >
                   <span
-                    className="text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl"
+                    className={`text-2xl font-bold uppercase tracking-wider text-white transition-opacity duration-300 sm:text-3xl ${
+                      isActive ? "opacity-0" : "opacity-100"
+                    }`}
                     style={{
                       writingMode: "vertical-rl",
                       textOrientation: "mixed",
@@ -182,11 +188,12 @@ export default function SkillsSection() {
                   >
                     {skill.label}
                   </span>
-                </div>
+                </button>
 
                 {/* Expanded state — full content */}
                 <div
-                  className={`absolute inset-0 flex flex-col justify-end p-6 transition-opacity duration-500 sm:p-8 ${
+                  id={`skill-panel-${i}`}
+                  className={`pointer-events-none absolute inset-0 flex flex-col justify-end p-6 transition-opacity duration-500 sm:p-8 ${
                     isActive ? "opacity-100" : "opacity-0"
                   }`}
                 >

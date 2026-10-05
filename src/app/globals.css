@@ -11,11 +11,18 @@
   /* Amber accent (used for testimonial stars and a few highlights) */
   --color-brand: #f59e0b;
   --color-brand-hover: #d97706;
+  /* Accessible (WCAG AA) variant of the amber for TEXT on light backgrounds.
+     The bright amber is only 2.1:1 on white/cream; this burnt orange is
+     5.3:1+ on every light background the site uses. Use text-brand-ink for
+     orange text on light sections; text-brand is fine on dark sections. */
+  --color-brand-ink: #a1460a;
   /* Primary purple accent — historically named "orange-brand" before a brand
      refresh swapped the color but kept the variable name. Both names are
      exported as Tailwind utilities to keep the codebase migration painless. */
   --color-accent: #6343d4;
   --color-accent-hover: #5235b8;
+  /* Purple for text on dark backgrounds (#6343d4 is only ~2.5:1 there; this is 6.5:1+) */
+  --color-accent-light: #a594f9;
   /* Legacy aliases — keep so existing classes still resolve. New code should
      prefer the `-accent` names. */
   --color-orange-brand: #6343d4;
@@ -245,4 +252,68 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .lp-note { animation: none; }
+}
+
+/* ── Accessibility (WCAG 2.1/2.2 AA) ────────────────────────────────────── */
+
+/* Keep focused elements and anchor targets clear of the fixed navbar
+   (WCAG 2.4.11 Focus Not Obscured). */
+html {
+  scroll-padding-top: 6rem;
+}
+
+/* Visible keyboard focus everywhere (WCAG 2.4.7). Two-tone ring: a white
+   inner ring plus a dark outer ring, so it stays visible on light AND dark
+   sections (WCAG technique C40). :focus-visible only, so mouse clicks
+   do not flash rings. */
+:where(a, button, input, select, textarea, summary, iframe, [tabindex]):focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px #1a1035;
+}
+/* Programmatic focus targets (skip-link target, dialog regions) need no ring. */
+[tabindex="-1"]:focus,
+[tabindex="-1"]:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Skip link (WCAG 2.4.1 Bypass Blocks): off-screen until focused. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  border-radius: 9999px;
+  background: #1a1035;
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Site-wide "Pause animations" (WCAG 2.2.2 Pause, Stop, Hide). Freezes every
+   CSS animation; JS-driven animations check the same attribute. */
+html[data-motion="paused"] *,
+html[data-motion="paused"] *::before,
+html[data-motion="paused"] *::after {
+  animation-play-state: paused !important;
+}
+
+/* Honor the OS "reduce motion" setting: stop animations and make transitions
+   instant. !important beats the inline transition styles used for reveals. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
 }

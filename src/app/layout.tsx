@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { MOTION_INIT_SCRIPT } from "@/lib/motion-init";
 import { serializeJsonLd } from "@/lib/json-ld";
 import {
   SITE_URL,
@@ -127,12 +128,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
+        {/* Apply the saved / OS reduced-motion preference before first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_INIT_SCRIPT }} />
+        {/* WCAG 2.4.1: first focusable element lets keyboard users jump past the nav. */}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd) }}
         />
         <Navbar />
-        {children}
+        <div id="main-content" tabIndex={-1}>
+          {children}
+        </div>
         <Footer />
         {/* Google Ads base tag — must load on EVERY page, not just /thank-you.
             Ad clicks land on the homepage or /ppc-b-test with a ?gclid= param;

@@ -33,7 +33,7 @@ export default function StudentPortalPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{
@@ -79,7 +79,7 @@ export default function StudentPortalPage() {
               style={{ height: "520px", minHeight: "440px" }}
             />
           </div>
-          <p className="mt-4 text-center text-xs text-zinc-400">
+          <p className="mt-4 text-center text-xs text-zinc-600">
             Powered by My Music Staff
           </p>
         </div>

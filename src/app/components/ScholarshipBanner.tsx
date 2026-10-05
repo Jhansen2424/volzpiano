@@ -157,10 +157,10 @@ export default function ScholarshipBanner() {
       >
         {/* Badge */}
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-5 py-2">
-          <svg viewBox="0 0 20 20" className="h-5 w-5 text-accent" fill="currentColor">
+          <svg viewBox="0 0 20 20" className="h-5 w-5 text-[#a594f9]" fill="currentColor" aria-hidden="true">
             <path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.77l-4.94 2.34.94-5.5-4-3.9 5.61-.87L10 1z" />
           </svg>
-          <span className="text-sm font-bold uppercase tracking-wider text-accent">
+          <span className="text-sm font-bold uppercase tracking-wider text-[#a594f9]">
             Now Accepted
           </span>
         </div>

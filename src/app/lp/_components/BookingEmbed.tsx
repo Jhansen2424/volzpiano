@@ -64,7 +64,7 @@ export default function BookingEmbed({ height = 820 }: { height?: number }) {
         >
           <span className="h-9 w-9 animate-spin rounded-full border-2 border-zinc-200 border-t-accent" />
           <span className="text-sm font-semibold">Loading your calendar…</span>
-          <span className="text-xs text-zinc-400 underline underline-offset-2">
+          <span className="text-xs text-zinc-600 underline underline-offset-2">
             Tap if it doesn&rsquo;t appear
           </span>
         </button>

@@ -45,7 +45,7 @@ export default function TestimonialsSection() {
 
   return (
     <>
-      <section ref={sectionRef} className="bg-cream py-20 sm:py-28 lg:py-32">
+      <section ref={sectionRef} className="overflow-x-clip bg-cream py-20 sm:py-28 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 sm:px-12 lg:px-20">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             {/* ── Left — Copy + Video buttons ── */}
@@ -99,7 +99,7 @@ export default function TestimonialsSection() {
                   >
                     {/* Play circle */}
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-md transition-transform duration-300 group-hover:scale-110">
-                      <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5" fill="currentColor">
+                      <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5" fill="currentColor" aria-hidden="true">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
@@ -129,7 +129,7 @@ export default function TestimonialsSection() {
                   }}
                 >
                   {/* Decorative quote mark */}
-                  <div className="absolute -top-2 -left-1 text-7xl font-bold leading-none text-brand/10 select-none">
+                  <div aria-hidden="true" className="absolute -top-2 -left-1 text-7xl font-bold leading-none text-brand/10 select-none">
                     &ldquo;
                   </div>
 
@@ -165,6 +165,7 @@ export default function TestimonialsSection() {
         isOpen={activeVideo !== null}
         onClose={() => setActiveVideo(null)}
         videoUrl={activeVideo ?? ""}
+        title={videos.find((v) => v.embedUrl === activeVideo)?.label ?? "Volz Piano video"}
       />
     </>
   );

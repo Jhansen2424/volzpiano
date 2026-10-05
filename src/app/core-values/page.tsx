@@ -217,7 +217,7 @@ function ValueRow({
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_auto] lg:gap-16">
           {/* Left — Content */}
           <div>
-            <h3
+            <h2
               className={`text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl ${
                 value.dark ? "text-white" : "text-zinc-900"
               }`}
@@ -242,7 +242,7 @@ function ValueRow({
                 />
               </span>
               {value.titleSuffix || ""}
-            </h3>
+            </h2>
 
             <p
               className={`mt-5 max-w-3xl text-base leading-relaxed sm:text-lg ${
@@ -268,7 +268,9 @@ function ValueRow({
             }}
           >
             <span
-              className={`text-[10rem] font-black leading-none tracking-tighter ${
+              aria-hidden="true"
+              data-n={value.number}
+              className={`before:content-[attr(data-n)] text-[10rem] font-black leading-none tracking-tighter ${
                 value.dark ? "text-white/[0.04]" : "text-zinc-900/[0.04]"
               }`}
               style={{
@@ -278,9 +280,7 @@ function ValueRow({
                     : "rgba(99, 67, 212, 0.12)"
                 }`,
               }}
-            >
-              {value.number}
-            </span>
+            />
           </div>
         </div>
       </div>

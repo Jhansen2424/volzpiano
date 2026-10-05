@@ -57,16 +57,16 @@ function PostCard({ post, index }: { post: IndexPost; index: number }) {
           </div>
         )}
         <div className="p-8">
-          <span className="inline-block rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand">
+          <span className="inline-block rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-ink">
             {post.tag}
           </span>
-          <h2 className="mt-4 text-xl font-extrabold text-zinc-900 transition-colors duration-200 group-hover:text-brand sm:text-2xl">
+          <h2 className="mt-4 text-xl font-extrabold text-zinc-900 transition-colors duration-200 group-hover:text-brand-ink sm:text-2xl">
             {post.title}
           </h2>
           <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-500 sm:text-base">
             {post.excerpt}
           </p>
-          <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand">
+          <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-ink">
             Read article
             <svg
               className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
@@ -125,7 +125,7 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
   return (
     <main>
       {/* Hero */}
-      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }}
@@ -160,20 +160,25 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
       <section className="bg-white pb-4 pt-12">
         <div className="mx-auto max-w-5xl px-6 sm:px-12">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <label htmlFor="blog-search" className="sr-only">
+              Search articles
+            </label>
             <input
-              type="text"
+              id="blog-search"
+              type="search"
               placeholder="Search articles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 px-4 py-2 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand sm:w-72"
+              className="w-full rounded-lg border border-zinc-200 px-4 py-2 text-sm text-zinc-700 placeholder:text-zinc-500 focus:border-accent sm:w-72"
             />
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedTag(null)}
+                aria-pressed={!selectedTag}
                 className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider transition-colors ${
                   !selectedTag
-                    ? "bg-brand text-white"
-                    : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200"
+                    ? "bg-brand text-zinc-900"
+                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                 }`}
               >
                 All
@@ -182,10 +187,11 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
                 <button
                   key={tag}
                   onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                  aria-pressed={selectedTag === tag}
                   className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider transition-colors ${
                     tag === selectedTag
-                      ? "bg-brand text-white"
-                      : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200"
+                      ? "bg-brand text-zinc-900"
+                      : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                   }`}
                 >
                   {tag}
@@ -199,8 +205,11 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
       {/* Posts Grid */}
       <section ref={gridRef} className="scroll-mt-8 bg-white py-8 sm:py-16">
         <div className="mx-auto max-w-5xl px-6 sm:px-12">
+          <p className="sr-only" aria-live="polite">
+            {`${filtered.length} ${filtered.length === 1 ? "article" : "articles"} found.`}
+          </p>
           {filtered.length === 0 && (
-            <p className="py-12 text-center text-zinc-400">No articles found.</p>
+            <p className="py-12 text-center text-zinc-600">No articles found.</p>
           )}
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {paged.map((post, i) => (
@@ -209,13 +218,13 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
           </div>
 
           {totalPages > 1 && (
-            <nav className="mt-12 flex items-center justify-center gap-2">
+            <nav aria-label="Blog pages" className="mt-12 flex items-center justify-center gap-2">
               <button
                 onClick={() => goToPage(page - 1)}
                 disabled={page === 1}
                 className="rounded-lg px-3 py-2 text-sm font-semibold text-zinc-500 transition-colors hover:bg-zinc-100 disabled:pointer-events-none disabled:opacity-30"
               >
-                ← Prev
+                <span aria-hidden="true">← </span>Prev
               </button>
               {Array.from({ length: totalPages }, (_, i) => i + 1)
                 .filter((p) => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
@@ -226,17 +235,19 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
                 }, [])
                 .map((item, idx) =>
                   item === "dots" ? (
-                    <span key={`dots-${idx}`} className="px-1 text-zinc-300">
+                    <span key={`dots-${idx}`} aria-hidden="true" className="px-1 text-zinc-500">
                       …
                     </span>
                   ) : (
                     <button
                       key={item}
                       onClick={() => goToPage(item as number)}
+                      aria-label={`Page ${item}`}
+                      aria-current={item === page ? "page" : undefined}
                       className={`min-w-[2.25rem] rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
                         item === page
-                          ? "bg-brand text-white shadow-sm"
-                          : "text-zinc-500 hover:bg-zinc-100"
+                          ? "bg-brand text-zinc-900 shadow-sm"
+                          : "text-zinc-600 hover:bg-zinc-100"
                       }`}
                     >
                       {item}
@@ -248,7 +259,7 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
                 disabled={page === totalPages}
                 className="rounded-lg px-3 py-2 text-sm font-semibold text-zinc-500 transition-colors hover:bg-zinc-100 disabled:pointer-events-none disabled:opacity-30"
               >
-                Next →
+                Next<span aria-hidden="true"> →</span>
               </button>
             </nav>
           )}

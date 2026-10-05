@@ -64,7 +64,7 @@ function FrameworkCard({ num, icon, title, children }: { num: string; icon: stri
     <div ref={ref} className="mt-6 rounded-2xl border-l-4 border-brand bg-gradient-to-r from-brand/5 to-transparent p-6"
       style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.55s ease-out, transform 0.55s ease-out" }}>
       <div className="flex items-center gap-3 mb-3">
-        <span className="flex-shrink-0 h-9 w-9 rounded-full bg-brand flex items-center justify-center text-white text-lg">{icon}</span>
+        <span className="flex-shrink-0 h-9 w-9 rounded-full bg-brand flex items-center justify-center text-zinc-900 text-lg">{icon}</span>
         <h3 className="text-xl font-bold text-zinc-900">{num}. {title}</h3>
       </div>
       <div className="text-base leading-relaxed text-zinc-600">{children}</div>
@@ -234,7 +234,7 @@ export default function MotivationBlogPost() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }} />
         <FloatingNotesAnimation visible={visible} />

@@ -176,7 +176,7 @@ export default function DigitalPianoDealPage() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[65vh] items-center justify-center overflow-hidden bg-zinc-950 pt-24">
+      <section className="relative flex min-h-[65vh] items-center justify-center overflow-hidden bg-zinc-950 pt-24 pb-28">
         {/* Animated piano keys fill the background */}
         <PianoKeysHero visible={visible} />
 
@@ -208,7 +208,7 @@ export default function DigitalPianoDealPage() {
           >
             Here is the list of items that we would{" "}
             <span
-              className="text-accent"
+              className="text-accent-light"
               style={{ textShadow: "0 0 40px rgba(99,67,212,0.5)" }}
             >
               recommend you buy!
@@ -310,7 +310,7 @@ export default function DigitalPianoDealPage() {
             </div>
           </div>
 
-          <p className="mt-16 text-center text-xs text-zinc-400 max-w-2xl mx-auto">
+          <p className="mt-16 text-center text-xs text-zinc-600 max-w-2xl mx-auto">
             As an Amazon Associate, Volz Piano may earn from qualifying purchases. These are the same products our teachers recommend to students.
           </p>
         </div>

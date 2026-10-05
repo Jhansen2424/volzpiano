@@ -25,6 +25,12 @@ import { track, trackOnce } from "./track";
 type WhiteKey = { id: string; off: number; label: string; hint: string };
 type BlackKey = { id: string; off: number; left: number };
 
+// WCAG 2.5.8: black keys must be >= 24px wide and centered on a boundary, so
+// each white key needs ~36px+. Ten keys can't fit that on a phone, so small
+// screens show one octave (C4-B4 covers both songs) and sm+ shows all ten.
+const MOBILE_WHITE_COUNT = 7;
+const whiteIndexBefore = (blackOff: number) => WHITE_OFFS.filter((o) => o < blackOff).length - 1;
+
 // One-plus octave: C4 → E5. Covers Twinkle and Ode to Joy.
 const WHITE: WhiteKey[] = [
   { id: "C4", off: 0, label: "C", hint: "A" },
@@ -48,6 +54,8 @@ const BLACK: BlackKey[] = [
   { id: "Cs5", off: 13, left: 76.75 },
   { id: "Ds5", off: 15, left: 86.75 },
 ];
+
+const WHITE_OFFS = WHITE.map((w) => w.off);
 
 const OFF: Record<string, number> = {};
 [...WHITE, ...BLACK].forEach((k) => (OFF[k.id] = k.off));
@@ -200,7 +208,7 @@ export default function PlayableKeyboard() {
 
   return (
     <section className="bg-cream py-16 sm:py-24">
-      <div className="mx-auto max-w-3xl px-6">
+      <div className="mx-auto max-w-3xl px-3 sm:px-6">
         <div className="mb-8 text-center">
           <span className="text-xs font-bold uppercase tracking-[0.18em] text-accent">
             Try it — right now
@@ -271,11 +279,11 @@ export default function PlayableKeyboard() {
           onKeyDown={onKeyDown}
           role="group"
           aria-label="Playable piano keyboard. Use A S D F G H J K L keys or tap."
-          className="lp-plum relative mx-auto flex w-full max-w-2xl rounded-b-xl rounded-t-md p-2 shadow-warm-lg outline-none ring-accent/50 focus-visible:ring-2"
+          className="lp-plum relative mx-auto flex w-full max-w-2xl rounded-b-xl rounded-t-md p-2 [--n:7] sm:[--n:10] shadow-warm-lg outline-none ring-accent/50 focus-visible:ring-2"
           style={{ touchAction: "none" }}
         >
           {/* White keys */}
-          {WHITE.map((k) => {
+          {WHITE.map((k, wi) => {
             const isNext = nextKey === k.id;
             const isLit = litKey === k.id;
             return (
@@ -287,11 +295,18 @@ export default function PlayableKeyboard() {
                   e.preventDefault();
                   press(k.id);
                 }}
-                className={`relative ${KEY_H} flex-1 select-none rounded-b-md border border-zinc-300 transition-[transform,background-color] duration-75 active:translate-y-0.5 ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    press(k.id);
+                  }
+                }}
+                className={`${wi >= MOBILE_WHITE_COUNT ? "hidden sm:block" : ""} relative ${KEY_H} flex-1 select-none rounded-b-md border border-zinc-300 transition-[transform,background-color] duration-75 active:translate-y-0.5 ${
                   isLit ? "bg-accent/25" : "bg-white hover:bg-zinc-50"
                 } ${isNext ? "lp-key-pulse z-[1]" : ""}`}
               >
-                <span className="pointer-events-none absolute inset-x-0 bottom-2 text-center text-[11px] font-bold text-zinc-400">
+                <span className="pointer-events-none absolute inset-x-0 bottom-2 text-center text-[11px] font-bold text-zinc-600" aria-hidden="true">
                   {k.label}
                 </span>
               </button>
@@ -306,20 +321,33 @@ export default function PlayableKeyboard() {
               <button
                 key={k.id}
                 type="button"
-                aria-label="Play sharp key"
+                aria-label={`Play ${k.id[0]} sharp`}
                 onPointerDown={(e) => {
                   e.preventDefault();
                   press(k.id);
                 }}
-                style={{ left: `${k.left}%`, touchAction: "none" }}
-                className={`absolute top-2 z-[2] h-24 w-[6.5%] select-none rounded-b-md transition-[transform,background-color] duration-75 active:translate-y-0.5 sm:h-28 ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    press(k.id);
+                  }
+                }}
+                style={{
+                  // Center on the boundary after its white key, measured across the
+                  // visible keys (--n) inside the container's 0.5rem padding.
+                  left: `calc(0.5rem + (100% - 1rem) * ${whiteIndexBefore(k.off) + 1} / var(--n))`,
+                  transform: "translateX(-50%)",
+                  touchAction: "none",
+                }}
+                className={`${whiteIndexBefore(k.off) + 1 >= MOBILE_WHITE_COUNT ? "hidden sm:block" : ""} absolute top-2 z-[2] h-24 w-[max(24px,6.5%)] select-none rounded-b-md transition-[transform,background-color] duration-75 active:translate-y-0.5 sm:h-28 ${
                   isLit ? "bg-accent" : "bg-zinc-800 hover:bg-zinc-700"
                 } ${isNext ? "lp-key-pulse" : ""}`}
               />
             );
           })}
         </div>
-        <p className="mt-3 text-center text-xs text-zinc-500">
+        <p className="mt-3 text-center text-xs text-zinc-600">
           Tap the keys — or on a computer, use your A–L keyboard row.
         </p>
 

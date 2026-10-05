@@ -18,6 +18,7 @@ const VALID_ROUTES = [
   "/schedule-call",
   "/student-portal",
   "/privacy-policy-2",
+  "/accessibility",
   "/about-us",
   "/contact-us",
   "/jobs",

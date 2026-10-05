@@ -82,47 +82,8 @@ export default function MethodSection() {
       >
         <div className="mx-auto max-w-7xl px-6 sm:px-12 lg:px-20">
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
-            {/* Left — Learning Path Cards */}
-            <div className="flex flex-col gap-5">
-              {learningPaths.map((path, i) => (
-                <div
-                  key={path.label}
-                  className={`group relative overflow-hidden rounded-3xl border ${path.borderColor} bg-gradient-to-r ${path.color} p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5`}
-                  style={{
-                    opacity: visible ? 1 : 0,
-                    transform: visible ? "translateX(0)" : "translateX(-40px)",
-                    transition: `all 0.7s ease-out ${i * 200}ms`,
-                  }}
-                >
-                  <div className="flex items-start gap-5">
-                    {/* Icon */}
-                    <div
-                      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${path.iconBg} shadow-md`}
-                    >
-                      {path.icon}
-                    </div>
-
-                    {/* Text */}
-                    <div>
-                      <h3 className="mb-1 text-xl font-bold text-zinc-900">
-                        {path.label}
-                      </h3>
-                      <p className="text-base leading-relaxed text-zinc-600">
-                        {path.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Decorative number */}
-                  <span className="absolute -bottom-4 -right-2 text-[120px] font-black leading-none text-black/[0.03] select-none">
-                    {i + 1}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Right — Copy */}
-            <div>
+            {/* Right — Copy (first in the DOM so the h2 precedes the card h3s) */}
+            <div className="lg:order-2">
               <h2
                 className="mb-6 text-4xl leading-tight font-extrabold tracking-tight text-zinc-900 sm:text-5xl"
                 style={{
@@ -224,6 +185,45 @@ export default function MethodSection() {
                 </div>
               </div>
             </div>
+
+            {/* Left — Learning Path Cards */}
+            <div className="flex flex-col gap-5 lg:order-1">
+              {learningPaths.map((path, i) => (
+                <div
+                  key={path.label}
+                  className={`group relative overflow-hidden rounded-3xl border ${path.borderColor} bg-gradient-to-r ${path.color} p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5`}
+                  style={{
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? "translateX(0)" : "translateX(-40px)",
+                    transition: `all 0.7s ease-out ${i * 200}ms`,
+                  }}
+                >
+                  <div className="flex items-start gap-5">
+                    {/* Icon */}
+                    <div
+                      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${path.iconBg} shadow-md`}
+                    >
+                      {path.icon}
+                    </div>
+
+                    {/* Text */}
+                    <div>
+                      <h3 className="mb-1 text-xl font-bold text-zinc-900">
+                        {path.label}
+                      </h3>
+                      <p className="text-base leading-relaxed text-zinc-600">
+                        {path.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Decorative number */}
+                  <span aria-hidden="true" className="absolute -bottom-4 -right-2 text-[120px] font-black leading-none text-black/[0.03] select-none">
+                    {i + 1}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -232,6 +232,7 @@ export default function MethodSection() {
         isOpen={videoOpen}
         onClose={() => setVideoOpen(false)}
         videoUrl="https://www.youtube.com/embed/F1VJWyGEC6c"
+        title="Learn more about the Volz Method"
       />
     </>
   );

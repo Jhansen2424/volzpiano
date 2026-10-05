@@ -77,7 +77,7 @@ export default function VariantBKidsLove() {
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
           <div className="max-w-2xl" style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}>
             <p
-              className="text-sm font-bold uppercase tracking-[0.18em] text-brand"
+              className="text-sm font-bold uppercase tracking-[0.18em] text-amber-300"
               style={{ animation: "fadeSlideIn 0.6s ease-out both" }}
             >
               The Volz Method · In-Home Lessons
@@ -126,7 +126,7 @@ export default function VariantBKidsLove() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Pain */}
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-400">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-600">
                 Sound familiar?
               </span>
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">

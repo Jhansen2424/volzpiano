@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMotionPaused } from "@/lib/motion";
 
 const phrases = [
   "You Pick the Sheet Music",
@@ -61,8 +62,16 @@ const IconStrip = ({ flip = false }: { flip?: boolean }) => (
 export default function RotatingBanner() {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+  // WCAG 2.2.2: auto-rotating text must be pausable. It stops when the visitor
+  // presses the pause button, hovers/focuses the banner, or has motion paused
+  // site-wide (or the OS reduced-motion setting on).
+  const [userPaused, setUserPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const motionPaused = useMotionPaused();
+  const paused = userPaused || hovered || motionPaused;
 
   useEffect(() => {
+    if (paused) return;
     const interval = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
@@ -71,10 +80,17 @@ export default function RotatingBanner() {
       }, 400);
     }, 3500);
     return () => clearInterval(interval);
-  }, []);
+  }, [paused]);
 
   return (
-    <section className="relative overflow-hidden bg-zinc-900 py-7 sm:py-9">
+    <section
+      aria-label="Why families choose Volz"
+      className="relative overflow-hidden bg-zinc-900 py-7 sm:py-9"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+    >
       {/* Accent lines */}
       <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-brand to-transparent" />
       <div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-brand to-transparent" />
@@ -89,7 +105,14 @@ export default function RotatingBanner() {
         <div className="hidden h-10 w-px bg-brand/40 md:block" />
 
         {/* Rotating text — wraps cleanly on mobile, never gets pushed off-screen */}
-        <p className="min-w-0 max-w-full text-center text-xl font-bold tracking-wide text-white sm:text-2xl md:text-3xl lg:text-5xl">
+        {/* Screen readers get all phrases as a static list rather than an
+            announcement every few seconds; the animated copy is hidden from them. */}
+        <ul className="sr-only">
+          {phrases.map((phrase) => (
+            <li key={phrase}>{phrase}</li>
+          ))}
+        </ul>
+        <p aria-hidden="true" className="min-w-0 max-w-full text-center text-xl font-bold tracking-wide text-white sm:text-2xl md:text-3xl lg:text-5xl">
           <span
             className="inline-block transition-all duration-400 ease-out"
             style={{
@@ -110,6 +133,19 @@ export default function RotatingBanner() {
           <IconStrip flip />
         </div>
       </div>
+
+      {/* Pause / play the rotation (WCAG 2.2.2) */}
+      <button
+        type="button"
+        onClick={() => setUserPaused((p) => !p)}
+        aria-pressed={userPaused}
+        aria-label={userPaused ? "Play rotating messages" : "Pause rotating messages"}
+        className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+      >
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          {userPaused ? <path d="M8 5v14l11-7z" /> : <path d="M6 5h4v14H6zM14 5h4v14h-4z" />}
+        </svg>
+      </button>
     </section>
   );
 }

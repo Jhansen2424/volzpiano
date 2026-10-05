@@ -32,14 +32,15 @@ describe("Scholarship Banner", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the banner inside the navbar element (so it stays sticky with the menu)", () => {
+  it("renders the banner inside the fixed site header (so it stays sticky with the menu)", () => {
     render(<Navbar />);
     const banner = screen.getByText(/we accept the utah fits all scholarship/i);
-    // Walk up the tree until we hit a <nav> or run out
+    // Walk up the tree until we hit the <header> or run out. (The banner isn't
+    // navigation, so it lives in the header landmark alongside the <nav>.)
     let node: HTMLElement | null = banner;
     let foundNav = false;
     while (node) {
-      if (node.tagName === "NAV") {
+      if (node.tagName === "HEADER") {
         foundNav = true;
         break;
       }

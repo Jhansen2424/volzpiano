@@ -359,7 +359,7 @@ export default function AppsVsLessonsBlogPost() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }} />
         <SplitFloatingAnimation visible={visible} />
@@ -371,7 +371,7 @@ export default function AppsVsLessonsBlogPost() {
             style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: "all 0.6s ease-out 0.1s" }}>
             <span className="rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-xs font-bold text-blue-300">Apps</span>
             <span className="text-white/40 text-sm font-bold">VS</span>
-            <span className="rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-bold text-brand">Real Lessons</span>
+            <span className="rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-bold text-amber-300">Real Lessons</span>
           </div>
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl max-w-4xl mx-auto"
             style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease-out 0.2s", textShadow: "0 4px 24px rgba(0,0,0,0.5)" }}>
@@ -480,7 +480,7 @@ export default function AppsVsLessonsBlogPost() {
           </AnimatedSection>
           <AnimatedTable />
           <AnimatedSection delay={0.1}>
-            <p className="text-xs text-zinc-400 mb-6">*Based on weekly 30-minute lessons at $29–$52 per session.</p>
+            <p className="text-xs text-zinc-600 mb-6">*Based on weekly 30-minute lessons at $29–$52 per session.</p>
             <p className="text-base leading-relaxed text-zinc-600 sm:text-lg mb-6">
               Yes, apps are cheaper upfront. But consider what you&apos;re getting per dollar. Factor in the cost of correcting bad technique later (often months of re-learning), the likelihood of your child abandoning the app within a few months vs. continuing with a teacher they have a relationship with, and the actual skill development happening per session.
             </p>
