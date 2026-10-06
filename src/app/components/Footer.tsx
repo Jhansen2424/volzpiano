@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useInView } from "@/lib/use-in-view";
+import MotionToggle from "./MotionToggle";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -16,6 +17,7 @@ export default function Footer() {
   return (
     <footer ref={sectionRef} className="relative overflow-hidden bg-zinc-950">
       <div
+        aria-hidden="true"
         className="absolute top-0 left-1/2 -translate-x-1/2 h-64 w-[600px] rounded-full opacity-15 blur-[120px]"
         style={{
           background: "radial-gradient(circle, #6343d4 0%, transparent 70%)",
@@ -41,7 +43,7 @@ export default function Footer() {
 
             <Link
               href="/schedule-call"
-              className="group relative inline-flex items-center gap-3 rounded-full bg-brand px-10 py-5 text-lg font-bold text-white shadow-lg shadow-brand/25 transition-all duration-300 hover:bg-brand-hover hover:shadow-xl hover:shadow-brand/30 hover:-translate-y-0.5"
+              className="group relative inline-flex items-center gap-3 rounded-full bg-brand px-10 py-5 text-lg font-bold text-zinc-900 shadow-lg shadow-brand/25 transition-all duration-300 hover:bg-brand-hover hover:shadow-xl hover:shadow-brand/30 hover:-translate-y-0.5"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? "translateY(0)" : "translateY(20px)",
@@ -55,6 +57,7 @@ export default function Footer() {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2.5}
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -79,25 +82,34 @@ export default function Footer() {
               className="inline-flex items-center gap-2 rounded-full bg-cta px-7 py-3 text-sm font-bold text-white transition-all duration-200 hover:bg-cta-hover hover:-translate-y-0.5"
             >
               Teach with us! Click here
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
 
-            <div className="flex items-center gap-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               <Link
                 href="/privacy-policy-2"
-                className="text-sm text-white/40 transition-colors duration-200 hover:text-white/70"
+                className="text-sm text-white/70 transition-colors duration-200 hover:text-white"
               >
                 Privacy Policy
               </Link>
-              <span className="text-white/10">|</span>
-              <span className="text-sm text-white/30">
+              <Link
+                href="/accessibility"
+                className="text-sm text-white/70 transition-colors duration-200 hover:text-white"
+              >
+                Accessibility
+              </Link>
+              <MotionToggle className="text-sm text-white/70 transition-colors duration-200 hover:text-white" />
+              <span className="text-white/20" aria-hidden="true">|</span>
+              <span className="text-sm text-white/60">
                 &copy; {new Date().getFullYear()} Volz Method Piano Lessons. Designed &amp; Developed by{" "}
                 <a
                   href="https://webaholics.co"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/50 hover:text-white/70 transition-colors"
+                  className="text-white/70 underline underline-offset-2 hover:text-white transition-colors"
                 >
                   Webaholics.co
+                  <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </span>
             </div>

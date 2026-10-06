@@ -27,14 +27,14 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
           TODO: when the client provides the official Utah Fits All logo
           (PNG/SVG), drop it in beside the text here (e.g. an <img> before the
           label) to feature the actual logo. */}
-      <div className="w-full bg-accent text-white">
+      <aside aria-label="Utah Fits All Scholarship" className="w-full bg-accent text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-center gap-2.5 px-4 py-2.5 text-center">
           <ChipIcon name="shield" className="h-5 w-5 shrink-0" />
           <span className="text-sm font-extrabold uppercase tracking-wide sm:text-base">
             We proudly accept the Utah Fits All Scholarship
           </span>
         </div>
-      </div>
+      </aside>
 
       {/* Slim top bar */}
       <header className="border-b border-[#ecdfce] bg-cream/90 backdrop-blur-sm">
@@ -62,14 +62,14 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
             Volz Method Piano Lessons · In-home lessons across Utah
           </span>
           <FooterLinks />
-          <span className="text-xs text-zinc-400">
+          <span className="text-xs text-zinc-600">
             &copy; {new Date().getFullYear()} Volz Method Piano Lessons
           </span>
         </div>
       </footer>
 
       {/* Sticky mobile CTA bar — zero JS, anchor link only */}
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-[#ecdfce] bg-cream/95 backdrop-blur-sm shadow-[0_-4px_20px_rgba(120,80,45,0.10)] lg:hidden">
+      <aside aria-label="Book a free call" className="fixed inset-x-0 bottom-0 z-50 border-t border-[#ecdfce] bg-cream/95 backdrop-blur-sm shadow-[0_-4px_20px_rgba(120,80,45,0.10)] lg:hidden">
         <div className="mx-auto max-w-md px-4 py-3">
           <a
             href="#book"
@@ -79,7 +79,7 @@ export default function LpLayout({ children }: { children: React.ReactNode }) {
             Book Free Call
           </a>
         </div>
-      </div>
+      </aside>
     </div>
   );
 }

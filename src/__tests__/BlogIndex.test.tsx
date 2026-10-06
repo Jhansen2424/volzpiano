@@ -67,8 +67,9 @@ describe("BlogIndexPage", () => {
 
   it("renders pagination controls when more than 12 posts", () => {
     render(<BlogIndexPage />);
-    expect(screen.getByText("Next →")).toBeInTheDocument();
-    expect(screen.getByText("← Prev")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Next" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Prev" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Blog pages" })).toBeInTheDocument();
   });
 
   it("filters posts when search term is entered", () => {
@@ -80,11 +81,12 @@ describe("BlogIndexPage", () => {
 
   it("navigates to page 2 when Next is clicked", () => {
     render(<BlogIndexPage />);
-    const nextButton = screen.getByText("Next →");
+    const nextButton = screen.getByRole("button", { name: "Next" });
     fireEvent.click(nextButton);
     // Page 2 button should be active (brand styling)
-    const page2Button = screen.getByRole("button", { name: "2" });
+    const page2Button = screen.getByRole("button", { name: "Page 2" });
     expect(page2Button.className).toContain("bg-brand");
+    expect(page2Button).toHaveAttribute("aria-current", "page");
   });
 
   it("post cards link to root-level /[slug] (not /blog/[slug])", () => {

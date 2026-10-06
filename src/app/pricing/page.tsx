@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
+import { useMotionPaused } from "@/lib/motion";
 
 /* ═══════════════════════════════════════════
    Rippling Piano Strings Animation (Hero)
@@ -16,7 +17,10 @@ type PianoString = {
   thickness: number;
 };
 
-function PianoStringsAnimation({ visible }: { visible: boolean }) {
+function PianoStringsAnimation({ visible: inView }: { visible: boolean }) {
+  // Stops plucking when motion is paused site-wide or reduced (WCAG 2.2.2).
+  const motionPaused = useMotionPaused();
+  const visible = inView && !motionPaused;
   // Strings are lazily initialized once we know the canvas height
   const stringsRef = useRef<PianoString[] | null>(null);
 
@@ -96,8 +100,9 @@ function PianoStringsAnimation({ visible }: { visible: boolean }) {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className="absolute inset-0 w-full h-full"
-      style={{ opacity: visible ? 0.6 : 0, transition: "opacity 1s ease-out" }}
+      style={{ opacity: inView ? 0.6 : 0, transition: "opacity 1s ease-out" }}
     />
   );
 }
@@ -215,7 +220,7 @@ function HowItWorksTimeline() {
                 <div key={i} className="flex flex-col items-center text-center">
                   {/* Dot with icon */}
                   <div
-                    className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-brand text-white shadow-lg"
+                    className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-brand text-zinc-900 shadow-lg"
                     style={{
                       opacity: visible ? 1 : 0,
                       transform: visible ? "scale(1)" : "scale(0.4)",
@@ -237,7 +242,7 @@ function HowItWorksTimeline() {
                     {/* Orange top accent on hover */}
                     <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl bg-gradient-to-r from-brand to-brand-hover scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100" />
 
-                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.15em] text-brand">
+                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.15em] text-brand-ink">
                       Step {i + 1}
                     </span>
                     <h3 className="mb-2 text-lg font-bold text-zinc-900">

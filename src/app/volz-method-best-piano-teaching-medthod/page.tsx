@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
+import { useMotionPaused } from "@/lib/motion";
 
 /* ═══════════════════════════════════════════
    Animated Piano Keys Background (Hero)
@@ -14,7 +15,10 @@ function isBlackKey(index: number): boolean {
   return p === 1 || p === 2 || p === 4 || p === 5 || p === 6;
 }
 
-function PianoKeysAnimation({ visible }: { visible: boolean }) {
+function PianoKeysAnimation({ visible: inView }: { visible: boolean }) {
+  // Stops the self-playing keys when motion is paused or reduced (WCAG 2.2.2).
+  const motionPaused = useMotionPaused();
+  const visible = inView && !motionPaused;
   const [pressedKeys, setPressedKeys] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -62,7 +66,7 @@ function PianoKeysAnimation({ visible }: { visible: boolean }) {
               ? "0 0 20px rgba(99,67,212,0.6), 0 0 40px rgba(99,67,212,0.3), inset 0 -2px 4px rgba(0,0,0,0.15)"
               : "inset 0 -4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.2)",
             transform: pressedKeys.has(keyIdx) ? "translateY(3px)" : "translateY(0)",
-            opacity: visible ? 1 : 0,
+            opacity: inView ? 1 : 0,
             transition: `opacity 0.8s ease-out ${i * 0.03}s, transform 0.15s ease-out, height 0.15s ease-out, background 0.2s ease-out, box-shadow 0.2s ease-out`,
           }}
         />

@@ -372,7 +372,7 @@ export default function BrainSection() {
                   </p>
                   <button
                     onClick={() => setStarted(true)}
-                    className="rounded-full bg-brand px-8 py-3.5 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-brand-hover hover:shadow-xl hover:-translate-y-0.5"
+                    className="rounded-full bg-brand px-8 py-3.5 text-lg font-bold text-zinc-900 shadow-lg transition-all duration-200 hover:bg-brand-hover hover:shadow-xl hover:-translate-y-0.5"
                   >
                     Start the Quiz
                   </button>
@@ -400,7 +400,7 @@ export default function BrainSection() {
                         className="group rounded-xl border border-white/10 bg-white/5 p-4 text-left text-base font-medium text-white transition-all duration-200 hover:border-brand/50 hover:bg-brand/10 sm:text-lg"
                       >
                         <span className="flex items-center gap-3">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white/20 text-sm font-bold text-white/50 transition-all duration-200 group-hover:border-brand group-hover:bg-brand group-hover:text-white">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white/20 text-sm font-bold text-white/75 transition-all duration-200 group-hover:border-brand group-hover:bg-brand group-hover:text-white">
                             {option.side === "left" ? "A" : "B"}
                           </span>
                           {option.label}

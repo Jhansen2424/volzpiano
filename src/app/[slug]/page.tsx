@@ -42,7 +42,7 @@ export default async function BlogPostPage({
   return (
     <main>
       {/* Hero */}
-      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{
@@ -52,13 +52,13 @@ export default async function BlogPostPage({
         <div className="relative z-[2] text-center px-6">
           <nav
             aria-label="Breadcrumb"
-            className="mb-5 flex items-center justify-center gap-2 text-xs font-medium text-white/50"
+            className="mb-5 flex items-center justify-center gap-2 text-xs font-medium text-white/75"
           >
-            <Link href="/" className="hover:text-white/80">Home</Link>
+            <Link href="/" className="hover:text-white">Home</Link>
             <span aria-hidden>/</span>
-            <Link href="/blog" className="hover:text-white/80">Blog</Link>
+            <Link href="/blog" className="hover:text-white">Blog</Link>
             <span aria-hidden>/</span>
-            <span className="text-white/70">{post.category}</span>
+            <span className="text-white" aria-current="page">{post.category}</span>
           </nav>
           <span className="inline-block rounded-full bg-brand/20 px-4 py-1 text-xs font-bold uppercase tracking-wider text-brand mb-6">
             {post.category}
@@ -104,7 +104,7 @@ export default async function BlogPostPage({
                 prose-h2:text-2xl prose-h2:sm:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-brand prose-h2:pl-4
                 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
                 prose-p:text-zinc-600 prose-p:leading-relaxed
-                prose-a:text-brand prose-a:font-semibold prose-a:no-underline hover:prose-a:underline
+                prose-a:text-brand-ink prose-a:font-semibold prose-a:underline prose-a:underline-offset-2 hover:prose-a:no-underline
                 prose-strong:text-zinc-800
                 prose-ul:text-zinc-600 prose-ol:text-zinc-600
                 prose-li:marker:text-brand
@@ -154,10 +154,10 @@ export default async function BlogPostPage({
                     href={`/${r.slug}`}
                     className="group flex flex-col rounded-2xl border border-zinc-200 bg-white p-5 transition-all hover:border-brand/40 hover:shadow-lg hover:-translate-y-0.5"
                   >
-                    <span className="mb-2 text-xs font-bold uppercase tracking-wider text-brand">
+                    <span className="mb-2 text-xs font-bold uppercase tracking-wider text-brand-ink">
                       {r.category}
                     </span>
-                    <span className="text-sm font-bold leading-snug text-zinc-900 group-hover:text-brand">
+                    <span className="text-sm font-bold leading-snug text-zinc-900 group-hover:text-brand-ink">
                       {r.title}
                     </span>
                   </Link>
@@ -170,7 +170,7 @@ export default async function BlogPostPage({
           <AnimatedSection delay={0.25} className="mt-10">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-sm font-bold text-brand hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-bold text-brand-ink hover:underline"
             >
               <svg className="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />

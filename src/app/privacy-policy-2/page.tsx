@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="relative flex min-h-[35vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
+      <section className="relative flex min-h-[35vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{
@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage() {
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-6 sm:px-12">
           <AnimatedSection>
-            <div className="prose prose-zinc prose-lg max-w-none prose-headings:font-extrabold prose-headings:text-zinc-900 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-brand prose-h2:pl-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-zinc-600 prose-p:leading-relaxed prose-a:text-brand prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-zinc-800 prose-ul:text-zinc-600 prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-li:my-1 prose-li:marker:text-brand">
+            <div className="prose prose-zinc prose-lg max-w-none prose-headings:font-extrabold prose-headings:text-zinc-900 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-brand prose-h2:pl-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-zinc-600 prose-p:leading-relaxed prose-a:text-brand-ink prose-a:font-semibold prose-a:underline prose-a:underline-offset-2 hover:prose-a:underline prose-strong:text-zinc-800 prose-ul:text-zinc-600 prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-li:my-1 prose-li:marker:text-brand">
               <h2>Interpretation and Definitions</h2>
               <p>
                 The words of which the initial letter is capitalized have

@@ -24,6 +24,10 @@ const KEY_MAP: Record<string, number> = {
   a: 0, w: 1, s: 2, e: 3, d: 4, f: 5, t: 6, g: 7, y: 8, h: 9, u: 10, j: 11, k: 12,
 };
 
+// Spoken names for screen readers ("C#" -> "C sharp", "C2" -> "High C").
+const noteName = (note: string) =>
+  note === "C2" ? "High C" : note.replace("#", " sharp");
+
 const WaveTop = () => (
   <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] -translate-y-[1px]">
     <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[60px] sm:h-[80px]">
@@ -90,6 +94,21 @@ export default function InteractiveKeyboard() {
     });
   }, []);
 
+  // Enter / Space on a focused key plays it (WCAG 2.1.1 Keyboard). Pointer
+  // events alone don't fire for keyboard activation.
+  const keyHandlers = (index: number) => ({
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if ((e.key === "Enter" || e.key === " ") && !e.repeat) {
+        e.preventDefault();
+        playNote(index);
+      }
+    },
+    onKeyUp: (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") stopNote(index);
+    },
+    onBlur: () => stopNote(index),
+  });
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.repeat) return;
@@ -151,7 +170,7 @@ export default function InteractiveKeyboard() {
           <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-zinc-800 sm:text-5xl">
             Give It a Try
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-zinc-500">
+          <p className="mx-auto max-w-2xl text-lg text-zinc-600">
             Tap the keys or use your keyboard (A&ndash;K row) to play a few notes.
             Imagine what a real lesson could sound like!
           </p>
@@ -167,9 +186,11 @@ export default function InteractiveKeyboard() {
           }}
         >
           {/* Piano container with soft card */}
-          <div className="rounded-3xl bg-white/80 backdrop-blur-sm shadow-[0_8px_40px_rgba(0,0,0,0.06)] border border-white/60 p-6 sm:p-8">
+          <div className="rounded-3xl bg-white/80 backdrop-blur-sm shadow-[0_8px_40px_rgba(0,0,0,0.06)] border border-white/60 p-3 sm:p-8">
             {/* Piano keyboard */}
             <div
+              role="group"
+              aria-label="Playable piano keyboard"
               className="relative mx-auto select-none"
               style={{ height: 180, maxWidth: 560 }}
             >
@@ -178,16 +199,19 @@ export default function InteractiveKeyboard() {
                 {whiteKeys.map((key) => (
                   <button
                     key={key.note}
+                    type="button"
+                    aria-label={noteName(key.note)}
                     onPointerDown={() => playNote(key.index)}
                     onPointerUp={() => stopNote(key.index)}
                     onPointerLeave={() => stopNote(key.index)}
+                    {...keyHandlers(key.index)}
                     className={`relative flex-1 rounded-b-xl transition-all duration-100 ${
                       activeNotes.has(key.index)
                         ? "bg-accent/15 border-2 border-accent/40 shadow-[inset_0_-4px_12px_rgba(99,67,212,0.15)]"
                         : "bg-white border-2 border-zinc-200/80 shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:bg-cream-dark"
                     }`}
                   >
-                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] font-semibold text-zinc-300">
+                    <span aria-hidden="true" className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] font-semibold text-zinc-600">
                       {key.note.replace("2", "")}
                     </span>
                   </button>
@@ -197,14 +221,18 @@ export default function InteractiveKeyboard() {
               {/* Black keys */}
               {blackKeys.map((key) => {
                 const pos = blackKeyPositions[key.note];
-                const leftPercent =
-                  ((pos + 1) / whiteKeyCount) * 100 - 100 / whiteKeyCount / 3;
+                // Centered on the boundary between white keys; at least 24px wide
+                // so it meets the WCAG 2.5.8 target size on small screens.
+                const leftPercent = ((pos + 1) / whiteKeyCount) * 100;
                 return (
                   <button
                     key={key.note}
+                    type="button"
+                    aria-label={noteName(key.note)}
                     onPointerDown={() => playNote(key.index)}
                     onPointerUp={() => stopNote(key.index)}
                     onPointerLeave={() => stopNote(key.index)}
+                    {...keyHandlers(key.index)}
                     className={`absolute top-0 z-10 rounded-b-lg transition-all duration-100 ${
                       activeNotes.has(key.index)
                         ? "bg-accent shadow-[inset_0_-2px_8px_rgba(0,0,0,0.2)]"
@@ -212,7 +240,8 @@ export default function InteractiveKeyboard() {
                     }`}
                     style={{
                       left: `${leftPercent}%`,
-                      width: `${(100 / whiteKeyCount) * 0.58}%`,
+                      transform: "translateX(-50%)",
+                      width: `max(24px, ${(100 / whiteKeyCount) * 0.58}%)`,
                       height: "56%",
                     }}
                   />
@@ -222,8 +251,8 @@ export default function InteractiveKeyboard() {
           </div>
 
           {/* Keyboard hints */}
-          <p className="mt-6 text-center text-sm text-zinc-400">
-            Keyboard: A W S E D F T G Y H U J K
+          <p className="mt-6 text-center text-sm text-zinc-600">
+            Keyboard: A W S E D F T G Y H U J K &mdash; or Tab to a key and press Enter
           </p>
 
           {/* CTA */}
