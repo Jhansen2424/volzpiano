@@ -21,15 +21,22 @@
 
 import csvPosts from "@/content/blog-posts.json";
 import extraPosts from "@/content/blog-posts-extra.json";
-import { getPostBySlug, getPublishedPosts } from "@/lib/blog";
+import { getPostBySlug, getPublishedPosts, isPublished, type BlogPost } from "@/lib/blog";
 import { generateMetadata } from "@/app/[slug]/layout";
 
-type StoredPost = { slug: string; title: string };
+type StoredPost = { slug: string; title: string; publishDate?: string };
 
-const allPosts = [
+const storedPosts = [
   ...(csvPosts as StoredPost[]),
   ...(extraPosts as StoredPost[]),
 ];
+
+/**
+ * Posts that are live right now. Scheduled posts (a future `publishDate`) are
+ * deliberately hidden until their date, so they're checked separately below.
+ */
+const allPosts = storedPosts.filter((p) => isPublished(p as BlogPost));
+const scheduledPosts = storedPosts.filter((p) => !isPublished(p as BlogPost));
 
 /** The slugs carrying a literal `%` — the ones that used to 404. */
 const ENCODED_SLUGS = allPosts
@@ -130,6 +137,14 @@ describe("blog slug resolution", () => {
     // The 404s were invisible partly because these posts *are* published and
     // do appear in the index and sitemap — only the lookup failed.
     expect(getPublishedPosts().length).toBe(allPosts.length);
+  });
+
+  it("keeps scheduled posts hidden until their publish date, then resolves them", () => {
+    for (const post of scheduledPosts) {
+      expect(getPostBySlug(post.slug)).toBeUndefined();
+      const after = new Date(Date.parse(post.publishDate!) + 1000);
+      expect(getPostBySlug(post.slug, after)?.title).toBe(post.title);
+    }
   });
 });
 
