@@ -129,6 +129,24 @@ single highest-impact next change.** Likewise, the area check shows a price
 *range*, never an invented exact number, and never tells a parent we *don't*
 serve them — only "book and we'll confirm your street."
 
+## Variant C: the phone-number test (`/lp/in-home-piano-lessons-call`)
+
+Variant A plus a visible tap-to-call link (in the hero and above the FAQ).
+Nothing else differs, so **test it against A**, not B.
+
+- **Question:** does showing the phone number bring more total leads per visitor?
+- **Why:** Google/Ipsos (2013) found local-service searchers the most likely to
+  call (69%), and 47% said they look elsewhere when no number is shown. The
+  phone was removed from these pages at the client's request, so it runs as a
+  test instead of a site-wide change.
+- **How to run:** a 50/50 Google Ads experiment on the same campaign, Base =
+  `/lp/in-home-piano-lessons`, Experiment = `/lp/in-home-piano-lessons-call`.
+- **How to judge it:** total leads (booked calls *plus* phone calls) per visitor.
+  Bookings still report through `/thank-you`; call taps show up as
+  `lp_cta_click` with `source: "call_link"`. To count completed calls as
+  conversions in Google Ads, set up call conversion tracking on the number
+  first, otherwise variant C will look worse than it is.
+
 ## Adding another variant (C, D, …)
 
 1. Create `lp/<your-slug>/page.tsx`.

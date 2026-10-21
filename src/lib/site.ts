@@ -46,6 +46,17 @@ export const OG_IMAGES = [OG_IMAGE];
  * from the Business Profile itself. This markup is for entity understanding,
  * not for rich results.
  */
+/**
+ * The business's own social profiles. Linked from the footer and listed as
+ * sameAs in the business schema, which helps Google connect them to the
+ * Business Profile. Both confirmed against Google's results (Oct 2026): the
+ * Instagram bio links volzpiano.com.
+ */
+export const SOCIAL_PROFILES = [
+  { name: "Facebook", url: "https://www.facebook.com/VolzMethodPianoLessons" },
+  { name: "Instagram", url: "https://www.instagram.com/volz_method_piano_lessons/" },
+] as const;
+
 export const RATING = "4.9";
 export const REVIEW_COUNT = "140";
 
