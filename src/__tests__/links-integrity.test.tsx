@@ -177,11 +177,10 @@ describe("SEO metadata checks", () => {
 });
 
 describe("Dynamic [slug] blog route checks", () => {
-  it("the dynamic [slug] route uses DOMPurify on blog content", () => {
+  it("the dynamic [slug] route sanitizes blog content", () => {
     const pagePath = path.join(SRC_DIR, "[slug]", "page.tsx");
     const content = fs.readFileSync(pagePath, "utf-8");
-    expect(content).toContain("isomorphic-dompurify");
-    expect(content).toContain("DOMPurify.sanitize");
+    expect(content).toContain("sanitizePostHtml(post.content)");
   });
 
   it("blog-posts.json content has no leftover HTML comments", () => {

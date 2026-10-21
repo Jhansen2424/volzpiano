@@ -12,4 +12,17 @@ const config: Config = {
   testMatch: ["<rootDir>/src/**/*.test.{ts,tsx}"],
 };
 
-export default createJestConfig(config);
+// sanitize-html depends on htmlparser2 and friends, which ship only as ES
+// modules. next/jest skips transforming node_modules, so let these through.
+const ESM_PACKAGES = ["htmlparser2", "domhandler", "domutils", "dom-serializer", "domelementtype", "entities"];
+
+const jestConfig = createJestConfig(config);
+
+export default async () => {
+  const resolved = await jestConfig();
+  resolved.transformIgnorePatterns = [
+    `/node_modules/(?!(${ESM_PACKAGES.join("|")})/)`,
+    ...(resolved.transformIgnorePatterns ?? []).filter((p) => !p.includes("node_modules")),
+  ];
+  return resolved;
+};
