@@ -17,7 +17,7 @@ const LESSON_TYPES = [
  */
 export default function ServiceAreasSection() {
   return (
-    <section aria-labelledby="areas-heading" className="bg-cream py-20 sm:py-28">
+    <section aria-labelledby="areas-heading" className="bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-6 sm:px-10">
         <div className="mx-auto max-w-3xl text-center">
           <h2 id="areas-heading" className="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl">
@@ -34,7 +34,7 @@ export default function ServiceAreasSection() {
             <li key={area.slug}>
               <Link
                 href={`/${area.slug}`}
-                className="group flex h-full flex-col rounded-3xl border border-[#efe6d8] bg-white p-7 shadow-warm transition-all hover:-translate-y-0.5 hover:shadow-warm-lg"
+                className="group flex h-full flex-col rounded-3xl border border-[#efe6d8] bg-cream p-7 shadow-warm transition-all hover:-translate-y-0.5 hover:shadow-warm-lg"
               >
                 <span className="text-xl font-bold text-zinc-900">{area.county}</span>
                 <span className="mt-2 flex-1 text-zinc-600">

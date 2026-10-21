@@ -18,10 +18,12 @@
  *
  * Server component, no client JS beyond the lazy Calendly embed.
  */
+import Image from "next/image";
 import Link from "next/link";
 import { serializeJsonLd } from "@/lib/json-ld";
 import { SITE_URL } from "@/lib/site";
 import BookingEmbed from "@/app/lp/_components/BookingEmbed";
+import LpAnalytics from "@/app/lp/_components/LpAnalytics";
 import { HowItWorks, OfferCard, Testimonials, TrustBar } from "@/app/lp/_components/sections";
 import { BookButton, Stars } from "@/app/lp/_components/ui";
 import { PRICE, PRICE_UNIT, RATING, REVIEW_COUNT } from "@/app/lp/_components/lpData";
@@ -110,6 +112,7 @@ export default function LandingPage({
 
   return (
     <main>
+      <LpAnalytics variant="seo" name={path.replace(/^\//, "") || "home"} />
       {jsonLd.map((data, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />
       ))}
@@ -121,9 +124,10 @@ export default function LandingPage({
           className="absolute left-1/2 top-1/2 h-72 w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-15 blur-[120px]"
           style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }}
         />
-        <div className="relative mx-auto max-w-4xl px-6 text-center">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="text-center lg:text-left">
           <nav aria-label="Breadcrumb" className="mb-6 text-sm text-white/75">
-            <ol className="flex flex-wrap items-center justify-center gap-2">
+            <ol className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
               {trail.map((c, i) => (
                 <li key={c.href} className="flex items-center gap-2">
                   {i > 0 && <span aria-hidden="true">/</span>}
@@ -152,10 +156,10 @@ export default function LandingPage({
               </>
             )}
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/75 sm:text-xl">{intro}</p>
-          <div className="mt-8 flex flex-col items-center gap-4">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/75 sm:text-xl lg:mx-0">{intro}</p>
+          <div className="mt-8 flex flex-col items-center gap-4 lg:items-start">
             <BookButton label="Book a Free 15-Min Call" source="seo_hero" />
-            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-white/75">
+            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-white/75 lg:justify-start">
               <span className="inline-flex items-center gap-1.5">
                 <Stars className="h-4 w-4" />
                 {RATING} from {REVIEW_COUNT} Google reviews
@@ -166,6 +170,18 @@ export default function LandingPage({
               </span>
             </p>
           </div>
+        </div>
+        {/* Desktop only, lazy: hidden lazy images aren't fetched on phones. */}
+        <Image
+          src="/driving-piano-lp.png"
+          alt=""
+          width={1600}
+          height={1380}
+          loading="lazy"
+          sizes="(min-width: 1024px) 460px, 1px"
+          className="hidden w-full max-w-[460px] justify-self-center lg:block"
+          style={{ animation: "heroDrive 4s ease-in-out infinite" }}
+        />
         </div>
       </section>
 

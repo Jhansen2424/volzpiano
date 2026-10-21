@@ -324,4 +324,8 @@ html[data-motion="paused"] *::after {
   body:has([data-sticky-cta]) {
     padding-bottom: 4.5rem;
   }
+  /* ...and keep keyboard focus from scrolling in behind it (WCAG 2.4.11). */
+  html:has([data-sticky-cta]) {
+    scroll-padding-bottom: 5.5rem;
+  }
 }

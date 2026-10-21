@@ -16,6 +16,7 @@ const volzMethodLinks = [
   { href: "/volz-method-best-piano-teaching-medthod", label: "The Method" },
   { href: "/pricing", label: "How It Works" },
   { href: "/core-values", label: "Core Values" },
+  { href: "/areas-we-serve", label: "Areas We Serve" },
 ];
 
 export default function Navbar() {

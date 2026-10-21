@@ -5,7 +5,7 @@ import { SERVICE_AREAS } from "@/lib/areas";
 import { OG_IMAGES } from "@/lib/site";
 import { FAQS } from "@/app/lp/_components/lpData";
 
-const TITLE = "Special Needs Piano Lessons for Kids in Utah | Volz Piano";
+const TITLE = "Autism & Special Needs Piano Lessons in Utah | Volz Piano";
 const DESCRIPTION =
   "One-on-one piano lessons at home for kids with autism, ADHD and sensory differences, with a teacher who adapts every lesson. In-home across Utah.";
 
@@ -73,7 +73,7 @@ export default function SpecialNeedsPianoPage() {
       path="/piano-lessons-special-needs"
       eyebrow="Lessons that adapt"
       title="Piano Lessons for Kids with"
-      highlight="Special Needs"
+      highlight="Autism and Special Needs"
       intro="One-on-one lessons at home with a teacher who adapts every lesson to how your child learns, including children with autism, ADHD and sensory differences."
       crumbs={[{ name: "Special needs piano lessons", href: "/piano-lessons-special-needs" }]}
       serviceName="In-home piano lessons for children with special needs in Utah"
