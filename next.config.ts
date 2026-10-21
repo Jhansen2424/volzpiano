@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { nextRedirects } from "./src/lib/redirects";
 
 // Content Security Policy. We allow:
 //   - 'unsafe-inline' on style-src because Tailwind 4 + Next.js inject inline styles
@@ -46,9 +47,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // No redirects: every legacy URL from the old WordPress site is now served
-  // by a real route at the same exact slug. Slug parity is enforced by
-  // src/__tests__/legacy-url-coverage.test.tsx.
+  // Every legacy page and blog URL is still served by a real route at its exact
+  // slug (enforced by src/__tests__/legacy-url-coverage.test.tsx). The
+  // redirects cover only URLs with nothing left to serve: old WordPress/Wix
+  // city pages, job posts and offer pages, plus blog posts folded into a
+  // landing page. See src/lib/redirects.ts.
+  async redirects() {
+    return nextRedirects();
+  },
 };
 
 export default nextConfig;

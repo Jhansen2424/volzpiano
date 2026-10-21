@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
 import { useMotionPaused } from "@/lib/motion";
+import PricingQuestions from "./PricingQuestions";
 
 /* ═══════════════════════════════════════════
    Rippling Piano Strings Animation (Hero)
@@ -463,6 +464,7 @@ export default function HowItWorksPage() {
       <HowItWorksTimeline />
 
       {/* ── Schedule a Consultation ── */}
+      <PricingQuestions />
       <ScheduleSection />
     </main>
   );

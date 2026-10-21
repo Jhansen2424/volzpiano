@@ -1,5 +1,6 @@
 import csvPosts from "@/content/blog-posts.json";
 import extraPosts from "@/content/blog-posts-extra.json";
+import { REDIRECTED_SLUGS } from "@/lib/redirects";
 
 export type BlogPost = {
   slug: string;
@@ -32,9 +33,14 @@ export function isPublished(post: BlogPost, now: Date = new Date()): boolean {
   return ts <= now.getTime();
 }
 
+/** A post folded into a landing page: its URL redirects, so never list it. */
+export function isRedirected(post: Pick<BlogPost, "slug">): boolean {
+  return REDIRECTED_SLUGS.has(post.slug);
+}
+
 export function getPublishedPosts(now: Date = new Date()): BlogPost[] {
   return allPosts
-    .filter((p) => isPublished(p, now))
+    .filter((p) => isPublished(p, now) && !isRedirected(p))
     .sort((a, b) => {
       // Newest first by best available date signal
       const aKey = a.publishDate || a.dateIso || a.date || "";
@@ -116,5 +122,5 @@ export function getPostBySlug(
 }
 
 export function getAllPublishedSlugs(now: Date = new Date()): string[] {
-  return allPosts.filter((p) => isPublished(p, now)).map((p) => p.slug);
+  return allPosts.filter((p) => isPublished(p, now) && !isRedirected(p)).map((p) => p.slug);
 }

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { serializeJsonLd } from "@/lib/json-ld";
 import { SITE_URL, OG_IMAGES } from "@/lib/site";
+import { SERVICE_AREAS } from "@/lib/areas";
 const TITLE = "How It Works & Pricing";
 const DESCRIPTION =
-  "How Volz Method in-home piano lessons work: scheduling, what to expect, and pricing. Lessons are $29–$52 per half hour, with multi-student discounts and no long-term contracts.";
+  "How Volz Method in-home piano lessons work and what they cost: $29–$52 per half hour, multi-student discounts, and no long-term contract.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -29,6 +30,22 @@ const faqJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
+      name: "How much is a 30-minute piano lesson?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A 30-minute Volz Method lesson in your home costs $29–$52, depending on your city and how many students are in your home. Families with more than one student get a multi-student discount.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are 30-minute piano lessons worth it?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "For most kids, yes. A focused, engaging 30-minute lesson beats a 60-minute session that loses a child halfway through, and every Volz Method lesson ends with a practice plan for the week.",
+      },
+    },
+    {
+      "@type": "Question",
       name: "How much do Volz Method piano lessons cost?",
       acceptedAnswer: {
         "@type": "Answer",
@@ -40,7 +57,7 @@ const faqJsonLd = {
       name: "Where do you offer in-home piano lessons?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Our teachers drive to students' homes across Utah and Idaho, including Salt Lake County and Utah County.",
+        text: "Our teachers drive to students' homes across Utah, including Salt Lake, Utah and Davis counties.",
       },
     },
     {
@@ -77,7 +94,7 @@ const serviceJsonLd = {
   provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: [
     { "@type": "State", name: "Utah" },
-    { "@type": "State", name: "Idaho" },
+    ...SERVICE_AREAS.map((a) => ({ "@type": "AdministrativeArea", name: `${a.county}, Utah` })),
   ],
   offers: {
     "@type": "AggregateOffer",

@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import blogSlugs from "../blog-slugs.json";
 import { SITE_URL } from "@/lib/site";
 import { getPublishedPosts } from "@/lib/blog";
+import { SERVICE_AREAS } from "@/lib/areas";
+import { REDIRECTED_SLUGS } from "@/lib/redirects";
 
 type BlogEntry = { slug: string; date: string };
 const blogEntries = blogSlugs as BlogEntry[];
@@ -21,6 +23,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/testimonials`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/digital-piano`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/shop`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${SITE_URL}/areas-we-serve`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    ...SERVICE_AREAS.map((a) => ({
+      url: `${SITE_URL}/${a.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    })),
+    { url: `${SITE_URL}/utah-fits-all-piano-lessons`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/preschool-piano-lessons`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/homeschool-piano-lessons-utah`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/piano-lessons-special-needs`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/accessibility`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/about-us`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
@@ -59,6 +72,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       .map((p) => p.slug)
   );
   for (const s of futureSlugsFromExtras) sitemapSlugs.delete(s);
+  // Redirected URLs (legacy pages, posts folded into landing pages) never go in.
+  for (const s of REDIRECTED_SLUGS) sitemapSlugs.delete(s);
 
   const blogRoutes: MetadataRoute.Sitemap = Array.from(sitemapSlugs).map(
     (slug) => {

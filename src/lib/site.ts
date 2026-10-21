@@ -46,8 +46,8 @@ export const OG_IMAGES = [OG_IMAGE];
  * from the Business Profile itself. This markup is for entity understanding,
  * not for rich results.
  */
-export const RATING = "5.0";
-export const REVIEW_COUNT = "134";
+export const RATING = "4.9";
+export const REVIEW_COUNT = "140";
 
 /**
  * GA4 measurement ID, e.g. "G-ABC1234567".

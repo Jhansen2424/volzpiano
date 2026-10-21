@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { MOTION_INIT_SCRIPT } from "@/lib/motion-init";
 import { serializeJsonLd } from "@/lib/json-ld";
+import { SERVICE_AREAS } from "@/lib/areas";
 import {
   SITE_URL,
   OG_IMAGE,
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | Volz Method Piano Lessons",
   },
   description:
-    "In-home piano lessons across Utah and Idaho. Our teachers drive to your house. The Volz Method tailors every lesson to how your child naturally learns — reading, composing, hearing, and arranging. Lessons $29–$52 per half hour.",
+    "In-home piano lessons for kids across Salt Lake, Utah and Davis counties. A Volz Method teacher drives to your house. From $29 per half hour.",
   applicationName: "Volz Method Piano Lessons",
   authors: [{ name: "Volz Method Piano Lessons" }],
   generator: "Next.js",
@@ -54,14 +55,14 @@ export const metadata: Metadata = {
     siteName: "Volz Method Piano Lessons",
     title: "Volz Method Piano Lessons | In-Home Piano Lessons in Utah",
     description:
-      "In-home piano lessons across Utah and Idaho. Our teachers drive to your house. The Volz Method meets every child where they are.",
+      "In-home piano lessons across Utah. Our teachers drive to your house. The Volz Method meets every child where they are.",
     images: OG_IMAGES,
   },
   twitter: {
     card: "summary_large_image",
     title: "Volz Method Piano Lessons | In-Home Piano Lessons in Utah",
     description:
-      "In-home piano lessons across Utah and Idaho. The Volz Method teaches the music your child wants to play.",
+      "In-home piano lessons across Utah. The Volz Method teaches the music your child wants to play.",
     images: [OG_IMAGE.url],
   },
   robots: {
@@ -95,12 +96,10 @@ export default function RootLayout({
     logo: `${SITE_URL}/icon.svg`,
     image: `${SITE_URL}${OG_IMAGE.url}`,
     description:
-      "In-home piano lessons across Utah and Idaho. The Volz Method tailors every lesson to how each child naturally learns — reading, composing, hearing, and arranging.",
+      "In-home piano lessons across Utah. The Volz Method tailors every lesson to how each child naturally learns — reading, composing, hearing, and arranging.",
     areaServed: [
       { "@type": "State", name: "Utah" },
-      { "@type": "State", name: "Idaho" },
-      { "@type": "AdministrativeArea", name: "Salt Lake County" },
-      { "@type": "AdministrativeArea", name: "Utah County" },
+      ...SERVICE_AREAS.map((a) => ({ "@type": "AdministrativeArea", name: `${a.county}, Utah` })),
     ],
     serviceType: "In-home piano lessons",
     priceRange: "$29–$52 per half hour",

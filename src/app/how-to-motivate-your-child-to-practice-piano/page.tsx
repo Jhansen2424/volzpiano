@@ -266,7 +266,7 @@ export default function MotivationBlogPost() {
               If piano practice has become a nightly argument in your house, you&apos;re not alone — and <strong className="text-zinc-900">the problem probably isn&apos;t your child</strong>.
             </p>
             <p className="text-base leading-relaxed text-zinc-600 sm:text-lg mb-6">
-              This is the single most common concern parents bring to our teachers at Volz Method. &ldquo;My kid loved piano at first, but now getting them to practice is a battle.&rdquo; We hear it every week. And after working with hundreds of families across Utah and Idaho, we&apos;ve learned that the real issue is almost always a mismatch between the teaching approach and the child — not a lack of discipline or interest.
+              This is the single most common concern parents bring to our teachers at Volz Method. &ldquo;My kid loved piano at first, but now getting them to practice is a battle.&rdquo; We hear it every week. And after working with hundreds of families across Utah, we&apos;ve learned that the real issue is almost always a mismatch between the teaching approach and the child — not a lack of discipline or interest.
             </p>
           </AnimatedSection>
 
@@ -349,7 +349,7 @@ export default function MotivationBlogPost() {
           ]} />
           <AnimatedSection delay={0.05}>
             <p className="text-base leading-relaxed text-zinc-600 sm:text-lg mb-6">
-              For families across Utah and Idaho, Volz Method teachers drive to you — so these benefits come built in.
+              For families across Utah, Volz Method teachers drive to you — so these benefits come built in.
             </p>
           </AnimatedSection>
 

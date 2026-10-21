@@ -346,7 +346,7 @@ export default function BestAgeBlogPost() {
               If you&apos;re wondering when your child should start piano lessons, you&apos;re asking the right question at the right time. The short answer: <strong className="text-zinc-900">most children are ready between ages 5 and 9</strong> — but readiness matters far more than hitting a specific number.
             </p>
             <p className="text-base leading-relaxed text-zinc-600 sm:text-lg mb-6">
-              As in-home piano teachers who work with families across Utah and Idaho every day, we see firsthand what makes a child thrive at the keyboard. Some 5-year-olds take to it immediately. Some 7-year-olds need a different approach before things click. The age on the birthday cake is only part of the story.
+              As in-home piano teachers who work with families across Utah every day, we see firsthand what makes a child thrive at the keyboard. Some 5-year-olds take to it immediately. Some 7-year-olds need a different approach before things click. The age on the birthday cake is only part of the story.
             </p>
           </AnimatedSection>
 
@@ -458,7 +458,7 @@ export default function BestAgeBlogPost() {
           ]} />
           <AnimatedSection delay={0.05}>
             <p className="text-base leading-relaxed text-zinc-600 sm:text-lg mb-6">
-              For families in Utah and Idaho, Volz Method teachers drive to your home — so you get all these benefits without any of the logistics.
+              For families in Utah, Volz Method teachers drive to your home — so you get all these benefits without any of the logistics.
             </p>
           </AnimatedSection>
 

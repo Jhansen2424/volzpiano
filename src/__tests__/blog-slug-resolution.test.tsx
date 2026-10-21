@@ -22,6 +22,7 @@
 import csvPosts from "@/content/blog-posts.json";
 import extraPosts from "@/content/blog-posts-extra.json";
 import { getPostBySlug, getPublishedPosts, isPublished, type BlogPost } from "@/lib/blog";
+import { REDIRECTED_SLUGS } from "@/lib/redirects";
 import { generateMetadata } from "@/app/[slug]/layout";
 
 type StoredPost = { slug: string; title: string; publishDate?: string };
@@ -136,7 +137,9 @@ describe("blog slug resolution", () => {
   it("lists every post as published", () => {
     // The 404s were invisible partly because these posts *are* published and
     // do appear in the index and sitemap — only the lookup failed.
-    expect(getPublishedPosts().length).toBe(allPosts.length);
+    // Posts folded into a landing page redirect away, so they're not listed.
+    const listable = allPosts.filter((p) => !REDIRECTED_SLUGS.has(p.slug));
+    expect(getPublishedPosts().length).toBe(listable.length);
   });
 
   it("keeps scheduled posts hidden until their publish date, then resolves them", () => {

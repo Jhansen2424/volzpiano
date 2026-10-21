@@ -1,4 +1,5 @@
 import sitemap from "../app/sitemap";
+import { REDIRECTED_SLUGS } from "../lib/redirects";
 import robots from "../app/robots";
 import { metadata as rootMetadata } from "../app/layout";
 import { metadata as blogMetadata } from "../app/blog/layout";
@@ -111,7 +112,9 @@ describe("sitemap.ts", () => {
     const urls = new Set(entries.map((e) => e.url));
     type BlogEntry = { slug: string; date: string };
     for (const entry of blogSlugs as BlogEntry[]) {
-      expect(urls.has(`${SITE_URL}/${entry.slug}`)).toBe(true);
+      // Posts folded into a landing page redirect, so they leave the sitemap.
+      const expected = !REDIRECTED_SLUGS.has(entry.slug);
+      expect(urls.has(`${SITE_URL}/${entry.slug}`)).toBe(expected);
     }
   });
 
