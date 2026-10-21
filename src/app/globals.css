@@ -304,6 +304,18 @@ html[data-motion="paused"] *::after {
   animation-play-state: paused !important;
 }
 
+/* Entrance animations start fully transparent, so pausing them would freeze
+   real content (landing-page headlines, the video dialog) at opacity 0. When
+   motion is paused, switch those off instead so the content just appears. */
+html[data-motion="paused"] [style*="fadeSlideIn"],
+html[data-motion="paused"] [style*="fadeScaleIn"],
+html[data-motion="paused"] [class*="fadeSlideIn"],
+html[data-motion="paused"] [class*="fadeScaleIn"],
+html[data-motion="paused"] .lp-fade-slide,
+html[data-motion="paused"] .lp-fade-scale {
+  animation: none !important;
+}
+
 /* Honor the OS "reduce motion" setting: stop animations and make transitions
    instant. !important beats the inline transition styles used for reveals. */
 @media (prefers-reduced-motion: reduce) {

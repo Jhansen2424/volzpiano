@@ -304,7 +304,7 @@ function FloatingAgesAnimation({ visible }: { visible: boolean }) {
    Page
    ═══════════════════════════════════════════ */
 export default function BestAgeBlogPost() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);

@@ -73,10 +73,13 @@ describe("Schedule Call Page", () => {
       "../app/schedule-call/page"
     );
     render(<ScheduleCallPage />);
-    expect(screen.getByText("Enroll")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Book your free 15-minute call");
     const iframe = document.querySelector("iframe");
     expect(iframe).toBeInTheDocument();
     expect(iframe?.getAttribute("src")).toContain("calendly.com");
+    // What the call is, plus price and reviews, sit beside the calendar
+    expect(screen.getByText("What happens on the call")).toBeInTheDocument();
+    expect(screen.getAllByText(/\$29.\$52 per half hour/).length).toBeGreaterThan(0);
   });
 });
 

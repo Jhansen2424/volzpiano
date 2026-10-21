@@ -85,7 +85,7 @@ function PostCard({ post, index }: { post: IndexPost; index: number }) {
 }
 
 export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [page, setPage] = useState(1);

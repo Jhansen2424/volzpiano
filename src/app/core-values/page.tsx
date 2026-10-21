@@ -292,7 +292,7 @@ function ValueRow({
    Page
    ═══════════════════════════════════════════ */
 export default function CoreValuesPage() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);

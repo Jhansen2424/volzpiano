@@ -24,7 +24,8 @@ import { serializeJsonLd } from "@/lib/json-ld";
 import { SITE_URL } from "@/lib/site";
 import BookingEmbed from "@/app/lp/_components/BookingEmbed";
 import LpAnalytics from "@/app/lp/_components/LpAnalytics";
-import { HowItWorks, OfferCard, Testimonials, TrustBar } from "@/app/lp/_components/sections";
+import { HowItWorks, OfferCard, TrustBar } from "@/app/lp/_components/sections";
+import SocialProof from "@/app/lp/_components/SocialProof";
 import { BookButton, Stars } from "@/app/lp/_components/ui";
 import { PRICE, PRICE_UNIT, RATING, REVIEW_COUNT } from "@/app/lp/_components/lpData";
 
@@ -234,7 +235,8 @@ export default function LandingPage({
       {/* 6. Pricing */}
       <OfferCard />
 
-      <Testimonials heading="What Volz families say" />
+      {/* Parent testimonial video (loads YouTube only on click) + named reviews */}
+      <SocialProof heading="What Volz families say" />
 
       {/* 7. FAQ */}
       <section className="bg-blush py-16 sm:py-24">
