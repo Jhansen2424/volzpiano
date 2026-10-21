@@ -317,3 +317,15 @@ html[data-motion="paused"] *::after {
     scroll-behavior: auto !important;
   }
 }
+
+/* Landing pages show a fixed booking bar on phones; keep the footer's last
+   line from sitting underneath it. */
+@media (max-width: 639px) {
+  body:has([data-sticky-cta]) {
+    padding-bottom: 4.5rem;
+  }
+  /* ...and keep keyboard focus from scrolling in behind it (WCAG 2.4.11). */
+  html:has([data-sticky-cta]) {
+    scroll-padding-bottom: 5.5rem;
+  }
+}

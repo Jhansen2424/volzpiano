@@ -31,9 +31,11 @@ describe("Root layout JSON-LD (Organization)", () => {
     expect(src).toMatch(/url:\s*SITE_URL/);
   });
 
-  it("declares Utah and Idaho as areas served", () => {
+  it("declares Utah and the counties served (Utah only, no Idaho)", () => {
     expect(src).toContain('name: "Utah"');
-    expect(src).toContain('name: "Idaho"');
+    // Counties come from lib/areas so the schema matches the area pages.
+    expect(src).toMatch(/\.\.\.SERVICE_AREAS\.map/);
+    expect(src).not.toContain("Idaho");
   });
 
   it("priceRange uses $29–$52", () => {
@@ -46,14 +48,14 @@ describe("Root layout JSON-LD (Organization)", () => {
     expect(src).toMatch(/maxPrice:\s*"52"/);
   });
 
-  it("aggregateRating uses 5.0 and the latest review count of 134", () => {
+  it("aggregateRating uses 4.9 and the latest review count of 140", () => {
     // The numbers live in lib/site.ts so the JSON-LD and the visible copy on
     // the landing pages cannot drift apart — the layout references the shared
     // constants rather than repeating the literals.
     expect(src).toMatch(/ratingValue:\s*RATING/);
     expect(src).toMatch(/ratingCount:\s*REVIEW_COUNT/);
-    expect(RATING).toBe("5.0");
-    expect(REVIEW_COUNT).toBe("134");
+    expect(RATING).toBe("4.9");
+    expect(REVIEW_COUNT).toBe("140");
   });
 
   it("sources the rating from lib/site so the landing pages agree", () => {

@@ -3,7 +3,7 @@ import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Schedule a Call to Enroll";
 const DESCRIPTION =
-  "Schedule a free 15-minute consultation to enroll your child in personalized in-home piano lessons with the Volz Method in Utah and Idaho.";
+  "Schedule a free 15-minute consultation to enroll your child in personalized in-home piano lessons with the Volz Method in Utah.";
 
 export const metadata: Metadata = {
   title: TITLE,

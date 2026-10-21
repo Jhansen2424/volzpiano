@@ -28,6 +28,14 @@ const VALID_ROUTES = [
   "/checkout",
   "/my-account",
   "/thank-you",
+  "/areas-we-serve",
+  "/piano-lessons-salt-lake-county",
+  "/piano-lessons-utah-county",
+  "/piano-lessons-davis-county",
+  "/utah-fits-all-piano-lessons",
+  "/preschool-piano-lessons",
+  "/homeschool-piano-lessons-utah",
+  "/piano-lessons-special-needs",
 ];
 
 function getAllTsxFiles(dir: string): string[] {

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import AnimatedSection from "@/app/components/AnimatedSection";
+import { SERVICE_AREAS } from "@/lib/areas";
 import { getAllPublishedSlugs, getPostBySlug, getPublishedPosts } from "@/lib/blog";
 
 // Re-render at most once per hour. Combined with `dynamicParams = true`,
@@ -140,6 +141,21 @@ export default async function BlogPostPage({
                   See pricing &rarr;
                 </Link>
               </div>
+              <p className="mt-6 text-sm text-white/75">
+                Teachers drive to homes in{" "}
+                {SERVICE_AREAS.map((a, i) => (
+                  <span key={a.slug}>
+                    {i > 0 && (i === SERVICE_AREAS.length - 1 ? " and " : ", ")}
+                    <Link href={`/${a.slug}`} className="font-semibold text-white underline underline-offset-2 hover:no-underline">
+                      {a.county}
+                    </Link>
+                  </span>
+                ))}
+                .{" "}
+                <Link href="/areas-we-serve" className="font-semibold text-white underline underline-offset-2 hover:no-underline">
+                  See every area we serve
+                </Link>
+              </p>
             </div>
           </AnimatedSection>
 

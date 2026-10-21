@@ -19,8 +19,8 @@ Current page the visitor is on: ${currentPath}
 
 SERVICE OVERVIEW:
 - We offer in-home piano lessons — our teachers drive to the student's home
-- Service area: Utah and Idaho
-- Google rating: 5.0 stars
+- Service area: Utah
+- Google rating: 4.9 stars
 
 PRICING:
 - Lessons are $29–$52 per half hour depending on location and number of students
@@ -33,7 +33,7 @@ HOW TO GET STARTED:
 - We answer questions, give an accurate price quote (we need city and number of students), and if ready, sign the family up
 
 TEACHERS:
-- All Volz Method teachers are trained for 3 months in the Volz Method before they ever teach a single lesson
+- All Volz Method teachers are trained for 3 months in the Volz Method as they begin teaching
 - Teachers are dedicated instructors in each geographic area so they can drive to students
 
 THE VOLZ METHOD — 4 PILLARS:

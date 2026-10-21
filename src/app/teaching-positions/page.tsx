@@ -60,7 +60,7 @@ export default function TeachingPositionsPage() {
       badge="Teaching Positions"
       title="Become a"
       highlight="Volz Piano Teacher"
-      description="We hire dedicated piano teachers across Utah and Idaho. Every teacher is trained for three months in the Volz Method before they ever teach a single lesson."
+      description="We hire dedicated piano teachers across Utah. Every teacher is trained for three months in the Volz Method as they begin teaching."
       primaryCta={{
         href: "https://docs.google.com/forms/d/e/1FAIpQLSeiYwH4ZX0-0hpnOf1nlrVFqLOXYim6GuzQu1Iq_05524850w/viewform",
         label: "Apply to Teach",

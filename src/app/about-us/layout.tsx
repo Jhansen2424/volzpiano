@@ -3,7 +3,7 @@ import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "About Us";
 const DESCRIPTION =
-  "About Volz Method Piano Lessons — in-home piano teachers serving Utah and Idaho families with the four-pillar Volz Method.";
+  "About Volz Method Piano Lessons — in-home piano teachers serving Utah families with the four-pillar Volz Method.";
 
 export const metadata: Metadata = {
   title: TITLE,

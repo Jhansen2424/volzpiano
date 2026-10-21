@@ -3,7 +3,7 @@ import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Testimonials";
 const DESCRIPTION =
-  "Read what parents and students say about their experience with Volz Method in-home piano lessons across Utah and Idaho. 5.0-star Google rating.";
+  "Read what parents and students say about their experience with Volz Method in-home piano lessons across Utah. Rated 4.9 stars on Google.";
 
 export const metadata: Metadata = {
   title: TITLE,

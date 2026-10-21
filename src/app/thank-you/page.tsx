@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FloatingNotes, WaveDivider } from "../lp/_components/Decor";
+import { GA_ID } from "@/lib/site";
 
 // "Book appointment" conversion action in Google Ads (id 6558605213). The
 // base tag itself loads site-wide from the root layout — it must be on the
@@ -32,6 +33,10 @@ export default function ThankYouPage() {
       window.dataLayer!.push(arguments);
     }
     gtag("event", "conversion", { send_to: ADS_BOOKING_SEND_TO });
+    // GA4 lead event, so each booking is credited to the page the visit began
+    // on. Only sent once NEXT_PUBLIC_GA_ID is configured; mark "generate_lead"
+    // as a key event in GA4.
+    if (GA_ID) gtag("event", "generate_lead", { send_to: GA_ID, method: "calendly" });
   }, []);
 
   return (

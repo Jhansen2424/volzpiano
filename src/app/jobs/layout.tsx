@@ -3,7 +3,7 @@ import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Jobs at Volz Piano";
 const DESCRIPTION =
-  "Interested in teaching piano with the Volz Method in Utah or Idaho? Reach out and we'll let you know when openings are available.";
+  "Interested in teaching piano with the Volz Method in Utah? Reach out and we'll let you know when openings are available.";
 
 export const metadata: Metadata = {
   title: TITLE,

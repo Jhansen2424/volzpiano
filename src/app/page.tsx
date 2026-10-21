@@ -7,6 +7,7 @@ import ResultsSection from "./components/ResultsSection";
 import InteractiveKeyboard from "./components/InteractiveKeyboard";
 import ScholarshipBanner from "./components/ScholarshipBanner";
 import TestimonialsSection from "./components/TestimonialsSection";
+import ServiceAreasSection from "./components/ServiceAreasSection";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <ResultsSection />
       <InteractiveKeyboard />
       <ScholarshipBanner />
+      <ServiceAreasSection />
       <TestimonialsSection />
     </main>
   );
