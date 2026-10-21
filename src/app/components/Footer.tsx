@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useInView } from "@/lib/use-in-view";
 import MotionToggle from "./MotionToggle";
+import { SOCIAL_PROFILES } from "@/lib/site";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -104,6 +105,18 @@ export default function Footer() {
               >
                 Accessibility
               </Link>
+              {SOCIAL_PROFILES.map((p) => (
+                <a
+                  key={p.name}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-white/70 transition-colors duration-200 hover:text-white"
+                >
+                  {p.name}
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ))}
               <MotionToggle className="text-sm text-white/70 transition-colors duration-200 hover:text-white" />
               <span className="text-white/20" aria-hidden="true">|</span>
               <span className="text-sm text-white/60">

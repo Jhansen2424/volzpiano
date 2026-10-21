@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AnimatedSection from "@/app/components/AnimatedSection";
 
 export default function PrivacyPolicyPage() {
-  const [heroVisible, setHeroVisible] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);

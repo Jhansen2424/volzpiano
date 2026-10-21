@@ -317,7 +317,7 @@ function PianoQuiz() {
    Page
    ═══════════════════════════════════════════ */
 export default function VolzMethodPage() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);

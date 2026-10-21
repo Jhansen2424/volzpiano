@@ -166,7 +166,7 @@ function PianoKeysHero({ visible }: { visible: boolean }) {
    Page
    ═══════════════════════════════════════════ */
 export default function DigitalPianoDealPage() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);

@@ -17,7 +17,7 @@ declare global {
 }
 
 export default function ThankYouPage() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
     return () => clearTimeout(t);

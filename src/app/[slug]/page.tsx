@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import DOMPurify from "isomorphic-dompurify";
+import { sanitizePostHtml } from "@/lib/sanitize";
 import AnimatedSection from "@/app/components/AnimatedSection";
 import { SERVICE_AREAS } from "@/lib/areas";
 import { getAllPublishedSlugs, getPostBySlug, getPublishedPosts } from "@/lib/blog";
@@ -28,8 +28,9 @@ export default async function BlogPostPage({
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
-  // Sanitize at build time — DOMPurify is isomorphic so this runs server-side.
-  const sanitizedHtml = DOMPurify.sanitize(post.content);
+  // Sanitize server-side before rendering. sanitize-html is bundled normally;
+  // see src/lib/sanitize.ts for why this route must not depend on jsdom.
+  const sanitizedHtml = sanitizePostHtml(post.content);
 
   // Related posts for internal linking — prefer the same category, then fill
   // with the most recent others. Every post (including the legacy imports that

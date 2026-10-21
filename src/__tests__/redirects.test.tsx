@@ -14,6 +14,7 @@ import extraPosts from "@/content/blog-posts-extra.json";
 import { getPublishedPosts } from "@/lib/blog";
 import {
   CONSOLIDATED_POST_REDIRECTS,
+  GOOGLE_REVIEW_URL,
   LEGACY_CITY_REDIRECTS,
   LEGACY_PAGE_REDIRECTS,
   nextRedirects,
@@ -33,11 +34,20 @@ const allPostSlugs = new Set(
 describe("permanent redirects", () => {
   const redirects = nextRedirects();
 
-  it("are all permanent and point at a page that exists", () => {
-    for (const r of redirects) {
+  it("internal redirects are permanent and point at a page that exists", () => {
+    for (const r of redirects.filter((x) => x.destination.startsWith("/"))) {
       expect(r.permanent).toBe(true);
       expect({ source: r.source, ok: routeExists(r.destination) }).toEqual({ source: r.source, ok: true });
     }
+  });
+
+  it("/review is a temporary redirect to the Google review form", () => {
+    const review = redirects.find((r) => r.source === "/review");
+    expect(review?.permanent).toBe(false);
+    expect(review?.destination).toBe(GOOGLE_REVIEW_URL);
+    expect(GOOGLE_REVIEW_URL).toMatch(/^https:\/\/search\.google\.com\/local\/writereview\?placeid=ChIJ/);
+    // The only redirect that leaves the site.
+    expect(redirects.filter((r) => !r.destination.startsWith("/"))).toHaveLength(1);
   });
 
   it("never shadow a live page route", () => {

@@ -23,7 +23,7 @@ const MMS_LOGIN_SRCDOC = `<!DOCTYPE html>
 </html>`;
 
 export default function StudentPortalPage() {
-  const [heroVisible, setHeroVisible] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);

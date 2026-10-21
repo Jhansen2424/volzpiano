@@ -5,6 +5,7 @@ import { useInView } from "@/lib/use-in-view";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
 import { useMotionPaused } from "@/lib/motion";
 import PricingQuestions from "./PricingQuestions";
+import BookingEmbed from "../lp/_components/BookingEmbed";
 
 /* ═══════════════════════════════════════════
    Rippling Piano Strings Animation (Hero)
@@ -283,7 +284,6 @@ function HowItWorksTimeline() {
 /* ═══════════════════════════════════════════
    Schedule a Consultation — Calendly Embed
    ═══════════════════════════════════════════ */
-const CALENDLY_URL = "https://calendly.com/volz-method-sales/piano_lessons_phone_consultation";
 
 function ScheduleSection() {
   const [sectionRef, visible] = useInView<HTMLElement>({ threshold: 0.1 });
@@ -350,14 +350,9 @@ function ScheduleSection() {
             transition: "all 0.7s ease-out 0.2s",
           }}
         >
-          <div className="relative -mx-6 overflow-hidden rounded-2xl border border-white/10 bg-white shadow-2xl sm:mx-0">
-            <iframe
-              src={CALENDLY_URL}
-              title="Schedule a consultation"
-              className="w-full border-0"
-              style={{ height: "820px" }}
-            />
-          </div>
+          {/* Loads Calendly (~2.9 MB) only as the visitor nears it, behind a
+              same-height placeholder, so it can't slow the page above. */}
+          <BookingEmbed height={820} />
         </div>
       </div>
     </section>
@@ -368,7 +363,7 @@ function ScheduleSection() {
    Page
    ═══════════════════════════════════════════ */
 export default function HowItWorksPage() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
