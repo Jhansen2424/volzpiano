@@ -6,7 +6,7 @@ import { useMotionPaused } from "@/lib/motion";
 const phrases = [
   "You Pick the Sheet Music",
   "We Teach to Your Child's Strengths",
-  "Lessons Right in Your Living Room",
+  "Your Teacher Comes to Your Living Room",
 ];
 
 const IconStrip = ({ flip = false }: { flip?: boolean }) => (
@@ -96,13 +96,14 @@ export default function RotatingBanner() {
       <div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-brand to-transparent" />
 
       <div className="mx-auto flex items-center justify-center gap-6 px-6 sm:gap-10">
-        {/* Left icon strip — hidden on mobile so the rotating text has room */}
-        <div className="hidden md:block">
+        {/* Icon strips only on very wide screens; any narrower and they squeeze
+            the rotating text onto several lines */}
+        <div className="hidden min-[1800px]:block">
           <IconStrip />
         </div>
 
         {/* Divider */}
-        <div className="hidden h-10 w-px bg-brand/40 md:block" />
+        <div className="hidden h-10 w-px bg-brand/40 min-[1800px]:block" />
 
         {/* Rotating text — wraps cleanly on mobile, never gets pushed off-screen */}
         {/* Screen readers get all phrases as a static list rather than an
@@ -112,9 +113,17 @@ export default function RotatingBanner() {
             <li key={phrase}>{phrase}</li>
           ))}
         </ul>
-        <p aria-hidden="true" className="min-w-0 max-w-full text-center text-xl font-bold tracking-wide text-white sm:text-2xl md:text-3xl lg:text-5xl">
+        {/* Every phrase sits in the same grid cell, the inactive ones invisible,
+            so the banner is always as tall as the longest phrase and doesn't
+            jump in height each time the text changes. */}
+        <p aria-hidden="true" className="grid min-w-0 max-w-full text-center text-xl font-bold tracking-wide text-white sm:text-2xl md:text-3xl lg:text-5xl">
+          {phrases.map((phrase) => (
+            <span key={phrase} className="invisible col-start-1 row-start-1">
+              {phrase}
+            </span>
+          ))}
           <span
-            className="inline-block transition-all duration-400 ease-out"
+            className="col-start-1 row-start-1 self-center transition-all duration-400 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(12px)",
@@ -126,10 +135,10 @@ export default function RotatingBanner() {
         </p>
 
         {/* Divider */}
-        <div className="hidden h-10 w-px bg-brand/40 md:block" />
+        <div className="hidden h-10 w-px bg-brand/40 min-[1800px]:block" />
 
-        {/* Right icon strip — also hidden on mobile */}
-        <div className="hidden md:block">
+        {/* Right icon strip */}
+        <div className="hidden min-[1800px]:block">
           <IconStrip flip />
         </div>
       </div>
