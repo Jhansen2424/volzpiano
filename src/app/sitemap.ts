@@ -4,6 +4,7 @@ import { SITE_URL } from "@/lib/site";
 import { getPublishedPosts } from "@/lib/blog";
 import { SERVICE_AREAS } from "@/lib/areas";
 import { REDIRECTED_SLUGS } from "@/lib/redirects";
+import { JOB_OPENINGS } from "@/lib/jobs";
 
 type BlogEntry = { slug: string; date: string };
 const blogEntries = blogSlugs as BlogEntry[];
@@ -40,6 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/contact-us`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
     { url: `${SITE_URL}/teaching-positions`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     { url: `${SITE_URL}/jobs`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
+    ...JOB_OPENINGS.map((job) => ({
+      url: `${SITE_URL}/jobs/${job.slug}`,
+      lastModified: new Date(job.datePosted),
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    })),
     { url: `${SITE_URL}/privacy-policy-2`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
 

@@ -1,14 +1,7 @@
+import Link from "next/link";
 import StubPage from "@/app/components/StubPage";
+import { APPLY_URL, JOB_OPENINGS, payLabel } from "@/lib/jobs";
 import MusicNotesHero from "./MusicNotesHero";
-
-const openPositions = [
-  {
-    title: "In-Home Piano Teacher",
-    pay: "$35–$50 per hour (while teaching)",
-    cities: ["Eagle Mountain", "Saratoga Springs", "Lehi", "Cedar Fort"],
-    employmentType: "Part-time",
-  },
-];
 
 export default function TeachingPositionsPage() {
   return (
@@ -18,7 +11,7 @@ export default function TeachingPositionsPage() {
       highlight="Volz Piano Teacher"
       description="We hire dedicated piano teachers across Utah. Every teacher is trained for three months in the Volz Method as they begin teaching."
       primaryCta={{
-        href: "https://docs.google.com/forms/d/e/1FAIpQLSeiYwH4ZX0-0hpnOf1nlrVFqLOXYim6GuzQu1Iq_05524850w/viewform",
+        href: APPLY_URL,
         label: "Apply to Teach",
       }}
       heroBackground={<MusicNotesHero />}
@@ -28,10 +21,16 @@ export default function TeachingPositionsPage() {
           <h2 className="mb-4 text-xl font-bold text-zinc-900">
             Open Positions
           </h2>
+          {JOB_OPENINGS.length === 0 && (
+            <p className="leading-relaxed text-zinc-600">
+              We don&rsquo;t have any open positions right now, but we&rsquo;re
+              always glad to hear from great teachers.
+            </p>
+          )}
           <div className="space-y-4">
-            {openPositions.map((pos, i) => (
+            {JOB_OPENINGS.map((pos) => (
               <div
-                key={`${pos.title}-${pos.cities[0]}-${i}`}
+                key={pos.slug}
                 className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
               >
                 <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -39,7 +38,7 @@ export default function TeachingPositionsPage() {
                     Now Hiring
                   </span>
                   <span className="text-xs text-zinc-500">
-                    {pos.employmentType}
+                    Part-time
                   </span>
                 </div>
                 <h3 className="mb-3 text-lg font-extrabold text-zinc-900">
@@ -48,13 +47,19 @@ export default function TeachingPositionsPage() {
                 <dl className="space-y-2 text-sm text-zinc-600">
                   <div className="flex flex-wrap gap-x-2">
                     <dt className="font-semibold text-zinc-900">Pay:</dt>
-                    <dd>{pos.pay}</dd>
+                    <dd>{payLabel(pos)}</dd>
                   </div>
                   <div className="flex flex-wrap gap-x-2">
                     <dt className="font-semibold text-zinc-900">Cities:</dt>
                     <dd>{pos.cities.join(", ")}</dd>
                   </div>
                 </dl>
+                <Link
+                  href={`/jobs/${pos.slug}`}
+                  className="mt-4 inline-block text-sm font-bold text-accent underline-offset-4 hover:underline"
+                >
+                  See job details<span className="sr-only"> for {pos.city}</span> &rarr;
+                </Link>
               </div>
             ))}
           </div>
