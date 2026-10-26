@@ -53,7 +53,7 @@ export const JOB_OPENINGS: JobOpening[] = [
     payMin: 35,
     payMax: 50,
     startingStudents: "10–12 students to start, with more to come",
-    datePosted: "2026-10-27T09:00:00-06:00",
+    datePosted: "2026-10-26T09:00:00-06:00",
   },
 ];
 
