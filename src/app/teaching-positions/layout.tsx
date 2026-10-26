@@ -3,7 +3,7 @@ import { OG_IMAGES } from "@/lib/site";
 
 const TITLE = "Teaching Positions";
 const DESCRIPTION =
-  "Now hiring in-home piano teachers in Sandy, Draper, Cottonwood Heights, and Midvale. $35–$45/hour while teaching. Apply to teach with the Volz Method.";
+  "Now hiring an in-home piano teacher for Eagle Mountain, Saratoga Springs, Lehi, and Cedar Fort. $35–$50/hour while teaching. Apply to teach with the Volz Method.";
 
 export const metadata: Metadata = {
   title: TITLE,

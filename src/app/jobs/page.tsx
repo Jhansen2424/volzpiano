@@ -6,7 +6,7 @@ export default function JobsPage() {
       badge="Careers"
       title="Teach With"
       highlight="Volz Piano"
-      description="We hire dedicated piano teachers in each geographic area we serve. Every Volz Method teacher is trained for three months in the method before they teach their first lesson."
+      description="We hire dedicated piano teachers in each geographic area we serve. Every Volz Method teacher is trained for three months in the method as they begin teaching."
       primaryCta={{
         href: "https://docs.google.com/forms/d/e/1FAIpQLSeiYwH4ZX0-0hpnOf1nlrVFqLOXYim6GuzQu1Iq_05524850w/viewform",
         label: "Apply to Teach",
