@@ -80,7 +80,17 @@ export const REDIRECTED_SLUGS = new Set<string>([
   ...Object.keys(CONSOLIDATED_POST_REDIRECTS),
 ]);
 
-type NextRedirect = { source: string; destination: string; permanent: true };
+/**
+ * volzpiano.com/review → the Google review form for the Business Profile.
+ * A short link for review requests (texts, emails, a QR code on a card).
+ * Place ID found in Google's results for the business (Oct 2026); it decodes
+ * to the same listing id Google's brand panel uses. Temporary (307) so it can
+ * be repointed without browsers caching it.
+ */
+export const GOOGLE_REVIEW_URL =
+  "https://search.google.com/local/writereview?placeid=ChIJN3sKiXWaTYcRO8MW-bw9p5Y";
+
+type NextRedirect = { source: string; destination: string; permanent: boolean };
 
 export function nextRedirects(): NextRedirect[] {
   const single = { ...LEGACY_CITY_REDIRECTS, ...LEGACY_PAGE_REDIRECTS, ...CONSOLIDATED_POST_REDIRECTS };
@@ -92,5 +102,6 @@ export function nextRedirects(): NextRedirect[] {
     })),
     // Old WordPress job postings, e.g. /job/piano-teacher-in-layton-ut
     { source: "/job/:path*", destination: "/teaching-positions", permanent: true },
+    { source: "/review", destination: GOOGLE_REVIEW_URL, permanent: false },
   ];
 }

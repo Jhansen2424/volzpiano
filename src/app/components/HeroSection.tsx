@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function HeroSection() {
-  const [animate, setAnimate] = useState(false);
+  const [animate, setAnimate] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setAnimate(true), 300);
@@ -190,6 +190,9 @@ export default function HeroSection() {
               alt="Volz Method piano teacher driving to your house with a piano on the roof"
               width={4107}
               height={3543}
+              // Above the fold on phones and the page's largest element there,
+              // so load it eagerly (sizes is 0px on desktop, where it's hidden).
+              priority
               sizes="(max-width: 1024px) 90vw, 0px"
               className="h-auto w-full select-none"
               style={{ animation: "heroDrive 4s ease-in-out infinite" }}

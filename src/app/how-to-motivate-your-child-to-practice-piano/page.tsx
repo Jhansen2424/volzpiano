@@ -225,7 +225,7 @@ function FloatingNotesAnimation({ visible }: { visible: boolean }) {
    Page
    ═══════════════════════════════════════════ */
 export default function MotivationBlogPost() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
     return () => clearTimeout(t);
