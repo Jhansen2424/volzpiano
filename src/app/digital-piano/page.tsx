@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useCanvasAnimation } from "@/lib/use-canvas-animation";
 
 /* ═══════════════════════════════════════════
@@ -166,19 +166,13 @@ function PianoKeysHero({ visible }: { visible: boolean }) {
    Page
    ═══════════════════════════════════════════ */
 export default function DigitalPianoDealPage() {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <main>
       {/* ── Hero ── */}
       <section className="relative flex min-h-[65vh] items-center justify-center overflow-hidden bg-zinc-950 pt-24 pb-28">
         {/* Animated piano keys fill the background */}
-        <PianoKeysHero visible={visible} />
+        <PianoKeysHero visible />
 
         {/* Dark gradient overlay — heavier at top/center for text legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/60 z-[1]" />
@@ -194,7 +188,6 @@ export default function DigitalPianoDealPage() {
           {/* Badge */}
           <div
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-5 py-2"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: "all 0.6s ease-out 0.1s" }}
           >
             <svg className="h-4 w-4 text-brand" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 1l2.928 5.934 6.546.952-4.737 4.617 1.118 6.515L10 15.897l-5.855 3.121 1.118-6.515L.526 7.886l6.546-.952L10 1z" clipRule="evenodd" />
@@ -204,7 +197,7 @@ export default function DigitalPianoDealPage() {
 
           <h1
             className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl xl:text-7xl leading-tight"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.9s ease-out 0.2s", textShadow: "0 4px 40px rgba(0,0,0,0.7)" }}
+            style={{ textShadow: "0 4px 40px rgba(0,0,0,0.7)" }}
           >
             Here is the list of items that we would{" "}
             <span
@@ -217,7 +210,6 @@ export default function DigitalPianoDealPage() {
 
           <p
             className="mt-6 mx-auto max-w-2xl text-lg text-white/70 sm:text-xl leading-relaxed"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.7s ease-out 0.5s" }}
           >
             This is the best deal we know of currently for a digital piano that has everything you need to learn piano properly on.
           </p>
@@ -225,7 +217,6 @@ export default function DigitalPianoDealPage() {
           {/* Scroll cue */}
           <div
             className="mt-10 flex justify-center"
-            style={{ opacity: visible ? 1 : 0, transition: "opacity 0.7s ease-out 0.9s" }}
           >
             <div className="flex flex-col items-center gap-2 text-white/30">
               <span className="text-xs font-semibold uppercase tracking-widest">See Recommendations</span>

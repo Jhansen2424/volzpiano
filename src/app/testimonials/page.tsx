@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useInView } from "@/lib/use-in-view";
 
 /* ═══════════════════════════════════════════
@@ -191,24 +190,16 @@ function ReviewCard({
   );
 }
 
-
 /* ═══════════════════════════════════════════
    Page
    ═══════════════════════════════════════════ */
 export default function TestimonialsPage() {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <main>
       {/* ── Hero ── */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/40 via-zinc-900/20 to-zinc-900 z-[1]" />
-        <FloatingReviewsAnimation visible={visible} />
+        <FloatingReviewsAnimation visible />
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px] z-[1]"
           style={{
@@ -221,11 +212,6 @@ export default function TestimonialsPage() {
           {/* Google rating badge */}
           <div
             className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm px-5 py-2.5"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(16px)",
-              transition: "all 0.6s ease-out 0.1s",
-            }}
           >
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
@@ -247,9 +233,6 @@ export default function TestimonialsPage() {
           <h1
             className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(30px)",
-              transition: "all 0.8s ease-out 0.2s",
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
@@ -257,11 +240,6 @@ export default function TestimonialsPage() {
           </h1>
           <p
             className="mt-6 mx-auto max-w-2xl text-lg text-white/60 sm:text-xl"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.5s",
-            }}
           >
             Real reviews from real parents. See why families love the Volz
             Method.

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FloatingNotes, WaveDivider } from "../lp/_components/Decor";
 import { GA_ID } from "@/lib/site";
 
@@ -17,11 +17,6 @@ declare global {
 }
 
 export default function ThankYouPage() {
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
 
   // Fire once per thank-you view (one completed booking). Pushing an
   // arguments object onto dataLayer is safe regardless of whether gtag.js
@@ -55,11 +50,6 @@ export default function ThankYouPage() {
           {/* Success check icon */}
           <div
             className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand/20 ring-4 ring-brand/15"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "scale(1)" : "scale(0.6)",
-              transition: "all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s",
-            }}
           >
             <svg
               className="h-8 w-8 text-brand"
@@ -75,8 +65,7 @@ export default function ThankYouPage() {
                 d="M5 13l4 4L19 7"
                 style={{
                   strokeDasharray: 30,
-                  strokeDashoffset: visible ? 0 : 30,
-                  transition: "stroke-dashoffset 0.5s ease-out 0.4s",
+                  strokeDashoffset: 0,
                 }}
               />
             </svg>
@@ -84,11 +73,6 @@ export default function ThankYouPage() {
 
           <span
             className="mb-4 inline-block rounded-full bg-brand/20 px-4 py-1 text-xs font-bold uppercase tracking-wider text-brand"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(10px)",
-              transition: "all 0.5s ease-out 0.2s",
-            }}
           >
             Confirmed
           </span>
@@ -96,9 +80,6 @@ export default function ThankYouPage() {
           <h1
             className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(30px)",
-              transition: "all 0.8s ease-out 0.3s",
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
@@ -108,11 +89,6 @@ export default function ThankYouPage() {
 
           <p
             className="mt-6 mx-auto max-w-2xl text-lg text-white/70 sm:text-xl"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.5s",
-            }}
           >
             Your free 15-minute phone consultation is booked. We&rsquo;re looking
             forward to talking with you and helping your family get started with

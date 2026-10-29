@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useInView } from "@/lib/use-in-view";
 
 export type IndexPost = {
   slug: string;
@@ -15,22 +16,7 @@ export type IndexPost = {
 const POSTS_PER_PAGE = 12;
 
 function PostCard({ post, index }: { post: IndexPost; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.15 });
 
   return (
     <div
@@ -51,7 +37,9 @@ function PostCard({ post, index }: { post: IndexPost; index: number }) {
               src={post.image}
               alt={post.title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              // One, two or three columns inside a max-w-5xl container with
+              // px-6 / sm:px-12 padding and a 2rem gap.
+              sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) calc(50vw - 64px), 288px"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
@@ -85,16 +73,10 @@ function PostCard({ post, index }: { post: IndexPost; index: number }) {
 }
 
 export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
-  const [visible, setVisible] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const gridRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
 
   const allTags = Array.from(new Set(posts.map((p) => p.tag))).sort();
 
@@ -134,9 +116,6 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
           <h1
             className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(30px)",
-              transition: "all 0.8s ease-out 0.2s",
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
@@ -144,11 +123,6 @@ export default function BlogIndexClient({ posts }: { posts: IndexPost[] }) {
           </h1>
           <p
             className="mx-auto mt-6 max-w-2xl text-lg text-white/60 sm:text-xl"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.5s",
-            }}
           >
             Tips, insights, and guides for parents navigating their child&apos;s piano journey.
           </p>

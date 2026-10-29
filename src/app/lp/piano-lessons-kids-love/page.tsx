@@ -69,6 +69,9 @@ export default function VariantBKidsLove() {
           alt="A child playing piano at home during an in-home lesson"
           fill
           priority
+          // The page's largest element on phone and desktop. Next 16's
+          // `priority` only preloads; it no longer raises fetch priority.
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

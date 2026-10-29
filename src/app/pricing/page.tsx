@@ -363,19 +363,13 @@ function ScheduleSection() {
    Page
    ═══════════════════════════════════════════ */
 export default function HowItWorksPage() {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <main>
       {/* ── Hero ── */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24">
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/40 via-zinc-900/20 to-zinc-900 z-[1]" />
-        <PianoStringsAnimation visible={visible} />
+        <PianoStringsAnimation visible />
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-20 blur-[120px] z-[1]"
           style={{
@@ -388,9 +382,6 @@ export default function HowItWorksPage() {
           <h1
             className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(30px)",
-              transition: "all 0.8s ease-out 0.2s",
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
@@ -400,20 +391,13 @@ export default function HowItWorksPage() {
               <span
                 className="absolute bottom-1 left-0 h-3 w-full bg-brand/30 -z-0 rounded-sm"
                 style={{
-                  transform: visible ? "scaleX(1)" : "scaleX(0)",
                   transformOrigin: "left",
-                  transition: "transform 0.6s ease-out 0.8s",
                 }}
               />
             </span>
           </h1>
           <p
             className="mt-6 mx-auto max-w-2xl text-lg text-white/60 sm:text-xl"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.5s",
-            }}
           >
             We drive to you! To give an accurate price we need your city and the
             number of students in your home. Multi-student discounts available.
@@ -422,11 +406,6 @@ export default function HowItWorksPage() {
           {/* Price range badge */}
           <div
             className="mt-10 inline-flex items-baseline gap-2 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm px-8 py-5"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.7s",
-            }}
           >
             <span className="text-5xl font-extrabold text-brand sm:text-6xl">
               $29–$52
@@ -437,11 +416,6 @@ export default function HowItWorksPage() {
           </div>
 
           <div
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(16px)",
-              transition: "all 0.6s ease-out 0.9s",
-            }}
           >
             <a
               href="#schedule"

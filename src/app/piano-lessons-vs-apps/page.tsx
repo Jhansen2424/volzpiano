@@ -1,20 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, ReactNode } from "react";
+import { useInView } from "@/lib/use-in-view";
+import { useEffect, useRef, ReactNode } from "react";
 
 /* ═══════════════════════════════════════════
    Animated Section Wrapper
    ═══════════════════════════════════════════ */
 function AnimatedSection({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-    }, { threshold: 0.1 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.1 });
   return (
     <div ref={ref} className={className} style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: `opacity 0.6s ease-out ${delay}s, transform 0.6s ease-out ${delay}s` }}>
       {children}
@@ -26,15 +19,7 @@ function AnimatedSection({ children, delay = 0, className = "" }: { children: Re
    Section Heading with orange bar
    ═══════════════════════════════════════════ */
 function SectionHeading({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-    }, { threshold: 0.2 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.2 });
   return (
     <div ref={ref} className="flex items-start gap-4 mt-12 mb-4">
       <div className="mt-1.5 w-1 rounded-full bg-brand flex-shrink-0"
@@ -51,15 +36,7 @@ function SectionHeading({ children }: { children: ReactNode }) {
    Staggered List
    ═══════════════════════════════════════════ */
 function StaggerList({ items, ordered = false }: { items: ReactNode[]; ordered?: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-    }, { threshold: 0.1 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.1 });
   const Tag = ordered ? "ol" : "ul";
   return (
     <div ref={ref}>
@@ -84,15 +61,7 @@ const tableRows = [
 ];
 
 function AnimatedTable() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-    }, { threshold: 0.2 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.2 });
   return (
     <div ref={ref} className="mb-2 overflow-x-auto rounded-xl border border-zinc-200">
       <table className="w-full text-sm sm:text-base">
@@ -135,15 +104,7 @@ const decisions = [
 ];
 
 function DecisionFramework() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-    }, { threshold: 0.1 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.1 });
   return (
     <div ref={ref} className="mb-6 space-y-4">
       {decisions.map((d, i) => (
@@ -170,15 +131,7 @@ function DecisionFramework() {
    FAQ Item
    ═══════════════════════════════════════════ */
 function FaqItem({ q, a }: { q: string; a: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-    }, { threshold: 0.15 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.15 });
   return (
     <div ref={ref} className="mt-6 rounded-xl border border-zinc-100 bg-zinc-50 p-6"
       style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: "opacity 0.5s ease-out, transform 0.5s ease-out" }}>
@@ -350,35 +303,27 @@ function SplitFloatingAnimation({ visible }: { visible: boolean }) {
    Page
    ═══════════════════════════════════════════ */
 export default function AppsVsLessonsBlogPost() {
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <main>
       {/* ── Hero ── */}
       <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }} />
-        <SplitFloatingAnimation visible={visible} />
+        <SplitFloatingAnimation visible />
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-transparent to-zinc-900 z-[1]" />
 
         <div className="relative z-[2] text-center px-6">
           {/* VS badge */}
-          <div className="mb-6 inline-flex items-center gap-3"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: "all 0.6s ease-out 0.1s" }}>
+          <div className="mb-6 inline-flex items-center gap-3">
             <span className="rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-xs font-bold text-blue-300">Apps</span>
             <span className="text-white/40 text-sm font-bold">VS</span>
             <span className="rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-bold text-amber-300">Real Lessons</span>
           </div>
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl max-w-4xl mx-auto"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease-out 0.2s", textShadow: "0 4px 24px rgba(0,0,0,0.5)" }}>
+            style={{ textShadow: "0 4px 24px rgba(0,0,0,0.5)" }}>
             Piano Lessons vs. Piano Apps: What Actually Works for Kids?
           </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-lg text-white/60 sm:text-xl"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.7s ease-out 0.5s" }}>
+          <p className="mt-6 mx-auto max-w-2xl text-lg text-white/60 sm:text-xl">
             An honest comparison from teachers who work with kids every day.
           </p>
         </div>
