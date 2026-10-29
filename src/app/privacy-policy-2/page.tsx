@@ -1,16 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import AnimatedSection from "@/app/components/AnimatedSection";
 
 export default function PrivacyPolicyPage() {
-  const [heroVisible, setHeroVisible] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setHeroVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <main>
       {/* Hero */}
@@ -25,9 +17,6 @@ export default function PrivacyPolicyPage() {
           <h1
             className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl"
             style={{
-              opacity: heroVisible ? 1 : 0,
-              transform: heroVisible ? "translateY(0)" : "translateY(30px)",
-              transition: "all 0.8s ease-out 0.2s",
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
@@ -35,10 +24,6 @@ export default function PrivacyPolicyPage() {
           </h1>
           <p
             className="mt-4 text-white/40 text-sm"
-            style={{
-              opacity: heroVisible ? 1 : 0,
-              transition: "opacity 0.6s ease-out 0.5s",
-            }}
           >
             Last updated: April 20, 2026
           </p>

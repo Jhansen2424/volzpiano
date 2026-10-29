@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, ReactNode } from "react";
+import { useInView } from "@/lib/use-in-view";
+import { ReactNode } from "react";
 
 /* ═══════════════════════════════════════════
    Animated Section Wrapper
@@ -14,19 +15,7 @@ function AnimatedSection({
   delay?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-      },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.1 });
 
   return (
     <div
@@ -47,19 +36,7 @@ function AnimatedSection({
    Animated H2 with orange left-bar
    ═══════════════════════════════════════════ */
 function SectionHeading({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-      },
-      { threshold: 0.2 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.2 });
 
   return (
     <div ref={ref} className="flex items-start gap-4 mt-12 mb-4">
@@ -97,19 +74,7 @@ function AgeBlock({
   title: string;
   children: ReactNode;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-      },
-      { threshold: 0.15 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.15 });
 
   return (
     <div ref={ref} className="relative mt-8 mb-2 pl-5 border-l-2 border-brand/20 overflow-hidden">
@@ -153,19 +118,7 @@ function AgeBlock({
    Staggered List
    ═══════════════════════════════════════════ */
 function StaggerList({ items, ordered = false }: { items: ReactNode[]; ordered?: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-      },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.1 });
 
   const Tag = ordered ? "ol" : "ul";
   return (
@@ -192,19 +145,7 @@ function StaggerList({ items, ordered = false }: { items: ReactNode[]; ordered?:
    FAQ Item
    ═══════════════════════════════════════════ */
 function FaqItem({ q, a }: { q: string; a: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-      },
-      { threshold: 0.15 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [ref, visible] = useInView<HTMLDivElement>({ threshold: 0.15 });
 
   return (
     <div
@@ -304,12 +245,6 @@ function FloatingAgesAnimation({ visible }: { visible: boolean }) {
    Page
    ═══════════════════════════════════════════ */
 export default function BestAgeBlogPost() {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <main>
@@ -317,20 +252,18 @@ export default function BestAgeBlogPost() {
       <section className="relative flex min-h-[45vh] items-center justify-center overflow-hidden bg-zinc-900 pt-24 pb-28">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-[500px] rounded-full opacity-15 blur-[120px]"
           style={{ background: "radial-gradient(circle, #6343d4 0%, transparent 70%)" }} />
-        <FloatingAgesAnimation visible={visible} />
+        <FloatingAgesAnimation visible />
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-transparent to-zinc-900 z-[1]" />
 
         <div className="relative z-[2] text-center px-6">
-          <span className="inline-block rounded-full bg-brand/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-brand mb-6"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)", transition: "all 0.6s ease-out 0.1s" }}>
+          <span className="inline-block rounded-full bg-brand/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-brand mb-6">
             Getting Started
           </span>
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl max-w-4xl mx-auto"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s ease-out 0.2s", textShadow: "0 4px 24px rgba(0,0,0,0.5)" }}>
+            style={{ textShadow: "0 4px 24px rgba(0,0,0,0.5)" }}>
             What Is the Best Age to Start Piano Lessons?
           </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-lg text-white/60 sm:text-xl"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.7s ease-out 0.5s" }}>
+          <p className="mt-6 mx-auto max-w-2xl text-lg text-white/60 sm:text-xl">
             A parent&apos;s complete guide to readiness, timing, and what actually matters.
           </p>
         </div>

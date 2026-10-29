@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 /**
  * A minimal landing-style page used for routes that need to exist for SEO
@@ -30,12 +29,6 @@ export default function StubPage({
    */
   heroBackground?: React.ReactNode;
 }) {
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <main>
       {/* Hero */}
@@ -51,11 +44,6 @@ export default function StubPage({
           {badge && (
             <span
               className="mb-6 inline-block rounded-full bg-accent/15 px-4 py-1 text-xs font-bold uppercase tracking-wider text-accent-light"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(10px)",
-                transition: "all 0.5s ease-out 0.1s",
-              }}
             >
               {badge}
             </span>
@@ -63,9 +51,6 @@ export default function StubPage({
           <h1
             className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(30px)",
-              transition: "all 0.8s ease-out 0.2s",
               textShadow: "0 4px 24px rgba(0,0,0,0.5)",
             }}
           >
@@ -79,11 +64,6 @@ export default function StubPage({
           </h1>
           <p
             className="mt-6 mx-auto max-w-2xl text-lg text-white/70 sm:text-xl"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.5s",
-            }}
           >
             {description}
           </p>

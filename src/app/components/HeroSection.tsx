@@ -1,16 +1,36 @@
 "use client";
 
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { preload } from "react-dom";
+
+// The piano-mover illustration is placed twice: beside the headline on
+// desktop and under it on phones, with CSS hiding whichever doesn't fit. Both
+// copies used to be preloaded, so every visitor also downloaded the one they
+// couldn't see (20–36 KB), and the visible one, the page's largest element,
+// went out at low priority. Now each copy is preloaded at high priority only
+// at the widths where it shows, and lazy loading keeps the hidden one from
+// being fetched at all.
+const DRIVING_ART = { src: "/driving-piano.png", width: 4107, height: 3543 };
+const DESKTOP_SIZES = "(max-width: 1024px) 0px, (max-width: 1280px) 55vw, 760px";
+// Under the headline the art fills the column (the viewport less 24px of
+// padding each side), up to its 420px cap.
+const MOBILE_SIZES = "(max-width: 1024px) min(calc(100vw - 48px), 420px), 0px";
+
+function preloadDrivingArt(sizes: string, media: string) {
+  const { props } = getImageProps({ ...DRIVING_ART, alt: "", sizes });
+  preload(props.src, {
+    as: "image",
+    imageSrcSet: props.srcSet,
+    imageSizes: props.sizes,
+    fetchPriority: "high",
+    media,
+  });
+}
 
 export default function HeroSection() {
-  const [animate, setAnimate] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setAnimate(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
+  preloadDrivingArt(DESKTOP_SIZES, "(min-width: 1024px)");
+  preloadDrivingArt(MOBILE_SIZES, "(max-width: 1023.98px)");
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
@@ -20,9 +40,7 @@ export default function HeroSection() {
         alt="Child playing piano at home"
         fill
         priority
-        className={`object-cover transition-transform duration-[1500ms] ease-out ${
-          animate ? "scale-100" : "scale-110"
-        }`}
+        className="object-cover"
       />
 
       {/* Dark Overlay — warmer gradient */}
@@ -34,19 +52,14 @@ export default function HeroSection() {
       <div
         className="pointer-events-none absolute right-12 bottom-24 z-[5] hidden w-[55%] max-w-[760px] lg:block xl:right-24 xl:bottom-32 xl:w-[58%]"
         style={{
-          opacity: animate ? 1 : 0,
-          transform: animate ? "translateX(0)" : "translateX(60px)",
-          transition: "opacity 1.1s ease-out 0.7s, transform 1.1s ease-out 0.7s",
           filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.45))",
         }}
       >
         <Image
-          src="/driving-piano.png"
+          {...DRIVING_ART}
           alt="Volz Method piano teacher driving to your house with a piano on the roof"
-          width={4107}
-          height={3543}
-          priority
-          sizes="(max-width: 1024px) 0px, (max-width: 1280px) 55vw, 760px"
+          loading="lazy"
+          sizes={DESKTOP_SIZES}
           className="h-auto w-full select-none"
           style={{ animation: "heroDrive 4s ease-in-out infinite" }}
         />
@@ -58,11 +71,6 @@ export default function HeroSection() {
           {/* Label */}
           <p
             className="mb-4 text-sm font-bold tracking-[0.2em] uppercase text-white/80"
-            style={{
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out 0ms",
-            }}
           >
             Volz Method Piano Lessons
           </p>
@@ -70,11 +78,6 @@ export default function HeroSection() {
           {/* Headline */}
           <h1
             className="mb-6 text-5xl leading-[1.1] font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl"
-            style={{
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out 150ms",
-            }}
           >
             We Drive to{" "}
             <span className="relative inline-block italic">
@@ -94,8 +97,7 @@ export default function HeroSection() {
                   strokeLinecap="round"
                   style={{
                     strokeDasharray: 200,
-                    strokeDashoffset: animate ? 0 : 200,
-                    transition: "stroke-dashoffset 1s ease-out 800ms",
+                    strokeDashoffset: 0,
                   }}
                 />
               </svg>
@@ -106,11 +108,6 @@ export default function HeroSection() {
           {/* Tagline 1 */}
           <p
             className="mb-2 text-lg font-medium text-white/90 sm:text-xl"
-            style={{
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out 350ms",
-            }}
           >
             We Teach According to Your Brain.
           </p>
@@ -118,11 +115,6 @@ export default function HeroSection() {
           {/* Tagline 2 */}
           <p
             className="mb-10 text-lg font-medium text-white/90 sm:text-xl"
-            style={{
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out 500ms",
-            }}
           >
             We Teach the Music You Want to Play.
           </p>
@@ -130,11 +122,6 @@ export default function HeroSection() {
           {/* Testimonial */}
           <div
             className="mb-8 max-w-md"
-            style={{
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out 650ms",
-            }}
           >
             <div className="mb-2 flex gap-1">
               {[...Array(5)].map((_, i) => (
@@ -160,11 +147,6 @@ export default function HeroSection() {
 
           {/* CTA */}
           <div
-            style={{
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(24px)",
-              transition: "all 0.7s ease-out 800ms",
-            }}
           >
             <Link
               href="/schedule-call"
@@ -179,21 +161,14 @@ export default function HeroSection() {
           <div
             className="pointer-events-none mx-auto mt-12 w-full max-w-[420px] lg:hidden"
             style={{
-              opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(20px)",
-              transition: "all 1s ease-out 0.9s",
               filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.4))",
             }}
           >
             <Image
-              src="/driving-piano.png"
+              {...DRIVING_ART}
               alt="Volz Method piano teacher driving to your house with a piano on the roof"
-              width={4107}
-              height={3543}
-              // Above the fold on phones and the page's largest element there,
-              // so load it eagerly (sizes is 0px on desktop, where it's hidden).
-              priority
-              sizes="(max-width: 1024px) 90vw, 0px"
+              loading="lazy"
+              sizes={MOBILE_SIZES}
               className="h-auto w-full select-none"
               style={{ animation: "heroDrive 4s ease-in-out infinite" }}
             />
