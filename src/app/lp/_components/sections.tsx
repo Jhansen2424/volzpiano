@@ -207,7 +207,9 @@ export function DrivingPianoArt({ className = "" }: { className?: string }) {
       width={1600}
       height={1380}
       priority
-      sizes="(max-width: 1024px) 90vw, 620px"
+      // On phones the art fills the column (viewport less 24px padding each
+      // side) up to its 560px cap; 90vw over-fetched the 750px file.
+      sizes="(max-width: 1024px) min(calc(100vw - 48px), 560px), 620px"
       className={className}
       style={{ animation: "heroDrive 4s ease-in-out infinite" }}
     />

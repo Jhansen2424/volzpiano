@@ -37,7 +37,9 @@ function PostCard({ post, index }: { post: IndexPost; index: number }) {
               src={post.image}
               alt={post.title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              // One, two or three columns inside a max-w-5xl container with
+              // px-6 / sm:px-12 padding and a 2rem gap.
+              sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) calc(50vw - 64px), 288px"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
