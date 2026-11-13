@@ -24,6 +24,7 @@ jest.mock("openai", () => {
 });
 
 beforeEach(() => {
+  resetRateLimits();
   mockCreate.mockReset();
   // Default: return an empty async iterable so the streaming path completes
   mockCreate.mockResolvedValue(
@@ -35,14 +36,17 @@ beforeEach(() => {
 });
 
 import { POST } from "../app/api/chat/route";
+import { resetRateLimits } from "@/lib/rate-limit";
 
 /**
- * Minimal stub of NextRequest. The route handler only calls `req.json()`,
- * so we don't need the full Fetch Request — and jsdom doesn't ship one.
+ * Minimal stub of NextRequest. The route handler only uses `req.json()` and
+ * `req.headers` (for the per-IP rate limit), so we don't need the full Fetch
+ * Request.
  */
-function makeRequest(body: unknown): Parameters<typeof POST>[0] {
+function makeRequest(body: unknown, ip = "203.0.113.1"): Parameters<typeof POST>[0] {
   const text = typeof body === "string" ? body : JSON.stringify(body);
   const stub = {
+    headers: new Headers({ "x-forwarded-for": ip }),
     async json() {
       return JSON.parse(text);
     },
@@ -157,5 +161,26 @@ describe("/api/chat validation", () => {
       })
     );
     expect(res.status).toBe(500);
+  });
+});
+
+describe("/api/chat rate limit", () => {
+  const ok = { messages: [{ role: "user", content: "hi" }] };
+
+  it("allows 30 messages per IP, then returns 429 with Retry-After", async () => {
+    for (let i = 0; i < 30; i++) {
+      const res = await POST(makeRequest(ok, "198.51.100.7"));
+      expect(res.status).toBe(200);
+    }
+    const blocked = await POST(makeRequest(ok, "198.51.100.7"));
+    expect(blocked.status).toBe(429);
+    expect(Number(blocked.headers.get("Retry-After"))).toBeGreaterThan(0);
+    expect(mockCreate).toHaveBeenCalledTimes(30);
+  });
+
+  it("counts each IP separately", async () => {
+    for (let i = 0; i < 31; i++) await POST(makeRequest(ok, "198.51.100.8"));
+    const other = await POST(makeRequest(ok, "198.51.100.9"));
+    expect(other.status).toBe(200);
   });
 });

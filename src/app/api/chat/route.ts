@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { NextRequest } from "next/server";
+import { checkRateLimit, clientIp } from "@/lib/rate-limit";
 
 function getClient() {
   return new OpenAI({
@@ -183,7 +184,20 @@ function validateBody(raw: unknown): ValidationResult {
 
 // ─── Route Handler ────────────────────────────────────────────────────────────
 
+// Per-IP cap on LLM calls: 30 messages per 10 minutes is a long conversation
+// for a parent, and stops one script from running up the Groq bill.
+const RATE_LIMIT = 30;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+
 export async function POST(req: NextRequest) {
+  const limit = checkRateLimit(`chat:${clientIp(req.headers)}`, RATE_LIMIT, RATE_WINDOW_MS);
+  if (!limit.ok) {
+    return new Response("Too many messages. Please try again in a few minutes.", {
+      status: 429,
+      headers: { "Retry-After": String(limit.retryAfterSeconds) },
+    });
+  }
+
   let raw: unknown;
   try {
     raw = await req.json();
