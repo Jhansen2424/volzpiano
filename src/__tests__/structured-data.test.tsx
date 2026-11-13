@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { RATING, REVIEW_COUNT } from "@/lib/site";
+import { PHONE_E164, RATING, REVIEW_COUNT } from "@/lib/site";
 
 const SRC_DIR = path.join(process.cwd(), "src");
 
@@ -36,6 +36,11 @@ describe("Root layout JSON-LD (Organization)", () => {
     // Counties come from lib/areas so the schema matches the area pages.
     expect(src).toMatch(/\.\.\.SERVICE_AREAS\.map/);
     expect(src).not.toContain("Idaho");
+  });
+
+  it("declares the business phone in E.164 form", () => {
+    expect(src).toMatch(/telephone:\s*PHONE_E164/);
+    expect(PHONE_E164).toBe("+13854820122");
   });
 
   it("priceRange uses $29–$52", () => {

@@ -61,6 +61,13 @@ export const RATING = "4.9";
 export const REVIEW_COUNT = "140";
 
 /**
+ * Business phone (sales line), as shown on /thank-you, the privacy policy and
+ * the landing pages. Declared in the LocalBusiness JSON-LD so Google can tie
+ * the number to the business.
+ */
+export const PHONE_E164 = "+13854820122";
+
+/**
  * GA4 measurement ID, e.g. "G-ABC1234567".
  *
  * The site already loads gtag.js for Google Ads (AW-755139969) but has never

@@ -16,6 +16,7 @@ import {
   REVIEW_COUNT,
   GA_ID,
   SOCIAL_PROFILES,
+  PHONE_E164,
 } from "@/lib/site";
 
 const inter = Inter({
@@ -96,6 +97,7 @@ export default function RootLayout({
     alternateName: "Volz Piano",
     url: SITE_URL,
     logo: `${SITE_URL}/icon.svg`,
+    telephone: PHONE_E164,
     image: `${SITE_URL}${OG_IMAGE.url}`,
     description:
       "In-home piano lessons across Utah. The Volz Method tailors every lesson to how each child naturally learns — reading, composing, hearing, and arranging.",
