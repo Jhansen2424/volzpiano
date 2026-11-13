@@ -1,6 +1,6 @@
 import Link from "next/link";
 import StubPage from "@/app/components/StubPage";
-import { APPLY_URL, JOB_OPENINGS } from "@/lib/jobs";
+import { APPLY_URL, JOB_OPENINGS, listingLabel } from "@/lib/jobs";
 
 export default function JobsPage() {
   return (
@@ -32,7 +32,7 @@ export default function JobsPage() {
                       href={`/jobs/${job.slug}`}
                       className="font-bold text-accent underline-offset-4 hover:underline"
                     >
-                      Piano Teacher in {job.city}, UT
+                      {listingLabel(job)}
                     </Link>
                   </li>
                 ))}

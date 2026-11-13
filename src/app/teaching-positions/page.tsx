@@ -1,7 +1,52 @@
 import Link from "next/link";
 import StubPage from "@/app/components/StubPage";
-import { APPLY_URL, JOB_OPENINGS, payLabel } from "@/lib/jobs";
+import {
+  APPLY_URL,
+  OFFICE_JOBS,
+  TEACHER_JOBS,
+  locationLabel,
+  payLabel,
+  type JobOpening,
+} from "@/lib/jobs";
 import MusicNotesHero from "./MusicNotesHero";
+
+function JobCard({ job }: { job: JobOpening }) {
+  const where = locationLabel(job);
+  const whereLabel =
+    job.kind === "teacher" ? (job.cities.length === 1 ? "City" : "Cities") : "Location";
+  return (
+    <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+          Now Hiring
+        </span>
+        <span className="text-xs text-zinc-500">Part-time</span>
+      </div>
+      <h3 className="mb-3 text-lg font-extrabold text-zinc-900">{job.title}</h3>
+      <dl className="space-y-2 text-sm text-zinc-600">
+        <div className="flex flex-wrap gap-x-2">
+          <dt className="font-semibold text-zinc-900">Pay:</dt>
+          <dd>{payLabel(job)}</dd>
+        </div>
+        <div className="flex flex-wrap gap-x-2">
+          <dt className="font-semibold text-zinc-900">{whereLabel}:</dt>
+          <dd>{where}</dd>
+        </div>
+      </dl>
+      <Link
+        href={`/jobs/${job.slug}`}
+        className="mt-4 inline-block text-sm font-bold text-accent underline-offset-4 hover:underline"
+      >
+        See job details
+        <span className="sr-only">
+          {" "}
+          for {job.kind === "teacher" ? job.city : `${job.title}, ${job.locationLabel}`}
+        </span>{" "}
+        &rarr;
+      </Link>
+    </div>
+  );
+}
 
 export default function TeachingPositionsPage() {
   return (
@@ -21,52 +66,35 @@ export default function TeachingPositionsPage() {
           <h2 className="mb-4 text-xl font-bold text-zinc-900">
             Open Positions
           </h2>
-          {JOB_OPENINGS.length === 0 && (
+          {TEACHER_JOBS.length === 0 && (
             <p className="leading-relaxed text-zinc-600">
-              We don&rsquo;t have any open positions right now, but we&rsquo;re
-              always glad to hear from great teachers.
+              We don&rsquo;t have any open teaching positions right now, but
+              we&rsquo;re always glad to hear from great teachers.
             </p>
           )}
           <div className="space-y-4">
-            {JOB_OPENINGS.map((pos) => (
-              <div
-                key={pos.slug}
-                className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
-              >
-                <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
-                    Now Hiring
-                  </span>
-                  <span className="text-xs text-zinc-500">
-                    Part-time
-                  </span>
-                </div>
-                <h3 className="mb-3 text-lg font-extrabold text-zinc-900">
-                  {pos.title}
-                </h3>
-                <dl className="space-y-2 text-sm text-zinc-600">
-                  <div className="flex flex-wrap gap-x-2">
-                    <dt className="font-semibold text-zinc-900">Pay:</dt>
-                    <dd>{payLabel(pos)}</dd>
-                  </div>
-                  <div className="flex flex-wrap gap-x-2">
-                    <dt className="font-semibold text-zinc-900">Cities:</dt>
-                    <dd>{pos.cities.join(", ")}</dd>
-                  </div>
-                </dl>
-                <Link
-                  href={`/jobs/${pos.slug}`}
-                  className="mt-4 inline-block text-sm font-bold text-accent underline-offset-4 hover:underline"
-                >
-                  See job details<span className="sr-only"> for {pos.city}</span> &rarr;
-                </Link>
-              </div>
+            {TEACHER_JOBS.map((job) => (
+              <JobCard key={job.slug} job={job} />
             ))}
           </div>
 
+          {/* Non-teaching openings, which have nowhere else in the nav to live */}
+          {OFFICE_JOBS.length > 0 && (
+            <>
+              <h2 className="mt-10 mb-4 text-xl font-bold text-zinc-900">
+                Office Positions
+              </h2>
+              <div className="space-y-4">
+                {OFFICE_JOBS.map((job) => (
+                  <JobCard key={job.slug} job={job} />
+                ))}
+              </div>
+            </>
+          )}
+
           {/* What we look for */}
           <h2 className="mt-10 mb-4 text-xl font-bold text-zinc-900">
-            What we look for
+            What we look for in teachers
           </h2>
           <ul className="list-disc space-y-2 pl-6 leading-relaxed text-zinc-600">
             <li>Strong musicianship and at least intermediate piano skills</li>
