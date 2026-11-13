@@ -38,7 +38,7 @@ describe("Root metadata", () => {
     expect(rootMetadata.openGraph).toBeTruthy();
     expect(rootMetadata.openGraph?.images).toBeTruthy();
     expect(rootMetadata.twitter).toBeTruthy();
-    expect(rootMetadata.twitter?.card).toBe("summary_large_image");
+    expect((rootMetadata.twitter as { card?: string } | null)?.card).toBe("summary_large_image");
   });
 
   it("has robots configured to index/follow with googleBot extras", () => {
@@ -54,7 +54,7 @@ describe("Root metadata", () => {
 });
 
 describe("Per-page metadata", () => {
-  const cases: Array<[string, { title?: unknown; description?: unknown; alternates?: { canonical?: string } }, string]> = [
+  const cases: Array<[string, { title?: unknown; description?: unknown; alternates?: { canonical?: unknown } | null }, string]> = [
     ["blog", blogMetadata, "/blog"],
     ["digital-piano", digitalPianoMetadata, "/digital-piano"],
     ["schedule-call", scheduleCallMetadata, "/schedule-call"],
