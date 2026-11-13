@@ -14,7 +14,7 @@ const csp = [
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https://fonts.gstatic.com https://assets.calendly.com https://app.mymusicstaff.com",
   "frame-src 'self' https://calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://app.mymusicstaff.com https://td.doubleclick.net",
-  "connect-src 'self' https://calendly.com https://api.groq.com https://app.mymusicstaff.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://www.google.com https://td.doubleclick.net",
+  "connect-src 'self' https://calendly.com https://api.groq.com https://app.mymusicstaff.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://td.doubleclick.net",
   "media-src 'self' https://www.youtube.com",
   "object-src 'none'",
   "base-uri 'self'",

@@ -74,6 +74,6 @@ export const REVIEW_COUNT = "140";
  * rather than trusted: anything that is not a well-formed measurement ID is
  * ignored instead of being written into the page.
  */
-const rawGaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
+const rawGaId = process.env.NEXT_PUBLIC_GA_ID?.trim() || "G-3RMYSV5538"; // property 564258857, read by OneApp
 export const GA_ID =
   rawGaId && /^G-[A-Z0-9]{4,20}$/.test(rawGaId) ? rawGaId : null;
