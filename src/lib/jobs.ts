@@ -103,75 +103,18 @@ export const JOB_OPENINGS: JobOpening[] = [
     payMax: 40,
     datePosted: "2026-11-13T09:00:00-07:00",
   },
-  // From the owner's Indeed posting, Nov 11 2026. Applications go through
-  // Indeed, which asks his three screening questions.
+  // From the owner's Indeed posting, Nov 20 2026: one city, as he asked.
   {
-    kind: "office",
-    slug: "customer-service-administrator-remote-ut",
-    title: "Customer Service Manager/Administrator",
-    locationLabel: "Remote in Utah",
-    applicantState: "Utah",
-    hoursPerWeek: "20–25",
-    payMin: 20,
-    payMax: 25,
-    datePosted: "2026-11-13T09:00:00-07:00",
-    payNote:
-      "$15 an hour during your first month of paid training, then $20 an hour, with raises up to $25 an hour over two years.",
-    summary:
-      "Work from home as the go-to person for our piano families and teachers. You answer customer questions, help new teachers get started and keep the office side of the business running smoothly. You don't need to know anything about piano or music.",
-    duties: [
-      {
-        heading: "Customer service",
-        items: [
-          "Answer questions from families by phone, text and email",
-          "Handle billing, scheduling, cancellations and refunds",
-          "Resolve complaints and keep an eye on customer satisfaction and reviews",
-        ],
-      },
-      {
-        heading: "Teacher support",
-        items: [
-          "Onboard new piano teachers",
-          "Help teachers with scheduling and technical questions",
-          "Coordinate students moving between teachers",
-        ],
-      },
-      {
-        heading: "Office and operations",
-        items: [
-          "Prepare payroll information for our accountant",
-          "Process account changes and keep records up to date",
-          "Troubleshoot our software and help the owner with day-to-day tasks",
-        ],
-      },
-      {
-        heading: "Inventory and shipping",
-        items: [
-          "Keep teaching materials organized at our storage unit",
-          "Ship and receive packages",
-          "Make sure teachers can get the supplies they need",
-        ],
-      },
-    ],
-    requirements: [
-      "A commitment of at least two years",
-      "Internet with at least 100 Mbps download speed",
-      "Reliable transportation for occasional local errands",
-      "Strong written and spoken communication, organization and computer skills",
-      "Able to work independently and solve problems on your own",
-      "No previous experience needed, and no piano or music knowledge",
-    ],
-    niceToHave: ["Experience in customer service, administration or office management"],
-    perks: [
-      "Paid training",
-      "Paid time off",
-      "Work from home and choose your own hours",
-      "Free VASA gym membership",
-      "Employee discount",
-    ],
-    applyUrl: "https://www.indeed.com/viewjob?jk=ad405ef0844dc51c",
-    applyNote:
-      "Apply through our Indeed posting using the button below. It asks three quick questions: the city you live in, whether you can commit to two years, and your internet download and upload speeds.",
+    kind: "teacher",
+    slug: "piano-teacher-pleasant-grove-ut",
+    title: "In-Home Piano Teacher",
+    city: "Pleasant Grove",
+    cities: ["Pleasant Grove"],
+    postalCodes: { "Pleasant Grove": "84062" },
+    payMin: 30,
+    payMax: 45,
+    startingStudents: "20 students available starting December 18",
+    datePosted: "2026-11-23T09:00:00-07:00",
   },
 ];
 

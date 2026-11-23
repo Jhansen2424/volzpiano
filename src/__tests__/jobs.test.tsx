@@ -24,9 +24,36 @@ import {
   listingLabel,
   locationLabel,
   type JobOpening,
+  type OfficeJob,
 } from "@/lib/jobs";
 
-const allJobs = JOB_OPENINGS.map((j) => [j.slug, j] as const);
+/**
+ * Office openings come and go, and there may be none listed. A sample one then
+ * keeps the remote-job markup covered, so it still works the next time an
+ * office role is posted.
+ */
+const SAMPLE_OFFICE_JOB: OfficeJob = {
+  kind: "office",
+  slug: "sample-office-role-remote-ut",
+  title: "Office Administrator",
+  locationLabel: "Remote in Utah",
+  applicantState: "Utah",
+  hoursPerWeek: "20–25",
+  payMin: 20,
+  payMax: 25,
+  datePosted: "2026-11-13T09:00:00-07:00",
+  summary: "Work from home as the go-to person for our piano families and teachers.",
+  duties: [{ heading: "Customer service", items: ["Answer questions from families"] }],
+  requirements: ["Strong written and spoken communication"],
+  perks: ["Paid training"],
+  applyUrl: "https://www.example.com/apply",
+  applyNote: "Apply through the link below.",
+};
+
+const markupJobs: JobOpening[] =
+  OFFICE_JOBS.length > 0 ? JOB_OPENINGS : [...JOB_OPENINGS, SAMPLE_OFFICE_JOB];
+const allJobs = markupJobs.map((j) => [j.slug, j] as const);
+const officeJobs = markupJobs.filter((j): j is OfficeJob => j.kind === "office");
 
 describe("job openings", () => {
   it("have unique, URL-safe slugs", () => {
@@ -104,7 +131,7 @@ describe("JobPosting markup", () => {
     expect("jobLocationType" in ld).toBe(false);
   });
 
-  it.each(OFFICE_JOBS.map((j) => [j.slug, j] as const))("%s is marked up as a remote job", (_, job) => {
+  it.each(officeJobs.map((j) => [j.slug, j] as const))("%s is marked up as a remote job", (_, job) => {
     // Google: a fully remote job needs TELECOMMUTE plus where applicants may live.
     const ld = jobPostingJsonLd(job);
     expect("jobLocationType" in ld && ld.jobLocationType).toBe("TELECOMMUTE");
