@@ -176,10 +176,10 @@ export default function ScholarshipBanner() {
         </p>
 
         <Link
-          href="/schedule-call"
+          href="/utah-fits-all-piano-lessons"
           className="inline-block rounded-full bg-cta px-10 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:bg-cta-hover hover:shadow-2xl hover:-translate-y-1"
         >
-          Learn More
+          Learn More<span className="sr-only"> about the Utah Fits All Scholarship</span>
         </Link>
       </div>
     </section>
